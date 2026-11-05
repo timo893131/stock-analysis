@@ -11,6 +11,12 @@ DATASETS = {'income': 'TaiwanStockFinancialStatements', 'balance': 'TaiwanStockB
             'cash': 'TaiwanStockCashFlowsStatement', 'revenue': 'TaiwanStockMonthRevenue'}
 
 
+class DatasetError(ValueError):
+    def __init__(self, reason):
+        self.reason = reason
+        super().__init__(reason)
+
+
 def fetch_statement(symbol, kind):
     query = urllib.parse.urlencode({'dataset': DATASETS[kind], 'data_id': symbol.split('.')[0],
         'start_date': (dt.datetime.now(TZ).date()-dt.timedelta(days=800)).isoformat()})
@@ -19,8 +25,13 @@ def fetch_statement(symbol, kind):
         headers['Authorization'] = 'Bearer ' + os.environ['FINMIND_TOKEN']
     with urllib.request.urlopen(urllib.request.Request('https://api.finmindtrade.com/api/v4/data?' + query, headers=headers), timeout=25) as response:
         payload = json.load(response)
-    if payload.get('status') != 200 or not isinstance(payload.get('data'), list) or not payload['data']:
-        raise ValueError('unavailable_dataset')
+    if payload.get('status') != 200:
+        status = payload.get('status')
+        raise DatasetError('provider_' + str(status) if isinstance(status, int) else 'provider_rejected')
+    if not isinstance(payload.get('data'), list):
+        raise DatasetError('invalid_schema')
+    if not payload['data']:
+        raise DatasetError('empty_dataset')
     for row in payload['data']:
         if row.get('stock_id') != symbol.split('.')[0]:
             raise ValueError('unexpected_symbol')
