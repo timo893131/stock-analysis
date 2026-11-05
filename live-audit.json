@@ -1,0 +1,147 @@
+{
+  "checkedAt": "2026-11-05T07:29:05.411032+00:00",
+  "url": "https://timo893131.github.io/stock-analysis/",
+  "errors": [],
+  "warnings": [],
+  "assets": {
+    "index.html": "ok",
+    "style.css": "ok",
+    "app.js": "ok",
+    "backtest.js": "ok"
+  },
+  "quotes": [
+    {
+      "symbol": "2330.TW",
+      "demo": false,
+      "date": "2026-11-05",
+      "historyRows": 130,
+      "source": "FinMind · 日收盤",
+      "syncError": null
+    },
+    {
+      "symbol": "2317.TW",
+      "demo": false,
+      "date": "2026-11-05",
+      "historyRows": 130,
+      "source": "FinMind · 日收盤",
+      "syncError": null
+    },
+    {
+      "symbol": "2454.TW",
+      "demo": false,
+      "date": "2026-11-05",
+      "historyRows": 130,
+      "source": "FinMind · 日收盤",
+      "syncError": null
+    },
+    {
+      "symbol": "2308.TW",
+      "demo": false,
+      "date": "2026-11-05",
+      "historyRows": 130,
+      "source": "FinMind · 日收盤",
+      "syncError": null
+    },
+    {
+      "symbol": "2881.TW",
+      "demo": false,
+      "date": "2026-11-05",
+      "historyRows": 130,
+      "source": "FinMind · 日收盤",
+      "syncError": null
+    },
+    {
+      "symbol": "0050.TW",
+      "demo": false,
+      "date": "2026-11-05",
+      "historyRows": 130,
+      "source": "FinMind · 日收盤",
+      "syncError": null
+    }
+  ],
+  "financials": [
+    {
+      "symbol": "2330.TW",
+      "status": "ready",
+      "coverage": 6,
+      "total": 6,
+      "fetchedAt": "2026-11-05T07:21:04.182560+00:00",
+      "periods": {
+        "revenue_yoy": "2026-09",
+        "gross_margin": "2026-06-30",
+        "eps": "2026-06-30",
+        "debt_ratio": "2026-06-30",
+        "current_ratio": "2026-06-30",
+        "operating_cash": "2026-06-30"
+      },
+      "datasetErrors": {}
+    },
+    {
+      "symbol": "2317.TW",
+      "status": "ready",
+      "coverage": 6,
+      "total": 6,
+      "fetchedAt": "2026-11-05T07:21:07.078300+00:00",
+      "periods": {
+        "revenue_yoy": "2026-09",
+        "gross_margin": "2026-06-30",
+        "eps": "2026-06-30",
+        "debt_ratio": "2026-06-30",
+        "current_ratio": "2026-06-30",
+        "operating_cash": "2026-06-30"
+      },
+      "datasetErrors": {}
+    },
+    {
+      "symbol": "2454.TW",
+      "status": "ready",
+      "coverage": 6,
+      "total": 6,
+      "fetchedAt": "2026-11-05T07:21:10.050859+00:00",
+      "periods": {
+        "revenue_yoy": "2026-09",
+        "gross_margin": "2026-06-30",
+        "eps": "2026-06-30",
+        "debt_ratio": "2026-06-30",
+        "current_ratio": "2026-06-30",
+        "operating_cash": "2026-06-30"
+      },
+      "datasetErrors": {}
+    },
+    {
+      "symbol": "2308.TW",
+      "status": "ready",
+      "coverage": 6,
+      "total": 6,
+      "fetchedAt": "2026-11-05T07:21:12.999105+00:00",
+      "periods": {
+        "revenue_yoy": "2026-09",
+        "gross_margin": "2026-09-30",
+        "eps": "2026-09-30",
+        "debt_ratio": "2026-09-30",
+        "current_ratio": "2026-09-30",
+        "operating_cash": "2026-09-30"
+      },
+      "datasetErrors": {}
+    },
+    {
+      "symbol": "2881.TW",
+      "status": "not_applicable",
+      "coverage": 0,
+      "total": null,
+      "fetchedAt": "2026-11-05T07:21:12.999386+00:00",
+      "periods": {},
+      "datasetErrors": {}
+    },
+    {
+      "symbol": "0050.TW",
+      "status": "not_applicable",
+      "coverage": 0,
+      "total": null,
+      "fetchedAt": "2026-11-05T07:21:12.999410+00:00",
+      "periods": {},
+      "datasetErrors": {}
+    }
+  ],
+  "status": "passed"
+}
