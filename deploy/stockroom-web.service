@@ -1,0 +1,20 @@
+[Unit]
+Description=Stockroom web
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=stockroom
+Group=stockroom
+WorkingDirectory=/opt/stockroom
+Environment=DATA_DIR=/var/lib/stockroom
+ExecStart=/opt/stockroom/.venv/bin/gunicorn --bind 127.0.0.1:8000 --workers 2 --threads 4 --access-logfile - wsgi:application
+Restart=on-failure
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/stockroom
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

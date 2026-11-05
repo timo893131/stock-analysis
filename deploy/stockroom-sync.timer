@@ -1,0 +1,11 @@
+[Unit]
+Description=Daily close update and publication-delay retries (Taipei)
+
+[Timer]
+OnCalendar=Mon..Fri *-*-* 16,18,20,22:10:00 Asia/Taipei
+Persistent=true
+RandomizedDelaySec=60
+Unit=stockroom-sync.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,18 @@
+[Unit]
+Description=Synchronize daily Taiwan market prices
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=stockroom
+Group=stockroom
+WorkingDirectory=/opt/stockroom
+Environment=DATA_DIR=/var/lib/stockroom
+EnvironmentFile=-/etc/stockroom.env
+ExecStart=/opt/stockroom/.venv/bin/python sync_market.py
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/stockroom
+PrivateTmp=true

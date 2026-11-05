@@ -1,0 +1,63 @@
+name: Publish Stockroom (free Pages)
+on:
+  workflow_dispatch:
+    inputs:
+      demo:
+        description: 'Publish demo only (uncheck after confirming API public-display rights)'
+        type: boolean
+        default: true
+  schedule:
+    # 18:20 and 22:20 Asia/Taipei, Monday to Friday; GitHub can delay runs.
+    - cron: '20 10,14 * * 1-5'
+permissions:
+  contents: read
+concurrency:
+  group: stockroom-pages
+  cancel-in-progress: false
+jobs:
+  build:
+    if: github.event_name == 'workflow_dispatch' || vars.MARKET_DATA_PUBLIC_DISPLAY == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Test
+        run: |
+          python -m unittest discover -s tests -p 'test_*.py'
+          node tests/trading.test.cjs
+      - name: Synchronize daily data
+        if: github.event_name != 'workflow_dispatch' || !inputs.demo
+        env:
+          FINMIND_TOKEN: ${{ secrets.FINMIND_TOKEN }}
+          PUBLIC_DISPLAY: ${{ vars.MARKET_DATA_PUBLIC_DISPLAY }}
+        run: |
+          test "$PUBLIC_DISPLAY" = true || { echo 'Confirm provider public-display rights and set MARKET_DATA_PUBLIC_DISPLAY=true first.'; exit 1; }
+          python sync_market.py
+      - name: Export market site
+        if: github.event_name != 'workflow_dispatch' || !inputs.demo
+        run: python export_site.py
+      - name: Export demo site
+        if: github.event_name == 'workflow_dispatch' && inputs.demo
+        run: python export_site.py --demo
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
