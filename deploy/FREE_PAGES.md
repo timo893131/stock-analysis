@@ -17,3 +17,5 @@ Limitations: browser-local portfolios, no server-side user accounts, no instant 
 The GCE scripts remain optional paid deployment examples; do not run them for this free path. If no DEPLOY confirmation was entered, that script has not created a VM. If it was entered earlier, inspect GCP for existing VMs/disks/IP resources; migrating to Pages does not delete them.
 
 Updates to application files on main now trigger Pages deployment. When MARKET_DATA_PUBLIC_DISPLAY=true, builds fetch real data and stop on failure; otherwise they publish the explicitly labelled demo. Keep this variable consistent with the intended public-data mode.
+
+Financial health is optional: set FUNDAMENTALS_PUBLIC_DISPLAY=true only after confirming financial-dataset access and public-display rights. The same FINMIND_TOKEN is used exclusively by Actions. Four nonfinancial companies × four datasets are fetched per live build; missing datasets remain unavailable. Demo mode does not make financial API requests or invent financial numbers. Financial statements are not inputs to the historical backtest because publication dates have not been verified.

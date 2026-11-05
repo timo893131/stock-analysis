@@ -24,7 +24,7 @@ gcloud compute instances create "$INSTANCE" --project="$PROJECT_ID" --zone="$ZON
 stage="$(mktemp -d)"
 trap 'rm -rf "$stage"' EXIT
 mkdir -p "$stage/stock-analysis"
-cp market.py wsgi.py sync_market.py requirements.txt "$stage/stock-analysis/"
+cp market.py fundamentals.py wsgi.py sync_market.py requirements.txt "$stage/stock-analysis/"
 cp -r static deploy "$stage/stock-analysis/"
 # Wait for SSH readiness before transferring. Host-key verification stays enabled.
 ready=false

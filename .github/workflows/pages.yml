@@ -12,6 +12,7 @@ on:
       - 'static/**'
       - 'tests/**'
       - 'market.py'
+      - 'fundamentals.py'
       - 'export_site.py'
       - '.github/workflows/pages.yml'
   schedule:
@@ -47,6 +48,11 @@ jobs:
         run: |
           test "$PUBLIC_DISPLAY" = true || { echo 'Confirm provider public-display rights and set MARKET_DATA_PUBLIC_DISPLAY=true first.'; exit 1; }
           python sync_market.py
+      - name: Update financial health data when licensed
+        if: vars.FUNDAMENTALS_PUBLIC_DISPLAY == 'true' && ((github.event_name == 'workflow_dispatch' && !inputs.demo) || (github.event_name != 'workflow_dispatch' && vars.MARKET_DATA_PUBLIC_DISPLAY == 'true'))
+        env:
+          FINMIND_TOKEN: ${{ secrets.FINMIND_TOKEN }}
+        run: python fundamentals.py
       - name: Export market site
         if: (github.event_name == 'workflow_dispatch' && !inputs.demo) || (github.event_name != 'workflow_dispatch' && vars.MARKET_DATA_PUBLIC_DISPLAY == 'true')
         run: python export_site.py

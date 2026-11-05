@@ -4,6 +4,8 @@ import json
 import shutil
 from pathlib import Path
 from market import quotes
+from fundamentals import reports, make_report
+from market import STOCKS
 
 
 def build(output, demo=False):
@@ -20,6 +22,7 @@ def build(output, demo=False):
     data = output / 'data'
     data.mkdir(exist_ok=True)
     (data / 'quotes.json').write_text(json.dumps({'quotes': rows}, ensure_ascii=False))
+    (data / 'fundamentals.json').write_text(json.dumps({'reports': [make_report(s,{}) for s in STOCKS] if demo else reports()}, ensure_ascii=False, allow_nan=False))
     (data / 'news.json').write_text(json.dumps({'items': []}))
     (output / '.nojekyll').touch()
 
