@@ -1,0 +1,57 @@
+name: Audit published website
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - scripts/audit_live_site.py
+      - .github/workflows/audit-site.yml
+permissions:
+  contents: write
+concurrency:
+  group: public-site-audit
+  cancel-in-progress: false
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check public website and datasets
+        run: |
+          python scripts/audit_live_site.py
+          python - <<'PY'
+          import os,json
+          r=json.load(open('live-audit.json'))
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as out:
+              out.write('## 網站檢查：'+r['status']+'\n\n')
+              out.write('檢查時間：'+r['checkedAt']+'\n\n')
+              for msg in r['errors']+r['warnings']: out.write('- '+msg+'\n')
+              out.write('\n詳細結果儲存在 website-audit 分支的 live-audit.json。\n')
+          PY
+      - name: Save metadata-only audit report to isolated branch
+        run: |
+          cp live-audit.json "$RUNNER_TEMP/live-audit.json"
+          git fetch origin website-audit || true
+          if git show-ref --verify --quiet refs/remotes/origin/website-audit; then
+            git checkout -B website-audit origin/website-audit
+          else
+            git checkout --orphan website-audit
+            git rm -rf .
+          fi
+          cp "$RUNNER_TEMP/live-audit.json" live-audit.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add live-audit.json
+          git commit -m 'Record public website audit'
+          git push origin website-audit
+      - name: Fail on invalid published data
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('live-audit.json'))
+          raise SystemExit(1 if r['status']=='failed' else 0)
+          PY
