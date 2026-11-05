@@ -12,6 +12,8 @@ Scheduled updates run weekdays at 18:20 and 22:20 Taipei. Each build fetches app
 
 Do not run demo mode over a live-data site unless you intend to replace it with a demonstration.
 
-Limitations: browser-local portfolios, no server-side user accounts, no instant quotes/paper fills, no guaranteed trading-day calendar or corporate-action adjustment, no backtest engine yet. Public static JSON can be downloaded by anyone, which is why redistribution permission matters. Official announcement links remain available without copying news content.
+Limitations: browser-local portfolios, no server-side user accounts, no instant quotes/paper fills, no guaranteed trading-day calendar or corporate-action adjustment, educational next-close MA backtest only; no corporate-action adjustment or out-of-sample validation. Public static JSON can be downloaded by anyone, which is why redistribution permission matters. Official announcement links remain available without copying news content.
 
 The GCE scripts remain optional paid deployment examples; do not run them for this free path. If no DEPLOY confirmation was entered, that script has not created a VM. If it was entered earlier, inspect GCP for existing VMs/disks/IP resources; migrating to Pages does not delete them.
+
+Updates to application files on main now trigger Pages deployment. When MARKET_DATA_PUBLIC_DISPLAY=true, builds fetch real data and stop on failure; otherwise they publish the explicitly labelled demo. Keep this variable consistent with the intended public-data mode.

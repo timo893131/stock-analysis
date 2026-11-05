@@ -2,6 +2,10 @@
 
 台股新手研究網站；每日收盤資料、透明技術訊號、收藏與虛擬帳戶。
 
+## 免費網站部署
+
+使用 [GitHub Pages + Actions](deploy/FREE_PAGES.md)。推送 main 的介面更新會自動建置；行情公開展示尚未啟用時發布示範版，已啟用則先同步資料，失敗時保留原網站。
+
 ## Run locally
 
 ```sh
@@ -26,7 +30,7 @@ See [deployment instructions](deploy/GOOGLE_CLOUD.md). Includes systemd services
 
 ```sh
 python3 -m unittest discover -s tests -p 'test_*.py'
-node tests/trading.test.cjs
+node --test --test-isolation=none tests/*.test.cjs
 node --check static/app.js
 ```
 
@@ -34,5 +38,5 @@ node --check static/app.js
 
 - Daily prices are labelled and cannot be used as instant paper fills. The paper account remains browser-local; no login/cloud account synchronization yet.
 - 20-day moving average signals and historical volatility scenarios are research aids, not validated forecasts or investment recommendations.
-- No strategy backtest engine yet. Plan next: corporate-action-aware data, next-bar execution, transaction costs, benchmark comparison and out-of-sample evaluation.
+- Educational backtest: 20/60-day MA signals, next-trading-day close execution, 20/50/100% cash allocation, fees/tax/slippage, same-allocation buy-and-hold benchmark, drawdown and trade log. No corporate-action adjustments or out-of-sample validation yet; historical results are not forecasts.
 - Source adapter: `market.py`; scheduler: `sync_market.py`; web: `wsgi.py`; UI: `static/`.
