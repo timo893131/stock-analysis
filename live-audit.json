@@ -1,7 +1,9 @@
 {
-  "checkedAt": "2026-11-06T13:15:19.776317+00:00",
+  "checkedAt": "2026-11-06T13:37:46.131554+00:00",
   "url": "https://timo893131.github.io/stock-analysis/",
-  "errors": [],
+  "errors": [
+    "網頁檔案無法讀取：research.js"
+  ],
   "warnings": [
     "6488.TWO 財務指標僅 5/6 項可用"
   ],
@@ -10,7 +12,8 @@
     "style.css": "ok",
     "app.js": "ok",
     "backtest.js": "ok",
-    "paper.js": "ok"
+    "paper.js": "ok",
+    "research.js": "failed"
   },
   "quotes": [
     {
@@ -457,7 +460,9 @@
   "features": {
     "paperTrading": true,
     "mobileViewport": true,
-    "decisionAssist": true
+    "decisionAssist": true,
+    "quickResearch": false,
+    "onDemandAI": false
   },
   "ai": [
     {
@@ -517,15 +522,15 @@
   ],
   "aiReadyCount": 6,
   "latestDeployment": {
-    "id": 42223332101,
-    "head_sha": "a4796eabc780c8035116af1962551312feaa9136",
-    "status": "completed",
-    "conclusion": "success",
-    "html_url": "https://github.com/timo893131/stock-analysis/actions/runs/42223332101",
+    "id": 42227022706,
+    "head_sha": "5845c64a7cc9570b4d1c20eb86b0b8e5b1cdc828",
+    "status": "in_progress",
+    "conclusion": null,
+    "html_url": "https://github.com/timo893131/stock-analysis/actions/runs/42227022706",
     "jobs": [
       {
         "name": "build",
-        "conclusion": "success",
+        "conclusion": null,
         "steps": [
           {
             "name": "Set up job",
@@ -544,84 +549,58 @@
           },
           {
             "name": "Run actions/setup-node@v4",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "in_progress"
           },
           {
             "name": "Test",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Synchronize daily data",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Update financial health data when licensed",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Generate optional AI explanations",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Export market site",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Export demo site",
-            "conclusion": "skipped",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Run actions/upload-pages-artifact@v3",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Post Run actions/setup-node@v4",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Post Run actions/setup-python@v5",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Post Run actions/checkout@v4",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Complete job",
-            "conclusion": "success",
-            "status": "completed"
-          }
-        ]
-      },
-      {
-        "name": "deploy",
-        "conclusion": "success",
-        "steps": [
-          {
-            "name": "Set up job",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Deploy",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Complete job",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           }
         ]
       }
@@ -632,5 +611,5 @@
     "count": 2602,
     "updatedAt": "2026-11-06T13:10:24.898524+00:00"
   },
-  "status": "warning"
+  "status": "failed"
 }
