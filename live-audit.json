@@ -1,12 +1,9 @@
 {
-  "checkedAt": "2026-11-06T13:14:48.532081+00:00",
+  "checkedAt": "2026-11-06T13:15:19.776317+00:00",
   "url": "https://timo893131.github.io/stock-analysis/",
-  "errors": [
-    "行情清單缺漏、重複或仍是空的示範版",
-    "財報清單缺漏或重複"
-  ],
+  "errors": [],
   "warnings": [
-    "名錄無法讀取"
+    "6488.TWO 財務指標僅 5/6 項可用"
   ],
   "assets": {
     "index.html": "ok",
@@ -63,6 +60,118 @@
       "historyRows": 130,
       "source": "FinMind · 日收盤",
       "syncError": null
+    },
+    {
+      "symbol": "2303.TW",
+      "demo": false,
+      "date": "2026-11-06",
+      "historyRows": 130,
+      "source": "FinMind · 日收盤",
+      "syncError": null
+    },
+    {
+      "symbol": "3711.TW",
+      "demo": false,
+      "date": "2026-11-06",
+      "historyRows": 130,
+      "source": "FinMind · 日收盤",
+      "syncError": null
+    },
+    {
+      "symbol": "2382.TW",
+      "demo": false,
+      "date": "2026-11-06",
+      "historyRows": 130,
+      "source": "FinMind · 日收盤",
+      "syncError": null
+    },
+    {
+      "symbol": "3231.TW",
+      "demo": false,
+      "date": "2026-11-06",
+      "historyRows": 130,
+      "source": "FinMind · 日收盤",
+      "syncError": null
+    },
+    {
+      "symbol": "2357.TW",
+      "demo": false,
+      "date": "2026-11-06",
+      "historyRows": 130,
+      "source": "FinMind · 日收盤",
+      "syncError": null
+    },
+    {
+      "symbol": "2379.TW",
+      "demo": false,
+      "date": "2026-11-06",
+      "historyRows": 130,
+      "source": "FinMind · 日收盤",
+      "syncError": null
+    },
+    {
+      "symbol": "3034.TW",
+      "demo": false,
+      "date": "2026-11-06",
+      "historyRows": 130,
+      "source": "FinMind · 日收盤",
+      "syncError": null
+    },
+    {
+      "symbol": "2345.TW",
+      "demo": false,
+      "date": "2026-11-06",
+      "historyRows": 130,
+      "source": "FinMind · 日收盤",
+      "syncError": null
+    },
+    {
+      "symbol": "2882.TW",
+      "demo": false,
+      "date": "2026-11-06",
+      "historyRows": 130,
+      "source": "FinMind · 日收盤",
+      "syncError": null
+    },
+    {
+      "symbol": "2891.TW",
+      "demo": false,
+      "date": "2026-11-06",
+      "historyRows": 130,
+      "source": "FinMind · 日收盤",
+      "syncError": null
+    },
+    {
+      "symbol": "0056.TW",
+      "demo": false,
+      "date": "2026-11-06",
+      "historyRows": 130,
+      "source": "FinMind · 日收盤",
+      "syncError": null
+    },
+    {
+      "symbol": "00878.TW",
+      "demo": false,
+      "date": "2026-11-06",
+      "historyRows": 130,
+      "source": "FinMind · 日收盤",
+      "syncError": null
+    },
+    {
+      "symbol": "6488.TWO",
+      "demo": false,
+      "date": "2026-11-06",
+      "historyRows": 130,
+      "source": "FinMind · 日收盤",
+      "syncError": null
+    },
+    {
+      "symbol": "8069.TWO",
+      "demo": false,
+      "date": "2026-11-06",
+      "historyRows": 130,
+      "source": "FinMind · 日收盤",
+      "syncError": null
     }
   ],
   "financials": [
@@ -71,7 +180,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-06T08:10:20.447222+00:00",
+      "fetchedAt": "2026-11-06T13:10:44.856739+00:00",
       "periods": {
         "revenue_yoy": "2026-09",
         "gross_margin": "2026-06-30",
@@ -87,7 +196,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-06T08:10:23.714771+00:00",
+      "fetchedAt": "2026-11-06T13:10:47.667963+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-06-30",
@@ -103,7 +212,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-06T08:10:26.317298+00:00",
+      "fetchedAt": "2026-11-06T13:10:50.492257+00:00",
       "periods": {
         "revenue_yoy": "2026-09",
         "gross_margin": "2026-06-30",
@@ -119,7 +228,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-06T08:10:28.999507+00:00",
+      "fetchedAt": "2026-11-06T13:10:53.404467+00:00",
       "periods": {
         "revenue_yoy": "2026-09",
         "gross_margin": "2026-09-30",
@@ -135,7 +244,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-06T08:10:28.999753+00:00",
+      "fetchedAt": "2026-11-06T13:10:53.404687+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -144,8 +253,204 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-06T08:10:28.999771+00:00",
+      "fetchedAt": "2026-11-06T13:10:53.404705+00:00",
       "periods": {},
+      "datasetErrors": {}
+    },
+    {
+      "symbol": "2303.TW",
+      "status": "ready",
+      "coverage": 6,
+      "total": 6,
+      "fetchedAt": "2026-11-06T13:10:56.418449+00:00",
+      "periods": {
+        "revenue_yoy": "2026-10",
+        "gross_margin": "2026-09-30",
+        "eps": "2026-09-30",
+        "debt_ratio": "2026-09-30",
+        "current_ratio": "2026-09-30",
+        "operating_cash": "2026-09-30"
+      },
+      "datasetErrors": {}
+    },
+    {
+      "symbol": "3711.TW",
+      "status": "ready",
+      "coverage": 6,
+      "total": 6,
+      "fetchedAt": "2026-11-06T13:10:59.311226+00:00",
+      "periods": {
+        "revenue_yoy": "2026-09",
+        "gross_margin": "2026-06-30",
+        "eps": "2026-06-30",
+        "debt_ratio": "2026-06-30",
+        "current_ratio": "2026-06-30",
+        "operating_cash": "2026-06-30"
+      },
+      "datasetErrors": {}
+    },
+    {
+      "symbol": "2382.TW",
+      "status": "ready",
+      "coverage": 6,
+      "total": 6,
+      "fetchedAt": "2026-11-06T13:11:02.179327+00:00",
+      "periods": {
+        "revenue_yoy": "2026-09",
+        "gross_margin": "2026-06-30",
+        "eps": "2026-06-30",
+        "debt_ratio": "2026-06-30",
+        "current_ratio": "2026-06-30",
+        "operating_cash": "2026-06-30"
+      },
+      "datasetErrors": {}
+    },
+    {
+      "symbol": "3231.TW",
+      "status": "ready",
+      "coverage": 6,
+      "total": 6,
+      "fetchedAt": "2026-11-06T13:11:04.985789+00:00",
+      "periods": {
+        "revenue_yoy": "2026-09",
+        "gross_margin": "2026-06-30",
+        "eps": "2026-06-30",
+        "debt_ratio": "2026-06-30",
+        "current_ratio": "2026-06-30",
+        "operating_cash": "2026-06-30"
+      },
+      "datasetErrors": {}
+    },
+    {
+      "symbol": "2357.TW",
+      "status": "ready",
+      "coverage": 6,
+      "total": 6,
+      "fetchedAt": "2026-11-06T13:11:08.032462+00:00",
+      "periods": {
+        "revenue_yoy": "2026-09",
+        "gross_margin": "2026-06-30",
+        "eps": "2026-06-30",
+        "debt_ratio": "2026-06-30",
+        "current_ratio": "2026-06-30",
+        "operating_cash": "2026-06-30"
+      },
+      "datasetErrors": {}
+    },
+    {
+      "symbol": "2379.TW",
+      "status": "ready",
+      "coverage": 6,
+      "total": 6,
+      "fetchedAt": "2026-11-06T13:11:10.932129+00:00",
+      "periods": {
+        "revenue_yoy": "2026-10",
+        "gross_margin": "2026-06-30",
+        "eps": "2026-06-30",
+        "debt_ratio": "2026-06-30",
+        "current_ratio": "2026-06-30",
+        "operating_cash": "2026-06-30"
+      },
+      "datasetErrors": {}
+    },
+    {
+      "symbol": "3034.TW",
+      "status": "ready",
+      "coverage": 6,
+      "total": 6,
+      "fetchedAt": "2026-11-06T13:11:13.785441+00:00",
+      "periods": {
+        "revenue_yoy": "2026-09",
+        "gross_margin": "2026-09-30",
+        "eps": "2026-09-30",
+        "debt_ratio": "2026-09-30",
+        "current_ratio": "2026-09-30",
+        "operating_cash": "2026-09-30"
+      },
+      "datasetErrors": {}
+    },
+    {
+      "symbol": "2345.TW",
+      "status": "ready",
+      "coverage": 6,
+      "total": 6,
+      "fetchedAt": "2026-11-06T13:11:16.614232+00:00",
+      "periods": {
+        "revenue_yoy": "2026-10",
+        "gross_margin": "2026-06-30",
+        "eps": "2026-06-30",
+        "debt_ratio": "2026-06-30",
+        "current_ratio": "2026-06-30",
+        "operating_cash": "2026-06-30"
+      },
+      "datasetErrors": {}
+    },
+    {
+      "symbol": "2882.TW",
+      "status": "not_applicable",
+      "coverage": 0,
+      "total": null,
+      "fetchedAt": "2026-11-06T13:11:16.614449+00:00",
+      "periods": {},
+      "datasetErrors": {}
+    },
+    {
+      "symbol": "2891.TW",
+      "status": "not_applicable",
+      "coverage": 0,
+      "total": null,
+      "fetchedAt": "2026-11-06T13:11:16.614467+00:00",
+      "periods": {},
+      "datasetErrors": {}
+    },
+    {
+      "symbol": "0056.TW",
+      "status": "not_applicable",
+      "coverage": 0,
+      "total": null,
+      "fetchedAt": "2026-11-06T13:11:16.614476+00:00",
+      "periods": {},
+      "datasetErrors": {}
+    },
+    {
+      "symbol": "00878.TW",
+      "status": "not_applicable",
+      "coverage": 0,
+      "total": null,
+      "fetchedAt": "2026-11-06T13:11:16.614485+00:00",
+      "periods": {},
+      "datasetErrors": {}
+    },
+    {
+      "symbol": "6488.TWO",
+      "status": "partial",
+      "coverage": 5,
+      "total": 6,
+      "fetchedAt": "2026-11-06T13:11:20.890805+00:00",
+      "periods": {
+        "revenue_yoy": "2026-09",
+        "gross_margin": "2026-09-30",
+        "eps": "2026-09-30",
+        "debt_ratio": "2026-09-30",
+        "current_ratio": "2026-09-30",
+        "operating_cash": "2026-09-30"
+      },
+      "datasetErrors": {}
+    },
+    {
+      "symbol": "8069.TWO",
+      "status": "ready",
+      "coverage": 6,
+      "total": 6,
+      "fetchedAt": "2026-11-06T13:11:23.876850+00:00",
+      "periods": {
+        "revenue_yoy": "2026-09",
+        "gross_margin": "2026-06-30",
+        "eps": "2026-06-30",
+        "debt_ratio": "2026-06-30",
+        "current_ratio": "2026-06-30",
+        "operating_cash": "2026-06-30"
+      },
       "datasetErrors": {}
     }
   ],
@@ -160,7 +465,7 @@
       "status": "ready",
       "reason": null,
       "model": "gemini-2.5-flash",
-      "generatedAt": "2026-11-06T08:10:39.192406+00:00",
+      "generatedAt": "2026-11-06T13:11:34.845173+00:00",
       "matchesQuote": true,
       "hasText": true
     },
@@ -169,7 +474,7 @@
       "status": "ready",
       "reason": null,
       "model": "gemini-2.5-flash",
-      "generatedAt": "2026-11-06T08:11:02.203643+00:00",
+      "generatedAt": "2026-11-06T13:11:58.951372+00:00",
       "matchesQuote": true,
       "hasText": true
     },
@@ -178,7 +483,7 @@
       "status": "ready",
       "reason": null,
       "model": "gemini-2.5-flash",
-      "generatedAt": "2026-11-06T08:11:25.396894+00:00",
+      "generatedAt": "2026-11-06T13:12:23.333873+00:00",
       "matchesQuote": true,
       "hasText": true
     },
@@ -187,7 +492,7 @@
       "status": "ready",
       "reason": null,
       "model": "gemini-2.5-flash",
-      "generatedAt": "2026-11-06T08:11:47.023879+00:00",
+      "generatedAt": "2026-11-06T13:12:46.901141+00:00",
       "matchesQuote": true,
       "hasText": true
     },
@@ -196,7 +501,7 @@
       "status": "ready",
       "reason": null,
       "model": "gemini-2.5-flash",
-      "generatedAt": "2026-11-06T08:12:08.052674+00:00",
+      "generatedAt": "2026-11-06T13:13:08.022309+00:00",
       "matchesQuote": true,
       "hasText": true
     },
@@ -205,7 +510,7 @@
       "status": "ready",
       "reason": null,
       "model": "gemini-2.5-flash",
-      "generatedAt": "2026-11-06T08:12:29.450916+00:00",
+      "generatedAt": "2026-11-06T13:13:28.949071+00:00",
       "matchesQuote": true,
       "hasText": true
     }
@@ -214,8 +519,8 @@
   "latestDeployment": {
     "id": 42223332101,
     "head_sha": "a4796eabc780c8035116af1962551312feaa9136",
-    "status": "in_progress",
-    "conclusion": null,
+    "status": "completed",
+    "conclusion": "success",
     "html_url": "https://github.com/timo893131/stock-analysis/actions/runs/42223332101",
     "jobs": [
       {
@@ -301,7 +606,7 @@
       },
       {
         "name": "deploy",
-        "conclusion": null,
+        "conclusion": "success",
         "steps": [
           {
             "name": "Set up job",
@@ -310,12 +615,22 @@
           },
           {
             "name": "Deploy",
-            "conclusion": null,
-            "status": "in_progress"
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success",
+            "status": "completed"
           }
         ]
       }
     ]
   },
-  "status": "failed"
+  "catalog": {
+    "status": "ready",
+    "count": 2602,
+    "updatedAt": "2026-11-06T13:10:24.898524+00:00"
+  },
+  "status": "warning"
 }
