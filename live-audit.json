@@ -1,8 +1,10 @@
 {
-  "checkedAt": "2026-11-06T02:31:34.317896+00:00",
+  "checkedAt": "2026-11-06T08:10:10.075559+00:00",
   "url": "https://timo893131.github.io/stock-analysis/",
   "errors": [],
-  "warnings": [],
+  "warnings": [
+    "AI 解讀可用 0/6 檔（選用功能）"
+  ],
   "assets": {
     "index.html": "ok",
     "style.css": "ok",
@@ -149,5 +151,7 @@
     "mobileViewport": true,
     "decisionAssist": true
   },
-  "status": "passed"
+  "ai": [],
+  "aiReadyCount": 0,
+  "status": "warning"
 }
