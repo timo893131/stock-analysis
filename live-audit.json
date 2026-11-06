@@ -1,8 +1,13 @@
 {
-  "checkedAt": "2026-11-06T08:13:54.433931+00:00",
+  "checkedAt": "2026-11-06T13:10:24.116640+00:00",
   "url": "https://timo893131.github.io/stock-analysis/",
-  "errors": [],
-  "warnings": [],
+  "errors": [
+    "行情清單缺漏、重複或仍是空的示範版",
+    "財報清單缺漏或重複"
+  ],
+  "warnings": [
+    "名錄無法讀取"
+  ],
   "assets": {
     "index.html": "ok",
     "style.css": "ok",
@@ -207,15 +212,15 @@
   ],
   "aiReadyCount": 6,
   "latestDeployment": {
-    "id": 42185737347,
-    "head_sha": "4221e95ee7460eb52fa876251d2f434a7dcbfd65",
-    "status": "completed",
-    "conclusion": "success",
-    "html_url": "https://github.com/timo893131/stock-analysis/actions/runs/42185737347",
+    "id": 42223332101,
+    "head_sha": "a4796eabc780c8035116af1962551312feaa9136",
+    "status": "in_progress",
+    "conclusion": null,
+    "html_url": "https://github.com/timo893131/stock-analysis/actions/runs/42223332101",
     "jobs": [
       {
         "name": "build",
-        "conclusion": "success",
+        "conclusion": null,
         "steps": [
           {
             "name": "Set up job",
@@ -244,78 +249,52 @@
           },
           {
             "name": "Synchronize daily data",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "in_progress"
           },
           {
             "name": "Update financial health data when licensed",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Generate optional AI explanations",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Export market site",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Export demo site",
-            "conclusion": "skipped",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Run actions/upload-pages-artifact@v3",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Post Run actions/setup-node@v4",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Post Run actions/setup-python@v5",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Post Run actions/checkout@v4",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Complete job",
-            "conclusion": "success",
-            "status": "completed"
-          }
-        ]
-      },
-      {
-        "name": "deploy",
-        "conclusion": "success",
-        "steps": [
-          {
-            "name": "Set up job",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Deploy",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Complete job",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           }
         ]
       }
     ]
   },
-  "status": "passed"
+  "status": "failed"
 }
