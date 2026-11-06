@@ -2,6 +2,7 @@
 import datetime as dt
 import json
 import math
+import os
 import urllib.request
 from pathlib import Path
 
@@ -82,6 +83,19 @@ def audit(loader=fetch):
     except Exception:
         result['aiReadyCount']=0
         result['warnings'].append('AI 解讀尚未提供或格式不符（選用功能）')
+    token=os.environ.get('AUDIT_GITHUB_TOKEN')
+    if token:
+        try:
+            def gh(path):
+                req=urllib.request.Request('https://api.github.com/repos/timo893131/stock-analysis/'+path,headers={'Authorization':'Bearer '+token,'Accept':'application/vnd.github+json','User-Agent':'Stockroom-Audit'})
+                with urllib.request.urlopen(req,timeout=20) as response:return json.load(response)
+            runs=gh('actions/workflows/pages.yml/runs?per_page=1')['workflow_runs']
+            if runs:
+                run=runs[0]
+                result['latestDeployment']={k:run.get(k) for k in ('id','head_sha','status','conclusion','html_url')}
+                jobs=gh('actions/runs/'+str(run['id'])+'/jobs')['jobs']
+                result['latestDeployment']['jobs']=[{'name':j['name'],'conclusion':j['conclusion'],'steps':[{'name':x['name'],'conclusion':x['conclusion'],'status':x['status']} for x in j.get('steps',[])]} for j in jobs]
+        except Exception:result['deploymentStatusUnavailable']=True
     result['status']='failed' if result['errors'] else 'warning' if result['warnings'] else 'passed'
     return result
 
