@@ -23,7 +23,7 @@ def audit(loader=fetch):
             if not body.strip():raise ValueError()
             if path=='' and ('window.STOCKROOM_STATIC=true' not in body or 'financial-results' not in body or 'backtest-results' not in body):
                 result['errors'].append('首頁不是預期的靜態財報／回測版本')
-            if path=='':result['features']={'paperTrading': 'src="./paper.js"' in body and 'paper-symbol' in body, 'mobileViewport':'viewport-fit=cover' in body}
+            if path=='':result['features']={'paperTrading': 'src="./paper.js"' in body and 'paper-symbol' in body, 'mobileViewport':'viewport-fit=cover' in body, 'decisionAssist':'id="decision-panel"' in body}
             result['assets'][path or 'index.html']='ok'
         except Exception:
             result['assets'][path or 'index.html']='failed'

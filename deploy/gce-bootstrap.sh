@@ -8,7 +8,7 @@ id stockroom >/dev/null 2>&1 || useradd --system --home /opt/stockroom --shell /
 install -d -o root -g root /opt/stockroom
 install -d -o stockroom -g stockroom -m 750 /var/lib/stockroom
 # Explicit source files only: never copy .env, credentials, databases, or local venv.
-cp "$APP_SOURCE"/{market.py,fundamentals.py,wsgi.py,sync_market.py,requirements.txt} /opt/stockroom/
+cp "$APP_SOURCE"/{market.py,fundamentals.py,ai_analysis.py,wsgi.py,sync_market.py,requirements.txt} /opt/stockroom/
 cp -r "$APP_SOURCE/static" /opt/stockroom/
 chmod -R a+rX /opt/stockroom
 python3 -m venv /opt/stockroom/.venv

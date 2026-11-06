@@ -13,6 +13,7 @@ on:
       - 'tests/**'
       - 'market.py'
       - 'fundamentals.py'
+      - 'ai_analysis.py'
       - 'export_site.py'
       - '.github/workflows/pages.yml'
   schedule:
@@ -27,7 +28,7 @@ jobs:
   build:
     if: github.event_name != 'schedule' || vars.MARKET_DATA_PUBLIC_DISPLAY == 'true'
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -53,6 +54,12 @@ jobs:
         env:
           FINMIND_TOKEN: ${{ secrets.FINMIND_TOKEN }}
         run: python fundamentals.py
+      - name: Generate optional AI explanations
+        if: vars.AI_ANALYSIS_ENABLED == 'true' && ((github.event_name == 'workflow_dispatch' && !inputs.demo) || (github.event_name != 'workflow_dispatch' && vars.MARKET_DATA_PUBLIC_DISPLAY == 'true'))
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: ${{ vars.GEMINI_MODEL }}
+        run: python ai_analysis.py
       - name: Export market site
         if: (github.event_name == 'workflow_dispatch' && !inputs.demo) || (github.event_name != 'workflow_dispatch' && vars.MARKET_DATA_PUBLIC_DISPLAY == 'true')
         run: python export_site.py
