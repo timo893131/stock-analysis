@@ -1,6 +1,11 @@
 name: Audit published website
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/audit-site.yml'
+      - 'scripts/audit_live_site.py'
   workflow_run:
     workflows: ['Publish Stockroom (free Pages)']
     types: [completed]
@@ -34,6 +39,7 @@ jobs:
       - name: Save metadata-only audit report to isolated branch
         run: |
           cp live-audit.json "$RUNNER_TEMP/live-audit.json"
+          rm live-audit.json
           git fetch origin website-audit || true
           if git show-ref --verify --quiet refs/remotes/origin/website-audit; then
             git checkout -B website-audit origin/website-audit
