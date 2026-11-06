@@ -5,6 +5,8 @@ import os
 from pathlib import Path
 import re
 import urllib.request
+import urllib.error
+import time
 from market import quotes
 from fundamentals import reports
 
@@ -50,10 +52,19 @@ def sync():
     model=os.environ.get('GEMINI_MODEL') or 'gemini-2.5-flash'
     financial={r['symbol']:r for r in reports()}
     results=[]
+    quota_hit=False
     for q in quotes():
         if q.get('error') or q.get('demo') or len(q.get('history',[]))<60:continue
+        if quota_hit:
+            results.append({'symbol':q['symbol'],'asOf':q['asOf'],'status':'unavailable','reason':'quota_skipped'})
+            continue
+        if results:time.sleep(13)
         try:results.append(generate(q,financial.get(q['symbol']),token,model))
-        except Exception:results.append({'symbol':q['symbol'],'asOf':q['asOf'],'status':'unavailable'})
+        except urllib.error.HTTPError as error:
+            quota_hit=error.code==429
+            results.append({'symbol':q['symbol'],'asOf':q['asOf'],'status':'unavailable','reason':'http_'+str(error.code)})
+        except Exception:
+            results.append({'symbol':q['symbol'],'asOf':q['asOf'],'status':'unavailable','reason':'network_or_response_invalid'})
     path=Path(os.environ.get('DATA_DIR','./data'))/'ai.json'
     path.parent.mkdir(parents=True,exist_ok=True)
     path.write_text(json.dumps({'reports':results},ensure_ascii=False))
@@ -65,4 +76,6 @@ if __name__=='__main__':
     summary=os.environ.get('GITHUB_STEP_SUMMARY')
     if summary:
         with open(summary,'a') as out:
+            for item in result:
+                if item.get('reason'):out.write(item['symbol']+'：'+item['reason']+'\n\n')
             out.write('## AI 解讀\n\n'+str(sum(r['status']=='ready' for r in result))+'/'+str(len(result))+' 檔已生成；失敗項目顯示未提供，不影響行情與規則試算。\n')

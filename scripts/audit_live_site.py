@@ -70,6 +70,18 @@ def audit(loader=fetch):
                 if r.get('pointInTimeSafe') is not False:result['errors'].append(symbol+' 缺少公告日限制標示')
     except Exception:
         result['errors'].append('財報 JSON 無法解析或驗證')
+    try:
+        ai=json.loads(loader('data/ai.json'))['reports']
+        qtimes={q['symbol']:q.get('asOf') for q in quotes}
+        result['ai']=[{'symbol':r.get('symbol'),'status':r.get('status'),'reason':r.get('reason'),
+            'model':r.get('model'),'generatedAt':r.get('generatedAt'),
+            'matchesQuote':r.get('asOf')==qtimes.get(r.get('symbol')),
+            'hasText':all(isinstance(r.get(k),str) and bool(r[k].strip()) for k in ('summary','risks','checks'))} for r in ai]
+        result['aiReadyCount']=sum(r['status']=='ready' and r['matchesQuote'] and r['hasText'] for r in result['ai'])
+        if result['aiReadyCount']<len(SYMBOLS):result['warnings'].append('AI 解讀可用 '+str(result['aiReadyCount'])+'/'+str(len(SYMBOLS))+' 檔（選用功能）')
+    except Exception:
+        result['aiReadyCount']=0
+        result['warnings'].append('AI 解讀尚未提供或格式不符（選用功能）')
     result['status']='failed' if result['errors'] else 'warning' if result['warnings'] else 'passed'
     return result
 
