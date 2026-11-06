@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-11-06T02:30:29.052905+00:00",
+  "checkedAt": "2026-11-06T02:31:34.317896+00:00",
   "url": "https://timo893131.github.io/stock-analysis/",
   "errors": [],
   "warnings": [],
@@ -66,7 +66,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-06T02:09:14.692086+00:00",
+      "fetchedAt": "2026-11-06T02:30:36.795760+00:00",
       "periods": {
         "revenue_yoy": "2026-09",
         "gross_margin": "2026-06-30",
@@ -82,7 +82,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-06T02:09:17.268739+00:00",
+      "fetchedAt": "2026-11-06T02:30:39.067211+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-06-30",
@@ -98,7 +98,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-06T02:09:19.842213+00:00",
+      "fetchedAt": "2026-11-06T02:30:41.362475+00:00",
       "periods": {
         "revenue_yoy": "2026-09",
         "gross_margin": "2026-06-30",
@@ -114,7 +114,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-06T02:09:22.436836+00:00",
+      "fetchedAt": "2026-11-06T02:30:43.741679+00:00",
       "periods": {
         "revenue_yoy": "2026-09",
         "gross_margin": "2026-09-30",
@@ -130,7 +130,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-06T02:09:22.437140+00:00",
+      "fetchedAt": "2026-11-06T02:30:43.741957+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -139,7 +139,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-06T02:09:22.437178+00:00",
+      "fetchedAt": "2026-11-06T02:30:43.741983+00:00",
       "periods": {},
       "datasetErrors": {}
     }
@@ -147,7 +147,7 @@
   "features": {
     "paperTrading": true,
     "mobileViewport": true,
-    "decisionAssist": false
+    "decisionAssist": true
   },
   "status": "passed"
 }
