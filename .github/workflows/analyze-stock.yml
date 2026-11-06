@@ -1,0 +1,55 @@
+name: Analyze one Taiwan stock (free quota)
+on:
+  workflow_dispatch:
+    inputs:
+      symbol:
+        description: '輸入股票代碼，例如 2603、6488.TWO；產生的研究報告會公開'
+        required: true
+        type: string
+permissions:
+  contents: write
+concurrency:
+  group: stockroom-single-stock
+  cancel-in-progress: false
+jobs:
+  analyze:
+    if: vars.MARKET_DATA_PUBLIC_DISPLAY == 'true' && vars.FUNDAMENTALS_PUBLIC_DISPLAY == 'true' && vars.AI_ANALYSIS_ENABLED == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Restore public research cache
+        run: |
+          mkdir -p research-data/reports
+          if git fetch origin ai-research; then
+            git archive FETCH_HEAD reports | tar -x -C research-data
+          fi
+      - name: Analyze requested stock once
+        env:
+          REQUEST_SYMBOL: ${{ inputs.symbol }}
+          FINMIND_TOKEN: ${{ secrets.FINMIND_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: ${{ vars.GEMINI_MODEL }}
+        run: python analyze_stock.py
+      - name: Publish public report without redeploying website
+        run: |
+          cp -R research-data/reports "$RUNNER_TEMP/stockroom-reports"
+          rm -rf research-data
+          if git show-ref --verify --quiet refs/remotes/origin/ai-research; then
+            git checkout -B ai-research origin/ai-research
+          else
+            git checkout --orphan ai-research
+            git rm -rf .
+          fi
+          mkdir -p reports
+          cp "$RUNNER_TEMP/stockroom-reports/"*.json reports/
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports
+          if ! git diff --cached --quiet; then
+            git commit -m 'Update requested stock research'
+            git push origin ai-research
+          fi

@@ -21,13 +21,13 @@ def fetch(path):
 def audit(loader=fetch):
     now=dt.datetime.now(dt.timezone.utc)
     result={'checkedAt':now.isoformat(),'url':BASE,'errors':[],'warnings':[],'assets':{},'quotes':[],'financials':[]}
-    for path in ('','style.css','app.js','backtest.js','paper.js'):
+    for path in ('','style.css','app.js','backtest.js','paper.js','research.js'):
         try:
             body=loader(path)
             if not body.strip():raise ValueError()
             if path=='' and ('window.STOCKROOM_STATIC=true' not in body or 'financial-results' not in body or 'backtest-results' not in body):
                 result['errors'].append('首頁不是預期的靜態財報／回測版本')
-            if path=='':result['features']={'paperTrading': 'src="./paper.js"' in body and 'paper-symbol' in body, 'mobileViewport':'viewport-fit=cover' in body, 'decisionAssist':'id="decision-panel"' in body}
+            if path=='':result['features']={'paperTrading': 'src="./paper.js"' in body and 'paper-symbol' in body, 'mobileViewport':'viewport-fit=cover' in body, 'decisionAssist':'id="decision-panel"' in body, 'quickResearch':'id="quick-panel"' in body, 'onDemandAI':'id="ai-dialog"' in body}
             result['assets'][path or 'index.html']='ok'
         except Exception:
             result['assets'][path or 'index.html']='failed'

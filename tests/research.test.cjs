@@ -1,0 +1,7 @@
+const {test}=require('node:test'),assert=require('node:assert/strict'),R=require('../static/research.js');
+const now=Date.UTC(2026,10,6,12),q={symbol:'2330.TW',name:'台積電',sector:'tech',asOf:now/1000,price:119.66666666666667,history:Array.from({length:60},(_,i)=>({close:100+i/3}))};
+const report={symbol:q.symbol,metrics:['revenue_yoy','eps','operating_cash'].map(key=>({key,value:1,period:'2026-09-30'}))};
+test('stale and demo quotes never rank',()=>{assert.equal(R.rank([{...q,demo:true},{...q,asOf:1}],[],now).rows.length,0)});
+test('missing or stale financials cannot become an enterprise candidate',()=>{assert.equal(R.rank([q],[],now).rows[0].eligible,false);const old={...report,metrics:report.metrics.map(m=>({...m,period:'2020-01-01'}))};assert.equal(R.rank([q],[old],now).rows[0].eligible,false);assert.equal(R.rank([q],[report],now).rows[0].eligible,true)});
+test('negative earnings and chase conditions block priority regardless of score',()=>{const bad={...report,metrics:report.metrics.map(m=>({...m,value:m.key==='eps'?-1:1}))};assert.equal(R.rank([q],[bad],now).rows[0].eligible,false);const hot={...q,price:160,history:q.history.map((x,i)=>i===59?{close:160}:x)};assert.equal(R.rank([hot],[report],now).rows[0].eligible,false)});
+test('ETF scoring is separate and does not fabricate fundamentals',()=>{const x=R.rank([{...q,sector:'etf'}],[report],now).rows[0];assert.equal(x.limit,75);assert.equal(x.fundamental,0);assert.equal(x.metrics.length,0)});
