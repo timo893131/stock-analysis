@@ -1,11 +1,9 @@
 name: Audit published website
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - scripts/audit_live_site.py
-      - .github/workflows/audit-site.yml
+  workflow_run:
+    workflows: ['Publish Stockroom (free Pages)']
+    types: [completed]
 permissions:
   contents: write
 concurrency:
@@ -13,6 +11,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   audit:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 6
     steps:
