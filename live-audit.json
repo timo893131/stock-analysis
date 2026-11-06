@@ -1,10 +1,8 @@
 {
-  "checkedAt": "2026-11-06T08:10:10.075559+00:00",
+  "checkedAt": "2026-11-06T08:13:33.279528+00:00",
   "url": "https://timo893131.github.io/stock-analysis/",
   "errors": [],
-  "warnings": [
-    "AI 解讀可用 0/6 檔（選用功能）"
-  ],
+  "warnings": [],
   "assets": {
     "index.html": "ok",
     "style.css": "ok",
@@ -16,7 +14,7 @@
     {
       "symbol": "2330.TW",
       "demo": false,
-      "date": "2026-11-05",
+      "date": "2026-11-06",
       "historyRows": 130,
       "source": "FinMind · 日收盤",
       "syncError": null
@@ -24,7 +22,7 @@
     {
       "symbol": "2317.TW",
       "demo": false,
-      "date": "2026-11-05",
+      "date": "2026-11-06",
       "historyRows": 130,
       "source": "FinMind · 日收盤",
       "syncError": null
@@ -32,7 +30,7 @@
     {
       "symbol": "2454.TW",
       "demo": false,
-      "date": "2026-11-05",
+      "date": "2026-11-06",
       "historyRows": 130,
       "source": "FinMind · 日收盤",
       "syncError": null
@@ -40,7 +38,7 @@
     {
       "symbol": "2308.TW",
       "demo": false,
-      "date": "2026-11-05",
+      "date": "2026-11-06",
       "historyRows": 130,
       "source": "FinMind · 日收盤",
       "syncError": null
@@ -48,7 +46,7 @@
     {
       "symbol": "2881.TW",
       "demo": false,
-      "date": "2026-11-05",
+      "date": "2026-11-06",
       "historyRows": 130,
       "source": "FinMind · 日收盤",
       "syncError": null
@@ -56,7 +54,7 @@
     {
       "symbol": "0050.TW",
       "demo": false,
-      "date": "2026-11-05",
+      "date": "2026-11-06",
       "historyRows": 130,
       "source": "FinMind · 日收盤",
       "syncError": null
@@ -68,7 +66,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-06T02:30:36.795760+00:00",
+      "fetchedAt": "2026-11-06T08:10:20.447222+00:00",
       "periods": {
         "revenue_yoy": "2026-09",
         "gross_margin": "2026-06-30",
@@ -84,7 +82,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-06T02:30:39.067211+00:00",
+      "fetchedAt": "2026-11-06T08:10:23.714771+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-06-30",
@@ -100,7 +98,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-06T02:30:41.362475+00:00",
+      "fetchedAt": "2026-11-06T08:10:26.317298+00:00",
       "periods": {
         "revenue_yoy": "2026-09",
         "gross_margin": "2026-06-30",
@@ -116,7 +114,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-06T02:30:43.741679+00:00",
+      "fetchedAt": "2026-11-06T08:10:28.999507+00:00",
       "periods": {
         "revenue_yoy": "2026-09",
         "gross_margin": "2026-09-30",
@@ -132,7 +130,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-06T02:30:43.741957+00:00",
+      "fetchedAt": "2026-11-06T08:10:28.999753+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -141,7 +139,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-06T02:30:43.741983+00:00",
+      "fetchedAt": "2026-11-06T08:10:28.999771+00:00",
       "periods": {},
       "datasetErrors": {}
     }
@@ -151,7 +149,62 @@
     "mobileViewport": true,
     "decisionAssist": true
   },
-  "ai": [],
-  "aiReadyCount": 0,
-  "status": "warning"
+  "ai": [
+    {
+      "symbol": "2330.TW",
+      "status": "ready",
+      "reason": null,
+      "model": "gemini-2.5-flash",
+      "generatedAt": "2026-11-06T08:10:39.192406+00:00",
+      "matchesQuote": true,
+      "hasText": true
+    },
+    {
+      "symbol": "2317.TW",
+      "status": "ready",
+      "reason": null,
+      "model": "gemini-2.5-flash",
+      "generatedAt": "2026-11-06T08:11:02.203643+00:00",
+      "matchesQuote": true,
+      "hasText": true
+    },
+    {
+      "symbol": "2454.TW",
+      "status": "ready",
+      "reason": null,
+      "model": "gemini-2.5-flash",
+      "generatedAt": "2026-11-06T08:11:25.396894+00:00",
+      "matchesQuote": true,
+      "hasText": true
+    },
+    {
+      "symbol": "2308.TW",
+      "status": "ready",
+      "reason": null,
+      "model": "gemini-2.5-flash",
+      "generatedAt": "2026-11-06T08:11:47.023879+00:00",
+      "matchesQuote": true,
+      "hasText": true
+    },
+    {
+      "symbol": "2881.TW",
+      "status": "ready",
+      "reason": null,
+      "model": "gemini-2.5-flash",
+      "generatedAt": "2026-11-06T08:12:08.052674+00:00",
+      "matchesQuote": true,
+      "hasText": true
+    },
+    {
+      "symbol": "0050.TW",
+      "status": "ready",
+      "reason": null,
+      "model": "gemini-2.5-flash",
+      "generatedAt": "2026-11-06T08:12:29.450916+00:00",
+      "matchesQuote": true,
+      "hasText": true
+    }
+  ],
+  "aiReadyCount": 6,
+  "status": "passed"
 }
