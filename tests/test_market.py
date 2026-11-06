@@ -22,7 +22,7 @@ class MarketTests(unittest.TestCase):
     def test_sync_is_idempotent_and_persistent(self):
         market.sync(Provider()); market.sync(Provider())
         with market.connect() as db:
-            self.assertEqual(db.execute('select count(*) from prices').fetchone()[0], 12)
+            self.assertEqual(db.execute('select count(*) from prices').fetchone()[0], len(market.STOCKS)*2)
         q = market.quotes()[0]
         self.assertAlmostEqual(q['change'], 10)
         self.assertFalse(q['tradable'])
@@ -49,7 +49,7 @@ class MarketTests(unittest.TestCase):
         statuses=[]
         with patch('urllib.request.urlopen',side_effect=AssertionError('Web must not query providers')):
             body=b''.join(application({'PATH_INFO':'/api/quotes','REQUEST_METHOD':'GET'}, lambda s,h:statuses.append(s)))
-            self.assertEqual(len(json.loads(body)['quotes']),6)
+            self.assertEqual(len(json.loads(body)['quotes']),len(market.STOCKS))
         body=b''.join(application({'PATH_INFO':'/../market.py','REQUEST_METHOD':'GET'},lambda s,h:statuses.append(s)))
         self.assertEqual(statuses[-1],'404 Not Found')
     def test_empty_cache_is_not_fabricated(self):

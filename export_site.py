@@ -7,6 +7,8 @@ from ai_analysis import stored as ai_stored
 from market import quotes
 from fundamentals import reports, make_report
 from market import STOCKS
+from catalog import stored as catalog_stored, fallback as catalog_fallback
+from universe import FOCUS
 
 
 def build(output, demo=False):
@@ -22,6 +24,8 @@ def build(output, demo=False):
     index.write_text(index.read_text().replace('<script src="./app.js">', '<script>window.STOCKROOM_STATIC=true;</script><script src="./app.js">'))
     data = output / 'data'
     data.mkdir(exist_ok=True)
+    (data / 'catalog.json').write_text(json.dumps(catalog_fallback() if demo else catalog_stored(),ensure_ascii=False))
+    (output / 'universe.js').write_text('window.STOCKROOM_UNIVERSE='+json.dumps([{'symbol':s,'name':n,'sector':sector} for s,n,sector in FOCUS],ensure_ascii=False)+';')
     (data / 'quotes.json').write_text(json.dumps({'quotes': rows}, ensure_ascii=False))
     (data / 'fundamentals.json').write_text(json.dumps({'reports': [make_report(s,{}) for s in STOCKS] if demo else reports()}, ensure_ascii=False, allow_nan=False))
     (data / 'ai.json').write_text(json.dumps({'reports': []} if demo else ai_stored(),ensure_ascii=False))

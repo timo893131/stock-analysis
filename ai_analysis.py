@@ -8,6 +8,7 @@ import urllib.request
 import urllib.error
 import time
 from market import quotes
+from universe import AI_SYMBOLS
 from fundamentals import reports
 
 
@@ -54,6 +55,7 @@ def sync():
     results=[]
     quota_hit=False
     for q in quotes():
+        if q.get('symbol') not in AI_SYMBOLS:continue
         if q.get('error') or q.get('demo') or len(q.get('history',[]))<60:continue
         if quota_hit:
             results.append({'symbol':q['symbol'],'asOf':q['asOf'],'status':'unavailable','reason':'quota_skipped'})

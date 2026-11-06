@@ -1,12 +1,12 @@
 /* Local-only next-session close simulation. Deterministic, no broker integration. */
 (function(root){
  'use strict';
- const SYMBOLS=['2330.TW','2317.TW','2454.TW','2308.TW','2881.TW','0050.TW'];
+ const SYMBOLS=["2330.TW", "2317.TW", "2454.TW", "2308.TW", "2881.TW", "0050.TW", "2303.TW", "3711.TW", "2382.TW", "3231.TW", "2357.TW", "2379.TW", "3034.TW", "2345.TW", "2882.TW", "2891.TW", "0056.TW", "00878.TW", "6488.TWO", "8069.TWO"];
  const feeRate=.001425,slippage=.001;
  const round=n=>Math.round(n*100+1e-8)/100;
  const day=time=>new Date(time).toLocaleDateString('en-CA',{timeZone:'Asia/Taipei'});
  const fresh=()=>({version:2,initial:1000000,cash:1000000,realized:0,positions:{},orders:[],trades:[]});
- const taxRate=s=>s==='0050.TW'?.001:.003;
+ const taxRate=s=>['0050.TW','0056.TW','00878.TW'].includes(s)?.001:.003;
  function reserves(a){let cash=0;const shares={};for(const o of a.orders.filter(o=>o.status==='pending')){if(o.side==='buy')cash+=round(o.limit*o.quantity*(1+feeRate));else shares[o.symbol]=(shares[o.symbol]||0)+o.quantity;}return {cash:round(cash),shares};}
  function validate(a){
   if(!a||a.version!==2||a.initial!==1000000||!Number.isFinite(a.cash)||a.cash<0||!Number.isFinite(a.realized)||!a.positions||Array.isArray(a.positions)||!Array.isArray(a.orders)||!Array.isArray(a.trades)||a.orders.length>2000||a.trades.length>2000)throw Error('練習帳戶資料格式不符。');

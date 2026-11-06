@@ -4,6 +4,7 @@ import mimetypes
 from pathlib import Path
 from ai_analysis import stored as ai_stored
 from market import quotes
+from catalog import stored as catalog_stored
 from fundamentals import reports
 
 STATIC = Path(__file__).parent / 'static'
@@ -14,8 +15,8 @@ def application(environ, start_response):
     status = '200 OK'
     if environ.get('REQUEST_METHOD') not in ('GET', 'HEAD'):
         status, content, kind = '405 Method Not Allowed', b'Method not allowed', 'text/plain'
-    elif path in ('/healthz', '/api/quotes', '/api/news', '/api/fundamentals', '/api/ai'):
-        data = {'status': 'ok'} if path == '/healthz' else {'quotes': quotes()} if path == '/api/quotes' else {'reports': reports()} if path == '/api/fundamentals' else ai_stored() if path == '/api/ai' else {'items': [], 'error': '目前提供官方公告入口；新聞 API 待選定授權來源。'}
+    elif path in ('/healthz', '/api/quotes', '/api/news', '/api/fundamentals', '/api/ai', '/api/catalog'):
+        data = {'status': 'ok'} if path == '/healthz' else {'quotes': quotes()} if path == '/api/quotes' else {'reports': reports()} if path == '/api/fundamentals' else ai_stored() if path == '/api/ai' else catalog_stored() if path == '/api/catalog' else {'items': [], 'error': '目前提供官方公告入口；新聞 API 待選定授權來源。'}
         content, kind = json.dumps(data, ensure_ascii=False).encode(), 'application/json; charset=utf-8'
         headers.append(('Cache-Control', 'no-store'))
     else:

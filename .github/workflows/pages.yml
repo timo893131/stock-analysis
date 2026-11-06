@@ -12,6 +12,8 @@ on:
       - 'static/**'
       - 'tests/**'
       - 'market.py'
+      - 'universe.py'
+      - 'catalog.py'
       - 'fundamentals.py'
       - 'ai_analysis.py'
       - 'export_site.py'
@@ -48,6 +50,7 @@ jobs:
           PUBLIC_DISPLAY: ${{ vars.MARKET_DATA_PUBLIC_DISPLAY }}
         run: |
           test "$PUBLIC_DISPLAY" = true || { echo 'Confirm provider public-display rights and set MARKET_DATA_PUBLIC_DISPLAY=true first.'; exit 1; }
+          python catalog.py
           python sync_market.py
       - name: Update financial health data when licensed
         if: vars.FUNDAMENTALS_PUBLIC_DISPLAY == 'true' && ((github.event_name == 'workflow_dispatch' && !inputs.demo) || (github.event_name != 'workflow_dispatch' && vars.MARKET_DATA_PUBLIC_DISPLAY == 'true'))

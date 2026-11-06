@@ -16,7 +16,7 @@
  function size(q,input){
   const {budget,riskPct,stopPct,capPct}=input;
   if(!Number.isFinite(q.price)||q.price<=0||![budget,riskPct,stopPct,capPct].every(Number.isFinite)||budget<=0||budget>1e9||riskPct<=0||riskPct>5||stopPct<1||stopPct>50||capPct<=0||capPct>100)throw Error('請填入有效資金；單筆風險 0–5%、停損距離 1–50%、部位上限 0–100%。');
-  const fee=.001425,tax=q.symbol==='0050.TW'?.001:.003,entry=q.price*1.001,stop=q.price*(1-stopPct/100),exit=stop*.999;
+  const fee=.001425,tax=['0050.TW','0056.TW','00878.TW'].includes(q.symbol)?.001:.003,entry=q.price*1.001,stop=q.price*(1-stopPct/100),exit=stop*.999;
   const costPerShare=entry*(1+fee),lossPerShare=costPerShare-exit*(1-fee-tax),riskBudget=budget*riskPct/100,cap=budget*capPct/100;
   const shares=Math.max(0,Math.floor(Math.min(riskBudget/lossPerShare,cap/costPerShare,budget/costPerShare)));
   return {shares,entry,stop,riskBudget,cap,cost:shares*costPerShare,loss:shares*lossPerShare};

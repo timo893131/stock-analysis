@@ -9,7 +9,7 @@ import urllib.request
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-STOCKS = {'2330.TW': '台積電', '2317.TW': '鴻海', '2454.TW': '聯發科', '2308.TW': '台達電', '2881.TW': '富邦金', '0050.TW': '元大台灣50'}
+from universe import STOCKS, SECTORS
 TZ = ZoneInfo('Asia/Taipei')
 
 def connect():
@@ -81,7 +81,7 @@ def quotes():
             history = [{'time': int(dt.datetime.combine(dt.date.fromisoformat(day), dt.time(13,30), TZ).timestamp()), 'close': price, 'volume': volume} for day, price, volume in rows]
             price = rows[-1][1]
             previous = rows[-2][1] if len(rows)>1 else None
-            result.append({'symbol': symbol, 'name': name, 'price': price, 'previous': previous, 'change': (price / previous - 1)*100 if previous else 0,
+            result.append({'symbol': symbol, 'name': name, 'sector': SECTORS[symbol], 'price': price, 'previous': previous, 'change': (price / previous - 1)*100 if previous else 0,
                 'history': history, 'asOf': history[-1]['time'], 'tradeDate': rows[-1][0], 'currency': 'TWD', 'source': 'FinMind · 日收盤',
                 'demo': False, 'dataKind': 'daily', 'tradable': False, 'analysisReady': len(rows)>=21, 'sync': {'lastSuccess': status[0] if status else None, 'lastAttempt': status[1] if status else None, 'error': status[2] if status else None}})
     return result

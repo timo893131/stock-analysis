@@ -7,7 +7,10 @@ import urllib.request
 from pathlib import Path
 
 BASE = 'https://timo893131.github.io/stock-analysis/'
-SYMBOLS = ['2330.TW','2317.TW','2454.TW','2308.TW','2881.TW','0050.TW']
+import sys
+sys.path.insert(0,str(Path(__file__).resolve().parent.parent))
+from universe import STOCKS, SECTORS, AI_SYMBOLS
+SYMBOLS = list(STOCKS)
 
 
 def fetch(path):
@@ -62,7 +65,7 @@ def audit(loader=fetch):
             count=sum(isinstance(m.get('value'),(int,float)) and math.isfinite(m['value']) for m in metrics)
             result['financials'].append({'symbol':symbol,'status':r.get('status'),'coverage':count,'total':r.get('total'),
                 'fetchedAt':r.get('fetchedAt'),'periods':{m.get('key'):m.get('period') for m in metrics},'datasetErrors':r.get('errors',{})})
-            if symbol in ('2881.TW','0050.TW'):
+            if SECTORS.get(symbol) in ('finance','etf'):
                 if r.get('status')!='not_applicable':result['errors'].append(symbol+' 應使用特殊產業說明')
             else:
                 if count!=6 or r.get('status')!='ready':result['warnings'].append(symbol+f' 財務指標僅 {count}/6 項可用')
@@ -79,7 +82,7 @@ def audit(loader=fetch):
             'matchesQuote':r.get('asOf')==qtimes.get(r.get('symbol')),
             'hasText':all(isinstance(r.get(k),str) and bool(r[k].strip()) for k in ('summary','risks','checks'))} for r in ai]
         result['aiReadyCount']=sum(r['status']=='ready' and r['matchesQuote'] and r['hasText'] for r in result['ai'])
-        if result['aiReadyCount']<len(SYMBOLS):result['warnings'].append('AI 解讀可用 '+str(result['aiReadyCount'])+'/'+str(len(SYMBOLS))+' 檔（選用功能）')
+        if result['aiReadyCount']<len(AI_SYMBOLS):result['warnings'].append('AI 解讀可用 '+str(result['aiReadyCount'])+'/'+str(len(AI_SYMBOLS))+' 檔（選用功能）')
     except Exception:
         result['aiReadyCount']=0
         result['warnings'].append('AI 解讀尚未提供或格式不符（選用功能）')
@@ -96,6 +99,11 @@ def audit(loader=fetch):
                 jobs=gh('actions/runs/'+str(run['id'])+'/jobs')['jobs']
                 result['latestDeployment']['jobs']=[{'name':j['name'],'conclusion':j['conclusion'],'steps':[{'name':x['name'],'conclusion':x['conclusion'],'status':x['status']} for x in j.get('steps',[])]} for j in jobs]
         except Exception:result['deploymentStatusUnavailable']=True
+    try:
+        catalog=json.loads(loader('data/catalog.json'))
+        result['catalog']={'status':catalog.get('status'),'count':len(catalog.get('items',[])),'updatedAt':catalog.get('updatedAt')}
+        if catalog.get('status')!='ready':result['warnings'].append('全市場名錄暫時僅提供重點清單')
+    except Exception:result['warnings'].append('名錄無法讀取')
     result['status']='failed' if result['errors'] else 'warning' if result['warnings'] else 'passed'
     return result
 

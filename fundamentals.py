@@ -6,6 +6,7 @@ import os
 import urllib.parse
 import urllib.request
 from market import STOCKS, TZ, connect
+from universe import SECTORS
 
 DATASETS = {'income': 'TaiwanStockFinancialStatements', 'balance': 'TaiwanStockBalanceSheet',
             'cash': 'TaiwanStockCashFlowsStatement', 'revenue': 'TaiwanStockMonthRevenue'}
@@ -73,9 +74,9 @@ def make_report(symbol, data, errors=None):
     def add(key, label, value, unit, period, formula, explanation):
         metrics.append({'key':key, 'label':label, 'value':value, 'unit':unit, 'period':period,
             'formula':formula, 'explanation':explanation, 'reason':None if value is not None else '資料不足、欄位缺漏或分母不適用'})
-    if symbol == '0050.TW':
+    if SECTORS.get(symbol) == 'etf':
         return {'symbol':symbol, 'status':'not_applicable', 'reason':'ETF 是一籃子資產，不適用單一公司的財報比率；應另看持股、費用率與追蹤差異。', 'metrics':[]}
-    if symbol == '2881.TW':
+    if SECTORS.get(symbol) == 'finance':
         return {'symbol':symbol, 'status':'not_applicable', 'reason':'金融業的負債與營收結構不同，本版不套用一般企業健檢；需另評估資本適足率、資產品質等指標。', 'metrics':[]}
     rev = data.get('revenue', [])
     months = {}
@@ -131,7 +132,7 @@ def sync_financials(fetcher=fetch_statement):
         init(db)
         for symbol in STOCKS:
             data, errors = {}, {}
-            if symbol not in ('0050.TW','2881.TW'):
+            if SECTORS.get(symbol) not in ('etf','finance'):
                 for kind in DATASETS:
                     try:
                         data[kind] = fetcher(symbol,kind)
