@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-11-05T07:29:05.411032+00:00",
+  "checkedAt": "2026-11-06T02:10:02.548263+00:00",
   "url": "https://timo893131.github.io/stock-analysis/",
   "errors": [],
   "warnings": [],
@@ -7,7 +7,8 @@
     "index.html": "ok",
     "style.css": "ok",
     "app.js": "ok",
-    "backtest.js": "ok"
+    "backtest.js": "ok",
+    "paper.js": "ok"
   },
   "quotes": [
     {
@@ -65,7 +66,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-05T07:21:04.182560+00:00",
+      "fetchedAt": "2026-11-06T02:09:14.692086+00:00",
       "periods": {
         "revenue_yoy": "2026-09",
         "gross_margin": "2026-06-30",
@@ -81,9 +82,9 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-05T07:21:07.078300+00:00",
+      "fetchedAt": "2026-11-06T02:09:17.268739+00:00",
       "periods": {
-        "revenue_yoy": "2026-09",
+        "revenue_yoy": "2026-10",
         "gross_margin": "2026-06-30",
         "eps": "2026-06-30",
         "debt_ratio": "2026-06-30",
@@ -97,7 +98,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-05T07:21:10.050859+00:00",
+      "fetchedAt": "2026-11-06T02:09:19.842213+00:00",
       "periods": {
         "revenue_yoy": "2026-09",
         "gross_margin": "2026-06-30",
@@ -113,7 +114,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-05T07:21:12.999105+00:00",
+      "fetchedAt": "2026-11-06T02:09:22.436836+00:00",
       "periods": {
         "revenue_yoy": "2026-09",
         "gross_margin": "2026-09-30",
@@ -129,7 +130,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-05T07:21:12.999386+00:00",
+      "fetchedAt": "2026-11-06T02:09:22.437140+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -138,10 +139,14 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-05T07:21:12.999410+00:00",
+      "fetchedAt": "2026-11-06T02:09:22.437178+00:00",
       "periods": {},
       "datasetErrors": {}
     }
   ],
+  "features": {
+    "paperTrading": true,
+    "mobileViewport": true
+  },
   "status": "passed"
 }
