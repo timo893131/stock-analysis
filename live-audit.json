@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-11-09T06:48:11.033531+00:00",
+  "checkedAt": "2026-11-09T06:48:41.175359+00:00",
   "url": "https://timo893131.github.io/stock-analysis/",
   "errors": [],
   "warnings": [
@@ -565,13 +565,13 @@
           },
           {
             "name": "Update financial health data when licensed",
-            "conclusion": null,
-            "status": "in_progress"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Generate optional AI explanations",
             "conclusion": null,
-            "status": "pending"
+            "status": "in_progress"
           },
           {
             "name": "Export market site",
@@ -685,6 +685,14 @@
     "mitigation": null,
     "pageTitle": null,
     "plainError": null
+  },
+  "publicStock": {
+    "httpStatus": 200,
+    "symbol": "2603.TW",
+    "tradeDate": "2026-11-09",
+    "historyCount": 130,
+    "verified": true,
+    "financialCoverage": 3
   },
   "status": "warning"
 }
