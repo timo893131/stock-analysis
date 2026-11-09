@@ -118,7 +118,7 @@ def audit(loader=fetch):
         try:
             with urllib.request.urlopen(req,timeout=90) as response:
                 payload=json.load(response)
-                result['publicAPI']={'httpStatus':response.status,'ready':payload.get('ai',{}).get('status')=='ready','count':payload.get('count'),'generatedAt':payload.get('ai',{}).get('generatedAt')}
+                result['publicAPI']={'httpStatus':response.status,'ready':payload.get('ai',{}).get('status')=='ready' or (payload.get('mode')=='published' and len(payload.get('items',[]))>0),'mode':payload.get('mode'),'fallbackReason':payload.get('reason'),'count':payload.get('count'),'generatedAt':payload.get('ai',{}).get('generatedAt')}
         except urllib.error.HTTPError as error:
             raw=error.read(4096).decode('utf-8',errors='replace')
             try:message=json.loads(raw).get('error','unknown')

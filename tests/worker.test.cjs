@@ -19,3 +19,7 @@ test('one-click brief uses verified snapshot scope and shares cache across visit
  const original=global.fetch;global.fetch=async()=>Response.json({quotes:[{symbol:'2330.TW',name:'台積電',asOf:Date.now()/1000-10,tradeDate:'2026-11-09',price:100,history:Array.from({length:60},()=>({close:100}))},{symbol:'demo',demo:true}]});
  try{const a=await svc.brief(),b=await svc.brief();assert.equal(a.count,1);assert.deepEqual(a.symbols,['2330.TW']);assert.equal(b.ai.status,'ready');assert.equal(calls,1);}finally{global.fetch=original;}
 });
+test('brief on AI failure returns only matching published AI, with clear provenance and cache',async()=>{
+ const {Research}=await mod,map=new Map(),storage={async get(k){return structuredClone(map.get(k));},async put(k,v){map.set(k,structuredClone(v));}};const svc=new Research({storage},{});let calls=0;svc.explain=async()=>{calls++;throw Error('AI HTTP 429')};const stamp=Date.now()/1000-10,q={symbol:'2330.TW',name:'台積電',asOf:stamp,tradeDate:'2026-11-09',price:100,history:Array.from({length:60},()=>({close:100}))};const a={symbol:q.symbol,asOf:stamp,status:'ready',generatedAt:new Date().toISOString(),summary:'原始 AI',risks:'風險',checks:'查證'};const original=global.fetch;global.fetch=async url=>Response.json(url.endsWith('quotes.json')?{quotes:[q]}:{reports:[a,{...a,symbol:'unknown'}]});
+ try{const r=await svc.brief();assert.equal(r.mode,'published');assert.equal(r.count,1);assert.equal(r.items[0].summary,'原始 AI');assert.equal(r.ai,undefined);await svc.brief();assert.equal(calls,1);}finally{global.fetch=original;}
+});
