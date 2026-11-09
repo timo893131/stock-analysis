@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-11-09T06:39:24.262606+00:00",
+  "checkedAt": "2026-11-09T06:41:05.175930+00:00",
   "url": "https://timo893131.github.io/stock-analysis/",
   "errors": [
     "首頁缺少預期的新功能入口"
@@ -567,13 +567,13 @@
           },
           {
             "name": "Update financial health data when licensed",
-            "conclusion": null,
-            "status": "in_progress"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Generate optional AI explanations",
             "conclusion": null,
-            "status": "pending"
+            "status": "in_progress"
           },
           {
             "name": "Export market site",
@@ -678,6 +678,10 @@
     "status": "ready",
     "count": 2602,
     "updatedAt": "2026-11-09T02:07:00.025366+00:00"
+  },
+  "publicAPI": {
+    "httpStatus": 403,
+    "error": "non_json_response"
   },
   "status": "failed"
 }
