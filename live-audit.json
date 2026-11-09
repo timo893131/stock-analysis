@@ -1,7 +1,9 @@
 {
-  "checkedAt": "2026-11-09T02:10:16.136413+00:00",
+  "checkedAt": "2026-11-09T06:38:57.700232+00:00",
   "url": "https://timo893131.github.io/stock-analysis/",
-  "errors": [],
+  "errors": [
+    "首頁缺少預期的新功能入口"
+  ],
   "warnings": [
     "AI 解讀可用 5/6 檔（選用功能）"
   ],
@@ -462,7 +464,8 @@
     "quickResearch": true,
     "onDemandAI": true,
     "inSiteAPI": true,
-    "simpleMenu": true
+    "simpleMenu": true,
+    "publicBrief": false
   },
   "ai": [
     {
@@ -522,15 +525,15 @@
   ],
   "aiReadyCount": 5,
   "latestDeployment": {
-    "id": 42549107090,
-    "head_sha": "7edfe54ec98a6c3213b14fa316ff3334621bfa47",
-    "status": "completed",
-    "conclusion": "success",
-    "html_url": "https://github.com/timo893131/stock-analysis/actions/runs/42549107090",
+    "id": 42574320276,
+    "head_sha": "a444a17a8bb430a8746bac481b90d66c71a5eaeb",
+    "status": "in_progress",
+    "conclusion": null,
+    "html_url": "https://github.com/timo893131/stock-analysis/actions/runs/42574320276",
     "jobs": [
       {
         "name": "build",
-        "conclusion": "success",
+        "conclusion": null,
         "steps": [
           {
             "name": "Set up job",
@@ -559,59 +562,63 @@
           },
           {
             "name": "Synchronize daily data",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "in_progress"
           },
           {
             "name": "Update financial health data when licensed",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Generate optional AI explanations",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Export market site",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Export demo site",
-            "conclusion": "skipped",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Run actions/upload-pages-artifact@v3",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Post Run actions/setup-node@v4",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Post Run actions/setup-python@v5",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Post Run actions/checkout@v4",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Complete job",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           }
         ]
-      },
+      }
+    ]
+  },
+  "backendDeployment": {
+    "id": 42574320273,
+    "head_sha": "a444a17a8bb430a8746bac481b90d66c71a5eaeb",
+    "status": "in_progress",
+    "conclusion": null,
+    "html_url": "https://github.com/timo893131/stock-analysis/actions/runs/42574320273",
+    "jobs": [
       {
         "name": "deploy",
-        "conclusion": "success",
+        "conclusion": null,
         "steps": [
           {
             "name": "Set up job",
@@ -619,14 +626,44 @@
             "status": "completed"
           },
           {
-            "name": "Deploy",
+            "name": "Run actions/checkout@v4",
             "conclusion": "success",
             "status": "completed"
           },
           {
-            "name": "Complete job",
-            "conclusion": "success",
-            "status": "completed"
+            "name": "Run actions/setup-node@v4",
+            "conclusion": null,
+            "status": "in_progress"
+          },
+          {
+            "name": "Run node --test --test-isolation=none tests/worker.test.cjs",
+            "conclusion": null,
+            "status": "pending"
+          },
+          {
+            "name": "Check required settings",
+            "conclusion": null,
+            "status": "pending"
+          },
+          {
+            "name": "Run cloudflare/wrangler-action@v3",
+            "conclusion": null,
+            "status": "pending"
+          },
+          {
+            "name": "Publish automatic connection settings",
+            "conclusion": null,
+            "status": "pending"
+          },
+          {
+            "name": "Post Run actions/setup-node@v4",
+            "conclusion": null,
+            "status": "pending"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "conclusion": null,
+            "status": "pending"
           }
         ]
       }
@@ -637,5 +674,5 @@
     "count": 2602,
     "updatedAt": "2026-11-09T02:07:00.025366+00:00"
   },
-  "status": "warning"
+  "status": "failed"
 }
