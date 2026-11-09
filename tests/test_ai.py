@@ -16,3 +16,12 @@ class AITests(unittest.TestCase):
         request=call.call_args.args[0]
         self.assertNotIn('SECRET',request.full_url);self.assertNotIn('SECRET',request.data.decode())
         self.assertEqual(r['asOf'],123);self.assertEqual(r['summary'],answer['summary'])
+    def test_cache_never_relabels_an_old_quote_or_generation_time(self):
+        import datetime as dt
+        from ai_analysis import matching_cached,fingerprint
+        stamp=dt.datetime.now(dt.timezone.utc).isoformat()
+        r={'symbol':'2330.TW','asOf':123,'status':'ready','generatedAt':stamp,'summary':'研究','risks':'風險','checks':'查證'}
+        self.assertEqual(matching_cached([r],{'symbol':'2330.TW','asOf':123})['generatedAt'],stamp)
+        self.assertIsNone(matching_cached([r],{'symbol':'2330.TW','asOf':124}))
+        q={'symbol':'2330.TW','asOf':123,'price':100,'history':[]}
+        self.assertNotEqual(fingerprint(q,{}),fingerprint({**q,'price':101},{}))

@@ -67,7 +67,7 @@ jobs:
               with urllib.request.urlopen(request,timeout=30) as response: health=json.load(response)
           except Exception:health={'status':'unavailable'}
           try:
-              req=urllib.request.Request(base+'/brief',data=b'{}',headers={'Content-Type':'application/json','Origin':'https://timo893131.github.io','User-Agent':'Stockroom-Website-Check/1.0'},method='POST')
+              req=urllib.request.Request(base+'/brief',data=b'{"readOnly":true}',headers={'Content-Type':'application/json','Origin':'https://timo893131.github.io','User-Agent':'Stockroom-Website-Check/1.0'},method='POST')
               with urllib.request.urlopen(req,timeout=90) as response: result=json.load(response)
               assert result.get('ai',{}).get('status')=='ready' or (result.get('mode')=='published' and len(result.get('items',[]))>0)
               check={'status':'ready','count':result['count'],'mode':result.get('mode'),'generatedAt':result.get('ai',{}).get('generatedAt'),'fallbackReason':result.get('reason')}

@@ -1,5 +1,6 @@
 """Optional server-side Gemini summaries. Never send user portfolios or budgets."""
 import datetime as dt
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -20,6 +21,29 @@ def validate_text(payload):
     return payload
 
 
+def fingerprint(q,financial):
+    data={'symbol':q['symbol'],'asOf':q['asOf'],'price':q['price'],'history':q.get('history',[]),'financial':{'status':(financial or {}).get('status'),'metrics':(financial or {}).get('metrics',[])}}
+    return hashlib.sha256(json.dumps(data,sort_keys=True,ensure_ascii=False).encode()).hexdigest()
+
+
+def published_cache():
+    try:
+        req=urllib.request.Request('https://timo893131.github.io/stock-analysis/data/ai.json',headers={'User-Agent':'Stockroom-Cache/1.0'})
+        with urllib.request.urlopen(req,timeout=15) as response:return json.load(response).get('reports',[])
+    except Exception:return stored().get('reports',[])
+
+
+def matching_cached(rows,q):
+    for row in rows:
+        try:
+            age=(dt.datetime.now(dt.timezone.utc)-dt.datetime.fromisoformat(row['generatedAt'])).total_seconds()
+            if row.get('status')=='ready' and row.get('symbol')==q['symbol'] and row.get('asOf')==q['asOf'] and 0<=age<86400:
+                validate_text({k:row[k] for k in ('summary','risks','checks')})
+                return row.copy()
+        except (ValueError,KeyError,TypeError):continue
+    return None
+
+
 def generate(q, financial, token, model):
     if not re.fullmatch(r'[a-zA-Z0-9._-]+',model):raise ValueError('invalid_model')
     history=q['history']
@@ -38,7 +62,7 @@ def generate(q, financial, token, model):
     with urllib.request.urlopen(request,timeout=45) as response:payload=json.load(response)
     text=''.join(p.get('text','') for p in payload['candidates'][0]['content']['parts'] if not p.get('thought'))
     answer=validate_text(json.loads(text))
-    return {'symbol':q['symbol'],'asOf':q['asOf'],'status':'ready','model':model,'generatedAt':dt.datetime.now(dt.timezone.utc).isoformat(),**answer}
+    return {'symbol':q['symbol'],'asOf':q['asOf'],'status':'ready','model':model,'generatedAt':dt.datetime.now(dt.timezone.utc).isoformat(),'fingerprint':fingerprint(q,financial),**answer}
 
 
 def stored():
@@ -53,10 +77,17 @@ def sync():
     model=os.environ.get('GEMINI_MODEL') or 'gemini-2.5-flash'
     financial={r['symbol']:r for r in reports()}
     results=[]
+    previous=published_cache()
     quota_hit=False
     for q in quotes():
         if q.get('symbol') not in AI_SYMBOLS:continue
         if q.get('error') or q.get('demo') or len(q.get('history',[]))<60:continue
+        cached=matching_cached(previous,q)
+        if cached and cached.get('fingerprint')==fingerprint(q,financial.get(q['symbol'])):
+            results.append(cached);continue
+        if quota_hit and cached:
+            cached['cacheFallback']=True
+            results.append(cached);continue
         if quota_hit:
             results.append({'symbol':q['symbol'],'asOf':q['asOf'],'status':'unavailable','reason':'quota_skipped'})
             continue
@@ -67,6 +98,12 @@ def sync():
             results.append({'symbol':q['symbol'],'asOf':q['asOf'],'status':'unavailable','reason':'http_'+str(error.code)})
         except Exception:
             results.append({'symbol':q['symbol'],'asOf':q['asOf'],'status':'unavailable','reason':'network_or_response_invalid'})
+    for index,item in enumerate(results):
+        if item.get('status')!='ready':
+            cached=matching_cached(previous,item)
+            if cached:
+                cached['cacheFallback']=True
+                results[index]=cached
     path=Path(os.environ.get('DATA_DIR','./data'))/'ai.json'
     path.parent.mkdir(parents=True,exist_ok=True)
     path.write_text(json.dumps({'reports':results},ensure_ascii=False))
