@@ -128,6 +128,17 @@ def audit(loader=fetch):
             result['publicAPI']={'httpStatus':error.code,'error':str(message)[:300],'server':error.headers.get('Server'),'contentType':error.headers.get('Content-Type'),'mitigation':error.headers.get('cf-mitigated'),'pageTitle':title.group(1)[:160] if title else None,'plainError':raw[:300] if error.headers.get('Content-Type','').startswith('text/plain') else None}
 
     except Exception:result['publicAPI']={'error':'network_unavailable'}
+    try:
+        req=urllib.request.Request('https://stockroom-api.livecap-worker.workers.dev/research',data=b'{"symbol":"2603.TW","ai":false}',headers={'Content-Type':'application/json','Origin':'https://timo893131.github.io','User-Agent':'Stockroom-Website-Check/1.0'},method='POST')
+        try:
+            with urllib.request.urlopen(req,timeout=140) as response:
+                payload=json.load(response);q=payload.get('quote',{})
+                result['publicStock']={'httpStatus':response.status,'symbol':q.get('symbol'),'tradeDate':q.get('tradeDate'),'historyCount':len(q.get('history',[])),'verified':q.get('marketVerified'),'financialCoverage':payload.get('financial',{}).get('coverage')}
+        except urllib.error.HTTPError as error:
+            try:message=json.load(error).get('error','unknown')
+            except Exception:message='non_json_response'
+            result['publicStock']={'httpStatus':error.code,'error':str(message)[:300]}
+    except Exception:result['publicStock']={'error':'network_unavailable'}
     result['status']='failed' if result['errors'] else 'warning' if result['warnings'] else 'passed'
     return result
 
