@@ -7,7 +7,7 @@ on:
       - '.github/workflows/audit-site.yml'
       - 'scripts/audit_live_site.py'
   workflow_run:
-    workflows: ['Publish Stockroom (free Pages)']
+    workflows: ['Publish Stockroom (free Pages)', 'Deploy free Taiwan research API']
     types: [completed]
 permissions:
   contents: write

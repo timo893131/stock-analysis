@@ -34,16 +34,19 @@ function renderQuick(){
 }
 $('#quick-sector').onchange=renderQuick;$('#quick-run').onclick=()=>{refresh();loadFinancials();};
 $('#quick-results').onclick=e=>{const b=e.target.closest('[data-quick-symbol]');if(b){selected=b.dataset.quickSymbol;showDetail('decision');news();}};
-let apiURL=read('stockroom-api-url',''),apiAccess='';try{apiAccess=sessionStorage.getItem('stockroom-api-access')||'';}catch{}
-$('#api-url').value=apiURL;$('#api-key').value=apiAccess;
+let apiURL='',connecting=null;
 function apiStatus(message){$('#api-status').textContent=message;}
-function apiConfigured(){return apiURL&&apiAccess.length>=24;}
-if(apiConfigured())apiStatus('已保存連線設定；載入股票時會檢查連線。');
-$('#api-form').onsubmit=e=>{e.preventDefault();try{const u=new URL($('#api-url').value.trim());if(u.protocol!=='https:'||!u.hostname.endsWith('.workers.dev')||u.username||u.password||u.port||u.search||u.hash||u.pathname!=='/')throw Error('請填入 workers.dev 的 HTTPS 根網址');if($('#api-key').value.length<24)throw Error('存取碼至少需要 24 個字元');apiURL=u.origin;apiAccess=$('#api-key').value;persist('stockroom-api-url',apiURL);try{sessionStorage.setItem('stockroom-api-access',apiAccess);}catch{}apiStatus('設定已保存。現在可搜尋股票，按「載入看盤」測試連線。');}catch(err){apiStatus(err.message);}};
-$('#api-clear').onclick=()=>{apiAccess='';$('#api-key').value='';try{sessionStorage.removeItem('stockroom-api-access');}catch{}apiStatus('已清除存取碼。');};
+function apiConfigured(){return !!apiURL;}
+async function connectAPI(){
+ if(connecting)return connecting;
+ connecting=(async()=>{try{const r=await fetch('https://raw.githubusercontent.com/timo893131/stock-analysis/service-config/api.json',{cache:'no-store',signal:AbortSignal.timeout(15000)});if(!r.ok)throw Error();const data=await r.json(),u=new URL(data.url);if(u.protocol!=='https:'||!u.hostname.endsWith('.workers.dev')||u.username||u.password||u.port||u.search||u.hash||u.pathname!=='/'||data.mode!=='public')throw Error();apiURL=u.origin;apiStatus('公開服務已自動連線，無需存取碼。');return true;}catch{apiStatus('服務部署或連線尚未完成，請稍後按「重新連線」。每日已保存行情仍可使用。');return false;}finally{connecting=null;}})();return connecting;
+}
+$('#api-reconnect').onclick=()=>connectAPI();
+try{sessionStorage.removeItem('stockroom-api-access');localStorage.removeItem('stockroom-api-url');}catch{}
+$('#brief-run').onclick=async()=>{const button=$('#brief-run'),target=$('#brief-result');button.disabled=true;target.textContent='正在整理研究重點…';try{if(!apiConfigured())await connectAPI();if(!apiConfigured())throw Error('服務尚未連線，請稍後再試。');const r=await fetch(apiURL+'/brief',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}',signal:AbortSignal.timeout(70000)});const data=await r.json();if(!r.ok)throw Error(data.error||'摘要暫不可用');if(data.ai?.status!=='ready'||!Array.isArray(data.symbols)||!Array.isArray(data.dates))throw Error('摘要格式不符');target.innerHTML=`<p><b>涵蓋 ${Number(data.count)} 檔研究清單</b> · 行情日 ${data.dates.map(esc).join('、')}；日收盤技術面，未接即時新聞或全市場掃描。</p>`+aiHTML(data.ai)+`<details><summary>本次分析的股票</summary><p>${data.symbols.map(esc).join('、')}</p></details>`;}catch(e){target.textContent=e.message+' 下方規則評比仍可使用。';}finally{button.disabled=false;}};
 async function requestStock(symbol,ai=false){
- if(!apiConfigured())throw Error('請到「設定 → 全台股站內服務設定」填入 Worker 網址與網站存取碼。');
- const r=await fetch(apiURL+'/research',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+apiAccess},body:JSON.stringify({symbol,ai}),signal:AbortSignal.timeout(150000)});
+ if(!apiConfigured())await connectAPI();if(!apiConfigured())throw Error('服務尚未連線，請稍後再試。');
+ const r=await fetch(apiURL+'/research',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({symbol,ai}),signal:AbortSignal.timeout(150000)});
  const data=await r.json();if(!r.ok)throw Error(data.error||'服務暫不可用');
  const q=data.quote;if(q?.symbol!==symbol||q.marketVerified!==true||!StockroomDecision.assess(q).ready||typeof q.name!=='string')throw Error('行情驗證失敗或已過期');
  const index=quotes.findIndex(x=>x.symbol===symbol);if(index<0)quotes.push(q);else quotes[index]=q;
@@ -53,7 +56,7 @@ async function requestStock(symbol,ai=false){
  reconcilePaper();render();renderCatalog();return data;
 }
 let stockLoading=false;
-async function loadStock(symbol){if(stockLoading)return;stockLoading=true;apiStatus('正在載入 '+symbol+' 的行情與可取得財報…');try{await requestStock(symbol);selected=symbol;render();news();apiStatus(symbol+' 已載入。使用日收盤資料；可進行分析與虛擬練習。');showDetail();}catch(e){apiStatus(e.message);toast(e.message);if(!apiConfigured())switchTab('settings');}finally{stockLoading=false;}}
+async function loadStock(symbol){if(stockLoading)return;stockLoading=true;apiStatus('正在載入 '+symbol+' 的行情與可取得財報…');try{await requestStock(symbol);selected=symbol;render();news();apiStatus(symbol+' 已載入。使用日收盤資料；可進行分析與虛擬練習。');showDetail();}catch(e){apiStatus(e.message);toast(e.message);}finally{stockLoading=false;}}
 $('#refresh-extra').onclick=async()=>{if(stockLoading)return;stockLoading=true;const known=new Set((window.STOCKROOM_UNIVERSE||[]).map(x=>x.symbol));const saved=read('stockroom-extra-symbols',[]);const symbols=[...new Set([...Object.keys(account.positions),...account.orders.filter(x=>x.status==='pending').map(x=>x.symbol),...(Array.isArray(saved)?saved:[])])].filter(x=>!known.has(x));let count=0;try{for(const symbol of symbols){apiStatus('正在更新 '+symbol+'…');await requestStock(symbol);count++;}apiStatus(`已更新 ${count} 檔按需股票；持倉與待成交委託優先，額度不足時停止。`);}catch(e){apiStatus(`完成 ${count} 檔：${e.message}`);}finally{stockLoading=false;}};
 let catalogItems=[];
 async function loadCatalog(){try{const response=await fetch(window.STOCKROOM_STATIC?'./data/catalog.json':'/api/catalog');if(!response.ok)throw Error();const data=await response.json();catalogItems=data.items||[];$('#catalog-status').textContent=`可搜尋 ${catalogItems.length} 筆名錄 · ${data.status==='ready'?'來源：FinMind；不代表都有行情分析':'來源暫不可用，僅提供重點清單'}`;}catch{$('#catalog-status').textContent='名錄暫無法載入，仍可使用下方重點股票。';}renderCatalog();}
@@ -137,7 +140,7 @@ let detailTab='chart';
 function switchTab(next,updateURL=true){
  if(next==='watch')next='market';if(!viewSelectors[next])next='overview';tab=next;
  const names={overview:'總覽',market:'找股票',detail:'個股分析',portfolio:'虛擬練習',settings:'設定',learn:'新手指南'};
- const descriptions={overview:'先看今日研究重點，再決定下一步。',market:'輸入股票名稱或代碼，收藏、分析與練習。',detail:'一次查看一類資訊，需要時再深入。',portfolio:'用虛擬資金練習，追蹤持倉與委託。',settings:'連線設定與使用說明，集中在這裡。',learn:'從行情時間、風險與交易成本開始。'};
+ const descriptions={overview:'先看今日研究重點，再決定下一步。',market:'輸入股票名稱或代碼，收藏、分析與練習。',detail:'一次查看一類資訊，需要時再深入。',portfolio:'用虛擬資金練習，追蹤持倉與委託。',settings:'服務狀態與使用說明，集中在這裡。',learn:'從行情時間、風險與交易成本開始。'};
  for(const [key,selector] of Object.entries(viewSelectors))$(selector).classList.toggle('hidden',key!==next);
  document.querySelectorAll('.nav').forEach(x=>{const active=x.dataset.tab===(next==='detail'?'market':next==='learn'?'settings':next);x.classList.toggle('active',active);if(active)x.setAttribute('aria-current','page');else x.removeAttribute('aria-current');});
  $('#breadcrumb').textContent=names[next];$('#page-title').textContent=names[next];$('#page-description').textContent=descriptions[next];$('#refresh').classList.toggle('hidden',['settings','learn'].includes(next));$('#data-banner').classList.toggle('hidden',['settings','learn'].includes(next));
@@ -193,6 +196,6 @@ document.querySelectorAll('[data-budget]').forEach(b=>b.onclick=()=>{const r=Sto
 $('#sell-all').onclick=()=>{const r=StockroomPaper.reserves(account);$('#side').value='sell';$('#side').onchange();$('#quantity').value=(account.positions[selected]?.quantity||0)-(r.shares[selected]||0);updateEstimate();};
 $('#trade-form').onsubmit=e=>{e.preventDefault();try{const q=quotes.find(x=>x.symbol===selected),next=StockroomPaper.place(account,q,{id:crypto.randomUUID(),side:$('#side').value,quantity:Number($('#quantity').value),limit:Number($('#order-limit').value),note:$('#order-note').value.trim()});if(savePaper(next)){$('#trade-dialog').close();switchTab('portfolio');toast('委託已記錄，等待下一交易日收盤資料。');}}catch(error){$('#trade-error').textContent=error.message;}};
 window.addEventListener('storage',e=>{if(e.key===PAPER_KEY){loadPaper();render();}});
-setupMenus();
+setupMenus();connectAPI();
 $('#today').textContent=new Date().toLocaleDateString('zh-TW',{timeZone:'Asia/Taipei',year:'numeric',month:'2-digit',day:'2-digit'});render();refresh();news();loadFinancials();loadAI();loadCatalog();setInterval(()=>{if(!document.hidden)refresh();},60000);setInterval(()=>{if(!document.hidden)news();},900000);
 }

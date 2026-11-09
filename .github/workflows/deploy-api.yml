@@ -1,8 +1,14 @@
 name: Deploy free Taiwan research API
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['cloudflare/**', '.github/workflows/deploy-api.yml']
 permissions:
-  contents: read
+  contents: write
+concurrency:
+  group: deploy-stockroom-api
+  cancel-in-progress: false
 jobs:
   deploy:
     runs-on: ubuntu-24.04
@@ -17,16 +23,15 @@ jobs:
         env:
           CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CF_ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          API_ACCESS: ${{ secrets.STOCKROOM_ACCESS_KEY }}
           FINMIND_TOKEN: ${{ secrets.FINMIND_TOKEN }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           python - <<'PYCODE'
           import os
           assert all(os.environ.get(k) for k in ('CF_TOKEN','CF_ACCOUNT','FINMIND_TOKEN','GEMINI_API_KEY')), 'Please configure the documented Actions Secrets first.'
-          assert len(os.environ.get('API_ACCESS','')) >= 24, 'STOCKROOM_ACCESS_KEY must have at least 24 characters.'
           PYCODE
-      - uses: cloudflare/wrangler-action@v3
+      - id: deploy
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -35,8 +40,40 @@ jobs:
           secrets: |
             FINMIND_TOKEN
             GEMINI_API_KEY
-            ACCESS_KEY
         env:
           FINMIND_TOKEN: ${{ secrets.FINMIND_TOKEN }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          ACCESS_KEY: ${{ secrets.STOCKROOM_ACCESS_KEY }}
+      - name: Publish automatic connection settings
+        env:
+          API_URL: ${{ steps.deploy.outputs.deployment-url }}
+        run: |
+          python - <<'PYCODE'
+          import json,os,urllib.parse,urllib.request,datetime
+          u=urllib.parse.urlparse(os.environ['API_URL'].strip())
+          assert u.scheme=='https' and u.hostname.endswith('.workers.dev') and not u.username and not u.password and not u.port, 'Deployment URL is missing or invalid'
+          base='https://'+u.hostname
+          check={'status':'unavailable'}
+          try:
+              req=urllib.request.Request(base+'/brief',data=b'{}',headers={'Content-Type':'application/json','Origin':'https://timo893131.github.io'},method='POST')
+              with urllib.request.urlopen(req,timeout=90) as response: result=json.load(response)
+              assert result['ai']['status']=='ready' and isinstance(result['ai']['summary'],str)
+              check={'status':'ready','count':result['count'],'generatedAt':result['ai']['generatedAt']}
+          except Exception:
+              print('AI smoke check unavailable; public connection settings will still be published.')
+          with open(os.environ['RUNNER_TEMP']+'/stockroom-api.json','w') as out:
+              json.dump({'url':base,'mode':'public','commit':os.environ['GITHUB_SHA'],'checkedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'briefCheck':check},out)
+          PYCODE
+          if git fetch origin service-config; then
+            git checkout -B service-config FETCH_HEAD
+          else
+            git checkout --orphan service-config
+            git rm -rf .
+          fi
+          cp "$RUNNER_TEMP/stockroom-api.json" api.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add api.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Publish public API connection address'
+            git push origin service-config
+          fi

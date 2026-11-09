@@ -27,7 +27,7 @@ def audit(loader=fetch):
             if not body.strip():raise ValueError()
             if path=='' and ('window.STOCKROOM_STATIC=true' not in body or 'financial-results' not in body or 'backtest-results' not in body):
                 result['errors'].append('首頁不是預期的靜態財報／回測版本')
-            if path=='':result['features']={'paperTrading': 'src="./paper.js' in body and 'paper-symbol' in body, 'mobileViewport':'viewport-fit=cover' in body, 'decisionAssist':'id="decision-panel"' in body, 'quickResearch':'id="quick-panel"' in body, 'onDemandAI':'id="ai-dialog"' in body, 'inSiteAPI':'id="api-settings"' in body and 'id="ai-generate"' in body, 'simpleMenu':'data-tab="market"' in body and 'data-tab="settings"' in body}
+            if path=='':result['features']={'paperTrading': 'src="./paper.js' in body and 'paper-symbol' in body, 'mobileViewport':'viewport-fit=cover' in body, 'decisionAssist':'id="decision-panel"' in body, 'quickResearch':'id="quick-panel"' in body, 'onDemandAI':'id="ai-dialog"' in body, 'inSiteAPI':'id="api-settings"' in body and 'id="ai-generate"' in body, 'simpleMenu':'data-tab="market"' in body and 'data-tab="settings"' in body, 'publicBrief':'id="brief-run"' in body and 'id="api-key"' not in body}
             if path=='' and not all(result['features'].values()):
                 result['errors'].append('首頁缺少預期的新功能入口')
             result['assets'][path or 'index.html']='ok'
@@ -100,6 +100,12 @@ def audit(loader=fetch):
                 result['latestDeployment']={k:run.get(k) for k in ('id','head_sha','status','conclusion','html_url')}
                 jobs=gh('actions/runs/'+str(run['id'])+'/jobs')['jobs']
                 result['latestDeployment']['jobs']=[{'name':j['name'],'conclusion':j['conclusion'],'steps':[{'name':x['name'],'conclusion':x['conclusion'],'status':x['status']} for x in j.get('steps',[])]} for j in jobs]
+            backend=gh('actions/workflows/deploy-api.yml/runs?per_page=1')['workflow_runs']
+            if backend:
+                run=backend[0]
+                result['backendDeployment']={k:run.get(k) for k in ('id','head_sha','status','conclusion','html_url')}
+                jobs=gh('actions/runs/'+str(run['id'])+'/jobs')['jobs']
+                result['backendDeployment']['jobs']=[{'name':j['name'],'conclusion':j['conclusion'],'steps':[{'name':x['name'],'conclusion':x['conclusion'],'status':x['status']} for x in j.get('steps',[])]} for j in jobs]
         except Exception:result['deploymentStatusUnavailable']=True
     try:
         catalog=json.loads(loader('data/catalog.json'))
