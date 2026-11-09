@@ -1,10 +1,10 @@
 {
-  "checkedAt": "2026-11-09T02:06:57.559149+00:00",
+  "checkedAt": "2026-11-09T02:10:16.136413+00:00",
   "url": "https://timo893131.github.io/stock-analysis/",
-  "errors": [
-    "首頁缺少預期的新功能入口"
+  "errors": [],
+  "warnings": [
+    "AI 解讀可用 5/6 檔（選用功能）"
   ],
-  "warnings": [],
   "assets": {
     "index.html": "ok",
     "style.css": "ok",
@@ -181,7 +181,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T01:56:06.328201+00:00",
+      "fetchedAt": "2026-11-09T02:07:15.294626+00:00",
       "periods": {
         "revenue_yoy": "2026-09",
         "gross_margin": "2026-06-30",
@@ -197,7 +197,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T01:56:09.206491+00:00",
+      "fetchedAt": "2026-11-09T02:07:17.708981+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-06-30",
@@ -213,7 +213,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T01:56:12.046276+00:00",
+      "fetchedAt": "2026-11-09T02:07:20.285283+00:00",
       "periods": {
         "revenue_yoy": "2026-09",
         "gross_margin": "2026-06-30",
@@ -229,7 +229,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T01:56:14.873057+00:00",
+      "fetchedAt": "2026-11-09T02:07:22.704767+00:00",
       "periods": {
         "revenue_yoy": "2026-09",
         "gross_margin": "2026-09-30",
@@ -245,7 +245,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-09T01:56:14.873308+00:00",
+      "fetchedAt": "2026-11-09T02:07:22.704983+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -254,7 +254,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-09T01:56:14.873333+00:00",
+      "fetchedAt": "2026-11-09T02:07:22.705001+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -263,7 +263,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T01:56:17.839489+00:00",
+      "fetchedAt": "2026-11-09T02:07:25.335440+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -279,7 +279,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T01:56:20.710412+00:00",
+      "fetchedAt": "2026-11-09T02:07:27.761502+00:00",
       "periods": {
         "revenue_yoy": "2026-09",
         "gross_margin": "2026-06-30",
@@ -295,7 +295,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T01:56:23.539760+00:00",
+      "fetchedAt": "2026-11-09T02:07:30.161733+00:00",
       "periods": {
         "revenue_yoy": "2026-09",
         "gross_margin": "2026-06-30",
@@ -311,7 +311,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T01:56:26.379128+00:00",
+      "fetchedAt": "2026-11-09T02:07:33.691483+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-06-30",
@@ -327,7 +327,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T01:56:29.217011+00:00",
+      "fetchedAt": "2026-11-09T02:07:36.136068+00:00",
       "periods": {
         "revenue_yoy": "2026-09",
         "gross_margin": "2026-06-30",
@@ -343,7 +343,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T01:56:32.033020+00:00",
+      "fetchedAt": "2026-11-09T02:07:38.558698+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-06-30",
@@ -359,7 +359,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T01:56:34.850392+00:00",
+      "fetchedAt": "2026-11-09T02:07:41.101328+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -375,7 +375,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T01:56:37.695443+00:00",
+      "fetchedAt": "2026-11-09T02:07:43.637666+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-06-30",
@@ -391,7 +391,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-09T01:56:37.695742+00:00",
+      "fetchedAt": "2026-11-09T02:07:43.637883+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -400,7 +400,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-09T01:56:37.695771+00:00",
+      "fetchedAt": "2026-11-09T02:07:43.637900+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -409,7 +409,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-09T01:56:37.695788+00:00",
+      "fetchedAt": "2026-11-09T02:07:43.637909+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -418,7 +418,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-09T01:56:37.695801+00:00",
+      "fetchedAt": "2026-11-09T02:07:43.637918+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -427,7 +427,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T01:56:40.574139+00:00",
+      "fetchedAt": "2026-11-09T02:07:46.139023+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -443,7 +443,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T01:56:43.385061+00:00",
+      "fetchedAt": "2026-11-09T02:07:48.976444+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-06-30",
@@ -462,7 +462,7 @@
     "quickResearch": true,
     "onDemandAI": true,
     "inSiteAPI": true,
-    "simpleMenu": false
+    "simpleMenu": true
   },
   "ai": [
     {
@@ -470,7 +470,7 @@
       "status": "ready",
       "reason": null,
       "model": "gemini-2.5-flash",
-      "generatedAt": "2026-11-09T01:56:55.685427+00:00",
+      "generatedAt": "2026-11-09T02:08:01.442560+00:00",
       "matchesQuote": true,
       "hasText": true
     },
@@ -479,7 +479,7 @@
       "status": "ready",
       "reason": null,
       "model": "gemini-2.5-flash",
-      "generatedAt": "2026-11-09T01:57:18.479480+00:00",
+      "generatedAt": "2026-11-09T02:08:25.680143+00:00",
       "matchesQuote": true,
       "hasText": true
     },
@@ -488,7 +488,7 @@
       "status": "ready",
       "reason": null,
       "model": "gemini-2.5-flash",
-      "generatedAt": "2026-11-09T01:57:41.910522+00:00",
+      "generatedAt": "2026-11-09T02:08:50.257820+00:00",
       "matchesQuote": true,
       "hasText": true
     },
@@ -497,7 +497,7 @@
       "status": "ready",
       "reason": null,
       "model": "gemini-2.5-flash",
-      "generatedAt": "2026-11-09T01:58:05.884257+00:00",
+      "generatedAt": "2026-11-09T02:09:14.019885+00:00",
       "matchesQuote": true,
       "hasText": true
     },
@@ -506,31 +506,31 @@
       "status": "ready",
       "reason": null,
       "model": "gemini-2.5-flash",
-      "generatedAt": "2026-11-09T01:58:29.460007+00:00",
+      "generatedAt": "2026-11-09T02:09:36.730714+00:00",
       "matchesQuote": true,
       "hasText": true
     },
     {
       "symbol": "0050.TW",
-      "status": "ready",
-      "reason": null,
-      "model": "gemini-2.5-flash",
-      "generatedAt": "2026-11-09T01:58:51.304653+00:00",
+      "status": "unavailable",
+      "reason": "http_429",
+      "model": null,
+      "generatedAt": null,
       "matchesQuote": true,
-      "hasText": true
+      "hasText": false
     }
   ],
-  "aiReadyCount": 6,
+  "aiReadyCount": 5,
   "latestDeployment": {
     "id": 42549107090,
     "head_sha": "7edfe54ec98a6c3213b14fa316ff3334621bfa47",
-    "status": "in_progress",
-    "conclusion": null,
+    "status": "completed",
+    "conclusion": "success",
     "html_url": "https://github.com/timo893131/stock-analysis/actions/runs/42549107090",
     "jobs": [
       {
         "name": "build",
-        "conclusion": null,
+        "conclusion": "success",
         "steps": [
           {
             "name": "Set up job",
@@ -559,48 +559,74 @@
           },
           {
             "name": "Synchronize daily data",
-            "conclusion": null,
-            "status": "in_progress"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Update financial health data when licensed",
-            "conclusion": null,
-            "status": "pending"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Generate optional AI explanations",
-            "conclusion": null,
-            "status": "pending"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Export market site",
-            "conclusion": null,
-            "status": "pending"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Export demo site",
-            "conclusion": null,
-            "status": "pending"
+            "conclusion": "skipped",
+            "status": "completed"
           },
           {
             "name": "Run actions/upload-pages-artifact@v3",
-            "conclusion": null,
-            "status": "pending"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Post Run actions/setup-node@v4",
-            "conclusion": null,
-            "status": "pending"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Post Run actions/setup-python@v5",
-            "conclusion": null,
-            "status": "pending"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Post Run actions/checkout@v4",
-            "conclusion": null,
-            "status": "pending"
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success",
+            "status": "completed"
+          }
+        ]
+      },
+      {
+        "name": "deploy",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
+            "name": "Deploy",
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success",
+            "status": "completed"
           }
         ]
       }
@@ -609,7 +635,7 @@
   "catalog": {
     "status": "ready",
     "count": 2602,
-    "updatedAt": "2026-11-09T01:55:49.557211+00:00"
+    "updatedAt": "2026-11-09T02:07:00.025366+00:00"
   },
-  "status": "failed"
+  "status": "warning"
 }
