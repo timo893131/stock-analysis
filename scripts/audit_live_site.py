@@ -114,7 +114,7 @@ def audit(loader=fetch):
     except Exception:result['warnings'].append('名錄無法讀取')
     # Inspect only the public API response schema, never provider credentials or raw logs.
     try:
-        req=urllib.request.Request('https://stockroom-api.livecap-worker.workers.dev/brief',data=b'{}',headers={'Content-Type':'application/json','Origin':'https://timo893131.github.io'},method='POST')
+        req=urllib.request.Request('https://stockroom-api.livecap-worker.workers.dev/brief',data=b'{}',headers={'Content-Type':'application/json','Origin':'https://timo893131.github.io','User-Agent':'Stockroom-Website-Check/1.0'},method='POST')
         try:
             with urllib.request.urlopen(req,timeout=90) as response:
                 payload=json.load(response)
