@@ -11,7 +11,7 @@
    - 既有 `FINMIND_TOKEN`、`GEMINI_API_KEY` 沿用，不用在網站輸入。
 4. 開啟 [Deploy free Taiwan research API](https://github.com/timo893131/stock-analysis/actions/workflows/deploy-api.yml)，按 Run workflow，分支 main。部署流程會將上述供應商金鑰及存取碼寫入 Worker Secrets。若 Cloudflare 要求建立 workers.dev 子網域，先到 Workers & Pages 完成，再重跑。
 5. 成功後從 Cloudflare Workers & Pages → stockroom-api 複製 HTTPS `workers.dev` 網址。
-6. 在股研室展開「全台股站內服務設定」，填 Worker 網址及 **網站存取碼**，儲存。搜尋 `2603`，點「載入看盤」，再點 AI 解析 →「在網站產生／更新 AI 解析」。之後不用到 GitHub 逐檔執行。
+6. 在股研室找到頁面上方「全台股站內服務設定」，填 Worker 網址及 **網站存取碼**，儲存。搜尋 `2603`，點「載入看盤」，再點 AI 解析 →「在網站產生／更新 AI 解析」。之後不用到 GitHub 逐檔執行。
 
 存取碼僅存本次瀏覽器工作階段，網址存本機。公開網站訪客沒有存取碼時不能消耗你的服務配額；不要把存取碼寫進網頁或公開 repo。這是私人工作台存取控制，不是多人會員系統。
 

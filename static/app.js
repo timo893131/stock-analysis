@@ -42,7 +42,7 @@ if(apiConfigured())apiStatus('已保存連線設定；載入股票時會檢查�
 $('#api-form').onsubmit=e=>{e.preventDefault();try{const u=new URL($('#api-url').value.trim());if(u.protocol!=='https:'||!u.hostname.endsWith('.workers.dev')||u.username||u.password||u.port||u.search||u.hash||u.pathname!=='/')throw Error('請填入 workers.dev 的 HTTPS 根網址');if($('#api-key').value.length<24)throw Error('存取碼至少需要 24 個字元');apiURL=u.origin;apiAccess=$('#api-key').value;persist('stockroom-api-url',apiURL);try{sessionStorage.setItem('stockroom-api-access',apiAccess);}catch{}apiStatus('設定已保存。現在可搜尋股票，按「載入看盤」測試連線。');}catch(err){apiStatus(err.message);}};
 $('#api-clear').onclick=()=>{apiAccess='';$('#api-key').value='';try{sessionStorage.removeItem('stockroom-api-access');}catch{}apiStatus('已清除存取碼。');};
 async function requestStock(symbol,ai=false){
- if(!apiConfigured())throw Error('請先展開「全台股站內服務設定」，填入 Worker 網址與網站存取碼。');
+ if(!apiConfigured())throw Error('請在頁面上方「全台股站內服務設定」填入 Worker 網址與網站存取碼。');
  const r=await fetch(apiURL+'/research',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+apiAccess},body:JSON.stringify({symbol,ai}),signal:AbortSignal.timeout(150000)});
  const data=await r.json();if(!r.ok)throw Error(data.error||'服務暫不可用');
  const q=data.quote;if(q?.symbol!==symbol||q.marketVerified!==true||!StockroomDecision.assess(q).ready||typeof q.name!=='string')throw Error('行情驗證失敗或已過期');
