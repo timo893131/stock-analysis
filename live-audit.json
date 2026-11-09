@@ -1,10 +1,8 @@
 {
-  "checkedAt": "2026-11-09T01:05:48.603101+00:00",
+  "checkedAt": "2026-11-09T01:59:20.861711+00:00",
   "url": "https://timo893131.github.io/stock-analysis/",
   "errors": [],
-  "warnings": [
-    "AI 解讀可用 2/6 檔（選用功能）"
-  ],
+  "warnings": [],
   "assets": {
     "index.html": "ok",
     "style.css": "ok",
@@ -181,7 +179,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T01:02:46.980790+00:00",
+      "fetchedAt": "2026-11-09T01:56:06.328201+00:00",
       "periods": {
         "revenue_yoy": "2026-09",
         "gross_margin": "2026-06-30",
@@ -197,7 +195,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T01:02:49.554527+00:00",
+      "fetchedAt": "2026-11-09T01:56:09.206491+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-06-30",
@@ -213,7 +211,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T01:02:52.133676+00:00",
+      "fetchedAt": "2026-11-09T01:56:12.046276+00:00",
       "periods": {
         "revenue_yoy": "2026-09",
         "gross_margin": "2026-06-30",
@@ -229,7 +227,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T01:02:54.699621+00:00",
+      "fetchedAt": "2026-11-09T01:56:14.873057+00:00",
       "periods": {
         "revenue_yoy": "2026-09",
         "gross_margin": "2026-09-30",
@@ -245,7 +243,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-09T01:02:54.699872+00:00",
+      "fetchedAt": "2026-11-09T01:56:14.873308+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -254,7 +252,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-09T01:02:54.699898+00:00",
+      "fetchedAt": "2026-11-09T01:56:14.873333+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -263,7 +261,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T01:02:57.402234+00:00",
+      "fetchedAt": "2026-11-09T01:56:17.839489+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -279,7 +277,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T01:02:59.973982+00:00",
+      "fetchedAt": "2026-11-09T01:56:20.710412+00:00",
       "periods": {
         "revenue_yoy": "2026-09",
         "gross_margin": "2026-06-30",
@@ -295,7 +293,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T01:03:02.588156+00:00",
+      "fetchedAt": "2026-11-09T01:56:23.539760+00:00",
       "periods": {
         "revenue_yoy": "2026-09",
         "gross_margin": "2026-06-30",
@@ -311,7 +309,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T01:03:05.167799+00:00",
+      "fetchedAt": "2026-11-09T01:56:26.379128+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-06-30",
@@ -327,7 +325,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T01:03:07.748697+00:00",
+      "fetchedAt": "2026-11-09T01:56:29.217011+00:00",
       "periods": {
         "revenue_yoy": "2026-09",
         "gross_margin": "2026-06-30",
@@ -343,7 +341,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T01:03:10.356553+00:00",
+      "fetchedAt": "2026-11-09T01:56:32.033020+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-06-30",
@@ -359,7 +357,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T01:03:12.942362+00:00",
+      "fetchedAt": "2026-11-09T01:56:34.850392+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -375,7 +373,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T01:03:15.639334+00:00",
+      "fetchedAt": "2026-11-09T01:56:37.695443+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-06-30",
@@ -391,7 +389,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-09T01:03:15.639556+00:00",
+      "fetchedAt": "2026-11-09T01:56:37.695742+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -400,7 +398,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-09T01:03:15.639578+00:00",
+      "fetchedAt": "2026-11-09T01:56:37.695771+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -409,7 +407,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-09T01:03:15.639590+00:00",
+      "fetchedAt": "2026-11-09T01:56:37.695788+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -418,7 +416,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-09T01:03:15.639603+00:00",
+      "fetchedAt": "2026-11-09T01:56:37.695801+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -427,7 +425,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T01:03:18.283469+00:00",
+      "fetchedAt": "2026-11-09T01:56:40.574139+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -443,7 +441,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T01:03:20.983649+00:00",
+      "fetchedAt": "2026-11-09T01:56:43.385061+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-06-30",
@@ -466,66 +464,66 @@
   "ai": [
     {
       "symbol": "2330.TW",
-      "status": "unavailable",
-      "reason": "http_503",
-      "model": null,
-      "generatedAt": null,
+      "status": "ready",
+      "reason": null,
+      "model": "gemini-2.5-flash",
+      "generatedAt": "2026-11-09T01:56:55.685427+00:00",
       "matchesQuote": true,
-      "hasText": false
+      "hasText": true
     },
     {
       "symbol": "2317.TW",
-      "status": "unavailable",
-      "reason": "network_or_response_invalid",
-      "model": null,
-      "generatedAt": null,
+      "status": "ready",
+      "reason": null,
+      "model": "gemini-2.5-flash",
+      "generatedAt": "2026-11-09T01:57:18.479480+00:00",
       "matchesQuote": true,
-      "hasText": false
+      "hasText": true
     },
     {
       "symbol": "2454.TW",
       "status": "ready",
       "reason": null,
       "model": "gemini-2.5-flash",
-      "generatedAt": "2026-11-09T01:04:16.011534+00:00",
+      "generatedAt": "2026-11-09T01:57:41.910522+00:00",
       "matchesQuote": true,
       "hasText": true
     },
     {
       "symbol": "2308.TW",
-      "status": "unavailable",
-      "reason": "http_503",
-      "model": null,
-      "generatedAt": null,
+      "status": "ready",
+      "reason": null,
+      "model": "gemini-2.5-flash",
+      "generatedAt": "2026-11-09T01:58:05.884257+00:00",
       "matchesQuote": true,
-      "hasText": false
+      "hasText": true
     },
     {
       "symbol": "2881.TW",
-      "status": "unavailable",
-      "reason": "http_503",
-      "model": null,
-      "generatedAt": null,
+      "status": "ready",
+      "reason": null,
+      "model": "gemini-2.5-flash",
+      "generatedAt": "2026-11-09T01:58:29.460007+00:00",
       "matchesQuote": true,
-      "hasText": false
+      "hasText": true
     },
     {
       "symbol": "0050.TW",
       "status": "ready",
       "reason": null,
       "model": "gemini-2.5-flash",
-      "generatedAt": "2026-11-09T01:05:24.251069+00:00",
+      "generatedAt": "2026-11-09T01:58:51.304653+00:00",
       "matchesQuote": true,
       "hasText": true
     }
   ],
-  "aiReadyCount": 2,
+  "aiReadyCount": 6,
   "latestDeployment": {
-    "id": 42543385784,
-    "head_sha": "92173e03931d69e211dc29befafb2883ea8bb818",
+    "id": 42548104677,
+    "head_sha": "1f425f534098bc45a6ff8b5200c5b326e5692195",
     "status": "completed",
     "conclusion": "success",
-    "html_url": "https://github.com/timo893131/stock-analysis/actions/runs/42543385784",
+    "html_url": "https://github.com/timo893131/stock-analysis/actions/runs/42548104677",
     "jobs": [
       {
         "name": "build",
@@ -634,7 +632,7 @@
   "catalog": {
     "status": "ready",
     "count": 2602,
-    "updatedAt": "2026-11-09T01:02:30.830869+00:00"
+    "updatedAt": "2026-11-09T01:55:49.557211+00:00"
   },
-  "status": "warning"
+  "status": "passed"
 }
