@@ -1,6 +1,7 @@
 // All provider credentials stay server-side. Counters reserve attempts before network calls.
 export const validSymbol=s=>typeof s==='string'&&/^(?:\d{4}|00\d{3,4}[A-Z]?)\.(?:TW|TWO)$/.test(s);
-const json=(data,status=200)=>Response.json(data,{status});
+const API_REVISION='20261109-public-v3';
+const json=(data,status=200)=>Response.json({...data,apiRevision:API_REVISION},{status});
 const day=()=>new Date().toISOString().slice(0,10);
 export function toQuote(item,rows,now=Date.now()){
  const code=item.symbol.split('.')[0],byDay=new Map();
@@ -31,11 +32,12 @@ export function financialReport(q,data){
  return {symbol:q.symbol,status:'partial',metrics,coverage:metrics.filter(m=>m.value!==null).length,total:6,source:'FinMind',notice:'按需版先提供營收、EPS 與現金流三項；毛利率及資產負債比率尚未提供。期間截止日不是公告日。',pointInTimeSafe:false};
 }
 export default {async fetch(request,env){
- const origin=request.headers.get('Origin'),headers={'Access-Control-Allow-Origin':env.ALLOWED_ORIGIN,'Vary':'Origin','Cache-Control':'no-store'};
+ const origin=request.headers.get('Origin'),headers={'Access-Control-Allow-Origin':env.ALLOWED_ORIGIN,'Vary':'Origin','Cache-Control':'no-store','X-Stockroom-Revision':API_REVISION};
  if(origin!==env.ALLOWED_ORIGIN)return json({error:'來源不允許'},403);
- if(request.method==='OPTIONS')return new Response(null,{headers:{...headers,'Access-Control-Allow-Methods':'POST, OPTIONS','Access-Control-Allow-Headers':'Content-Type, Authorization'}});
+ if(request.method==='OPTIONS')return new Response(null,{headers:{...headers,'Access-Control-Allow-Methods':'GET, POST, OPTIONS','Access-Control-Allow-Headers':'Content-Type, Authorization'}});
  let response;
- if(!['/research','/brief'].includes(new URL(request.url).pathname)||request.method!=='POST')response=json({error:'找不到操作'},404);
+ if(new URL(request.url).pathname==='/health'&&request.method==='GET')response=json({status:'ready'});
+ else if(!['/research','/brief'].includes(new URL(request.url).pathname)||request.method!=='POST')response=json({error:'找不到操作'},404);
 
  else response=await env.RESEARCH.get(env.RESEARCH.idFromName('global-budget')).fetch(request);
  return new Response(response.body,{status:response.status,headers:{...headers,'Content-Type':'application/json'}});

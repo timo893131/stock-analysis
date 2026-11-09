@@ -118,14 +118,14 @@ def audit(loader=fetch):
         try:
             with urllib.request.urlopen(req,timeout=90) as response:
                 payload=json.load(response)
-                result['publicAPI']={'httpStatus':response.status,'ready':payload.get('ai',{}).get('status')=='ready' or (payload.get('mode')=='published' and len(payload.get('items',[]))>0),'mode':payload.get('mode'),'fallbackReason':payload.get('reason'),'count':payload.get('count'),'generatedAt':payload.get('ai',{}).get('generatedAt')}
+                result['publicAPI']={'httpStatus':response.status,'apiRevision':payload.get('apiRevision'),'ready':payload.get('ai',{}).get('status')=='ready' or (payload.get('mode')=='published' and len(payload.get('items',[]))>0),'mode':payload.get('mode'),'fallbackReason':payload.get('reason'),'count':payload.get('count'),'generatedAt':payload.get('ai',{}).get('generatedAt')}
         except urllib.error.HTTPError as error:
             raw=error.read(4096).decode('utf-8',errors='replace')
             try:message=json.loads(raw).get('error','unknown')
             except Exception:message='non_json_response'
             import re
             title=re.search(r'<title>([^<]+)</title>',raw,re.I)
-            result['publicAPI']={'httpStatus':error.code,'error':str(message)[:300],'server':error.headers.get('Server'),'contentType':error.headers.get('Content-Type'),'mitigation':error.headers.get('cf-mitigated'),'pageTitle':title.group(1)[:160] if title else None,'plainError':raw[:300] if error.headers.get('Content-Type','').startswith('text/plain') else None}
+            result['publicAPI']={'httpStatus':error.code,'revision':error.headers.get('X-Stockroom-Revision'),'error':str(message)[:300],'server':error.headers.get('Server'),'contentType':error.headers.get('Content-Type'),'mitigation':error.headers.get('cf-mitigated'),'pageTitle':title.group(1)[:160] if title else None,'plainError':raw[:300] if error.headers.get('Content-Type','').startswith('text/plain') else None}
 
     except Exception:result['publicAPI']={'error':'network_unavailable'}
     try:

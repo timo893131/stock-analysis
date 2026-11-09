@@ -46,6 +46,8 @@ jobs:
       - name: Publish automatic connection settings
         env:
           API_URL: ${{ steps.deploy.outputs.deployment-url }}
+          CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           python - <<'PYCODE'
           import json,os,urllib.parse,urllib.request,datetime
@@ -53,6 +55,17 @@ jobs:
           assert u.scheme=='https' and u.hostname.endswith('.workers.dev') and not u.username and not u.password and not u.port, 'Deployment URL is missing or invalid'
           base='https://'+u.hostname
           check={'status':'unavailable'}
+          deployed={}
+          health={}
+          try:
+              request=urllib.request.Request('https://api.cloudflare.com/client/v4/accounts/'+os.environ['CF_ACCOUNT']+'/workers/scripts/stockroom-api',headers={'Authorization':'Bearer '+os.environ['CF_TOKEN'],'User-Agent':'Stockroom-Website-Check/1.0'})
+              with urllib.request.urlopen(request,timeout=30) as response: body=response.read().decode('utf-8',errors='replace')
+              deployed={'hasCurrentRevision':'20261109-public-v3' in body,'hasFallback':'cachedAt' in body}
+          except Exception:deployed={'inspection':'unavailable'}
+          try:
+              request=urllib.request.Request(base+'/health',headers={'Origin':'https://timo893131.github.io','User-Agent':'Stockroom-Website-Check/1.0'})
+              with urllib.request.urlopen(request,timeout=30) as response: health=json.load(response)
+          except Exception:health={'status':'unavailable'}
           try:
               req=urllib.request.Request(base+'/brief',data=b'{}',headers={'Content-Type':'application/json','Origin':'https://timo893131.github.io','User-Agent':'Stockroom-Website-Check/1.0'},method='POST')
               with urllib.request.urlopen(req,timeout=90) as response: result=json.load(response)
@@ -61,7 +74,7 @@ jobs:
           except Exception:
               print('AI smoke check unavailable; public connection settings will still be published.')
           with open(os.environ['RUNNER_TEMP']+'/stockroom-api.json','w') as out:
-              json.dump({'url':base,'mode':'public','commit':os.environ['GITHUB_SHA'],'checkedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'briefCheck':check},out)
+              json.dump({'url':base,'mode':'public','commit':os.environ['GITHUB_SHA'],'checkedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'briefCheck':check,'deployedCode':deployed,'healthCheck':health},out)
           PYCODE
           if git fetch origin service-config; then
             git checkout -B service-config FETCH_HEAD
