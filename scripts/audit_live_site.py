@@ -112,6 +112,18 @@ def audit(loader=fetch):
         result['catalog']={'status':catalog.get('status'),'count':len(catalog.get('items',[])),'updatedAt':catalog.get('updatedAt')}
         if catalog.get('status')!='ready':result['warnings'].append('全市場名錄暫時僅提供重點清單')
     except Exception:result['warnings'].append('名錄無法讀取')
+    # Inspect only the public API response schema, never provider credentials or raw logs.
+    try:
+        req=urllib.request.Request('https://stockroom-api.livecap-worker.workers.dev/brief',data=b'{}',headers={'Content-Type':'application/json','Origin':'https://timo893131.github.io'},method='POST')
+        try:
+            with urllib.request.urlopen(req,timeout=90) as response:
+                payload=json.load(response)
+                result['publicAPI']={'httpStatus':response.status,'ready':payload.get('ai',{}).get('status')=='ready','count':payload.get('count'),'generatedAt':payload.get('ai',{}).get('generatedAt')}
+        except urllib.error.HTTPError as error:
+            try:message=json.load(error).get('error','unknown')
+            except Exception:message='non_json_response'
+            result['publicAPI']={'httpStatus':error.code,'error':str(message)[:300]}
+    except Exception:result['publicAPI']={'error':'network_unavailable'}
     result['status']='failed' if result['errors'] else 'warning' if result['warnings'] else 'passed'
     return result
 
