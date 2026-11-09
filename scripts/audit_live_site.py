@@ -120,9 +120,13 @@ def audit(loader=fetch):
                 payload=json.load(response)
                 result['publicAPI']={'httpStatus':response.status,'ready':payload.get('ai',{}).get('status')=='ready','count':payload.get('count'),'generatedAt':payload.get('ai',{}).get('generatedAt')}
         except urllib.error.HTTPError as error:
-            try:message=json.load(error).get('error','unknown')
+            raw=error.read(4096).decode('utf-8',errors='replace')
+            try:message=json.loads(raw).get('error','unknown')
             except Exception:message='non_json_response'
-            result['publicAPI']={'httpStatus':error.code,'error':str(message)[:300]}
+            import re
+            title=re.search(r'<title>([^<]+)</title>',raw,re.I)
+            result['publicAPI']={'httpStatus':error.code,'error':str(message)[:300],'server':error.headers.get('Server'),'contentType':error.headers.get('Content-Type'),'mitigation':error.headers.get('cf-mitigated'),'pageTitle':title.group(1)[:160] if title else None,'plainError':raw[:300] if error.headers.get('Content-Type','').startswith('text/plain') else None}
+
     except Exception:result['publicAPI']={'error':'network_unavailable'}
     result['status']='failed' if result['errors'] else 'warning' if result['warnings'] else 'passed'
     return result
