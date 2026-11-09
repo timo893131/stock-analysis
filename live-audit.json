@@ -1,9 +1,9 @@
 {
-  "checkedAt": "2026-11-09T06:48:41.175359+00:00",
+  "checkedAt": "2026-11-09T06:49:14.208467+00:00",
   "url": "https://timo893131.github.io/stock-analysis/",
   "errors": [],
   "warnings": [
-    "AI 解讀可用 4/6 檔（選用功能）"
+    "AI 解讀可用 1/6 檔（選用功能）"
   ],
   "assets": {
     "index.html": "ok",
@@ -181,7 +181,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T06:39:15.754631+00:00",
+      "fetchedAt": "2026-11-09T06:47:59.496668+00:00",
       "periods": {
         "revenue_yoy": "2026-09",
         "gross_margin": "2026-06-30",
@@ -197,7 +197,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T06:39:18.506067+00:00",
+      "fetchedAt": "2026-11-09T06:48:01.306624+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-06-30",
@@ -213,7 +213,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T06:39:21.154534+00:00",
+      "fetchedAt": "2026-11-09T06:48:03.212634+00:00",
       "periods": {
         "revenue_yoy": "2026-09",
         "gross_margin": "2026-06-30",
@@ -229,7 +229,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T06:39:23.815651+00:00",
+      "fetchedAt": "2026-11-09T06:48:06.198685+00:00",
       "periods": {
         "revenue_yoy": "2026-09",
         "gross_margin": "2026-09-30",
@@ -245,7 +245,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-09T06:39:23.815960+00:00",
+      "fetchedAt": "2026-11-09T06:48:06.198900+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -254,7 +254,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-09T06:39:23.815980+00:00",
+      "fetchedAt": "2026-11-09T06:48:06.198914+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -263,7 +263,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T06:39:26.612988+00:00",
+      "fetchedAt": "2026-11-09T06:48:08.158496+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -279,7 +279,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T06:39:29.296335+00:00",
+      "fetchedAt": "2026-11-09T06:48:09.980946+00:00",
       "periods": {
         "revenue_yoy": "2026-09",
         "gross_margin": "2026-06-30",
@@ -295,7 +295,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T06:39:31.944080+00:00",
+      "fetchedAt": "2026-11-09T06:48:11.849501+00:00",
       "periods": {
         "revenue_yoy": "2026-09",
         "gross_margin": "2026-06-30",
@@ -311,7 +311,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T06:39:34.555597+00:00",
+      "fetchedAt": "2026-11-09T06:48:13.676905+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-06-30",
@@ -327,7 +327,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T06:39:37.224403+00:00",
+      "fetchedAt": "2026-11-09T06:48:15.586404+00:00",
       "periods": {
         "revenue_yoy": "2026-09",
         "gross_margin": "2026-06-30",
@@ -343,7 +343,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T06:39:39.945104+00:00",
+      "fetchedAt": "2026-11-09T06:48:17.405358+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-06-30",
@@ -359,7 +359,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T06:39:42.426395+00:00",
+      "fetchedAt": "2026-11-09T06:48:19.452434+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -375,7 +375,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T06:39:45.134496+00:00",
+      "fetchedAt": "2026-11-09T06:48:21.562272+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-06-30",
@@ -391,7 +391,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-09T06:39:45.134807+00:00",
+      "fetchedAt": "2026-11-09T06:48:21.562476+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -400,7 +400,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-09T06:39:45.134833+00:00",
+      "fetchedAt": "2026-11-09T06:48:21.562489+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -409,7 +409,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-09T06:39:45.134844+00:00",
+      "fetchedAt": "2026-11-09T06:48:21.562495+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -418,7 +418,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-09T06:39:45.134854+00:00",
+      "fetchedAt": "2026-11-09T06:48:21.562502+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -427,7 +427,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T06:39:47.797446+00:00",
+      "fetchedAt": "2026-11-09T06:48:23.496623+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -443,7 +443,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-09T06:39:50.433328+00:00",
+      "fetchedAt": "2026-11-09T06:48:25.432998+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-06-30",
@@ -471,41 +471,41 @@
       "status": "ready",
       "reason": null,
       "model": "gemini-2.5-flash",
-      "generatedAt": "2026-11-09T06:40:01.380775+00:00",
+      "generatedAt": "2026-11-09T06:48:35.223252+00:00",
       "matchesQuote": true,
       "hasText": true
     },
     {
       "symbol": "2317.TW",
-      "status": "ready",
-      "reason": null,
-      "model": "gemini-2.5-flash",
-      "generatedAt": "2026-11-09T06:40:25.495654+00:00",
+      "status": "unavailable",
+      "reason": "http_429",
+      "model": null,
+      "generatedAt": null,
       "matchesQuote": true,
-      "hasText": true
+      "hasText": false
     },
     {
       "symbol": "2454.TW",
-      "status": "ready",
-      "reason": null,
-      "model": "gemini-2.5-flash",
-      "generatedAt": "2026-11-09T06:40:49.305254+00:00",
+      "status": "unavailable",
+      "reason": "quota_skipped",
+      "model": null,
+      "generatedAt": null,
       "matchesQuote": true,
-      "hasText": true
+      "hasText": false
     },
     {
       "symbol": "2308.TW",
-      "status": "ready",
-      "reason": null,
-      "model": "gemini-2.5-flash",
-      "generatedAt": "2026-11-09T06:41:14.497192+00:00",
+      "status": "unavailable",
+      "reason": "quota_skipped",
+      "model": null,
+      "generatedAt": null,
       "matchesQuote": true,
-      "hasText": true
+      "hasText": false
     },
     {
       "symbol": "2881.TW",
       "status": "unavailable",
-      "reason": "http_429",
+      "reason": "quota_skipped",
       "model": null,
       "generatedAt": null,
       "matchesQuote": true,
@@ -521,17 +521,17 @@
       "hasText": false
     }
   ],
-  "aiReadyCount": 4,
+  "aiReadyCount": 1,
   "latestDeployment": {
     "id": 42575238722,
     "head_sha": "f37dc22503dab4cf33ba4c40ea3da5629b049f87",
-    "status": "in_progress",
-    "conclusion": null,
+    "status": "completed",
+    "conclusion": "success",
     "html_url": "https://github.com/timo893131/stock-analysis/actions/runs/42575238722",
     "jobs": [
       {
         "name": "build",
-        "conclusion": null,
+        "conclusion": "success",
         "steps": [
           {
             "name": "Set up job",
@@ -570,38 +570,64 @@
           },
           {
             "name": "Generate optional AI explanations",
-            "conclusion": null,
-            "status": "in_progress"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Export market site",
-            "conclusion": null,
-            "status": "pending"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Export demo site",
-            "conclusion": null,
-            "status": "pending"
+            "conclusion": "skipped",
+            "status": "completed"
           },
           {
             "name": "Run actions/upload-pages-artifact@v3",
-            "conclusion": null,
-            "status": "pending"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Post Run actions/setup-node@v4",
-            "conclusion": null,
-            "status": "pending"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Post Run actions/setup-python@v5",
-            "conclusion": null,
-            "status": "pending"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Post Run actions/checkout@v4",
-            "conclusion": null,
-            "status": "pending"
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success",
+            "status": "completed"
+          }
+        ]
+      },
+      {
+        "name": "deploy",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
+            "name": "Deploy",
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success",
+            "status": "completed"
           }
         ]
       }
@@ -675,7 +701,7 @@
   "catalog": {
     "status": "ready",
     "count": 2602,
-    "updatedAt": "2026-11-09T06:38:59.728279+00:00"
+    "updatedAt": "2026-11-09T06:47:46.327377+00:00"
   },
   "publicAPI": {
     "httpStatus": 503,
