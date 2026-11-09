@@ -2,23 +2,24 @@
 (function(root){
  'use strict';
  const SYMBOLS=["2330.TW", "2317.TW", "2454.TW", "2308.TW", "2881.TW", "0050.TW", "2303.TW", "3711.TW", "2382.TW", "3231.TW", "2357.TW", "2379.TW", "3034.TW", "2345.TW", "2882.TW", "2891.TW", "0056.TW", "00878.TW", "6488.TWO", "8069.TWO"];
+ const validSymbol=s=>typeof s==='string'&&/^(?:\d{4}|00\d{3,4}[A-Z]?)\.(?:TW|TWO)$/.test(s);
  const feeRate=.001425,slippage=.001;
  const round=n=>Math.round(n*100+1e-8)/100;
  const day=time=>new Date(time).toLocaleDateString('en-CA',{timeZone:'Asia/Taipei'});
  const fresh=()=>({version:2,initial:1000000,cash:1000000,realized:0,positions:{},orders:[],trades:[]});
- const taxRate=s=>['0050.TW','0056.TW','00878.TW'].includes(s)?.001:.003;
+ const taxRate=(s,time=Date.now())=>s.startsWith('00')?(/B\.(TW|TWO)$/.test(s)&&day(time)<='2026-12-31'?0:.001):.003;
  function reserves(a){let cash=0;const shares={};for(const o of a.orders.filter(o=>o.status==='pending')){if(o.side==='buy')cash+=round(o.limit*o.quantity*(1+feeRate));else shares[o.symbol]=(shares[o.symbol]||0)+o.quantity;}return {cash:round(cash),shares};}
  function validate(a){
   if(!a||a.version!==2||a.initial!==1000000||!Number.isFinite(a.cash)||a.cash<0||!Number.isFinite(a.realized)||!a.positions||Array.isArray(a.positions)||!Array.isArray(a.orders)||!Array.isArray(a.trades)||a.orders.length>2000||a.trades.length>2000)throw Error('練習帳戶資料格式不符。');
-  for(const [symbol,p] of Object.entries(a.positions))if(!SYMBOLS.includes(symbol)||!Number.isSafeInteger(p.quantity)||p.quantity<=0||!Number.isFinite(p.cost)||p.cost<0)throw Error('持倉資料格式不符。');
-  const ids=new Set();for(const o of a.orders){if(typeof o.id!=='string'||o.id.length>100||ids.has(o.id)||!SYMBOLS.includes(o.symbol)||!['buy','sell'].includes(o.side)||!Number.isSafeInteger(o.quantity)||o.quantity<=0||o.quantity>1000000||!Number.isFinite(o.limit)||o.limit<=0||!Number.isFinite(o.createdAt)||!Number.isFinite(o.referenceTime)||o.referenceTime<=0||!['pending','filled','cancelled','expired'].includes(o.status)||typeof o.note!=='string'||o.note.length>500||typeof o.name!=='string'||o.name.length>80)throw Error('委託資料格式不符。');ids.add(o.id);}
-  for(const t of a.trades)if(!ids.has(t.orderId)||!SYMBOLS.includes(t.symbol)||!['buy','sell'].includes(t.side)||!Number.isSafeInteger(t.quantity)||t.quantity<=0||![t.price,t.fee,t.tax,t.time].every(Number.isFinite)||t.price<=0||t.fee<0||t.tax<0||typeof t.name!=='string'||t.name.length>80)throw Error('成交紀錄格式不符。');
+  for(const [symbol,p] of Object.entries(a.positions))if(!validSymbol(symbol)||!Number.isSafeInteger(p.quantity)||p.quantity<=0||!Number.isFinite(p.cost)||p.cost<0)throw Error('持倉資料格式不符。');
+  const ids=new Set();for(const o of a.orders){if(typeof o.id!=='string'||o.id.length>100||ids.has(o.id)||!validSymbol(o.symbol)||!['buy','sell'].includes(o.side)||!Number.isSafeInteger(o.quantity)||o.quantity<=0||o.quantity>1000000||!Number.isFinite(o.limit)||o.limit<=0||!Number.isFinite(o.createdAt)||!Number.isFinite(o.referenceTime)||o.referenceTime<=0||!['pending','filled','cancelled','expired'].includes(o.status)||typeof o.note!=='string'||o.note.length>500||typeof o.name!=='string'||o.name.length>80)throw Error('委託資料格式不符。');ids.add(o.id);}
+  for(const t of a.trades)if(!ids.has(t.orderId)||!validSymbol(t.symbol)||!['buy','sell'].includes(t.side)||!Number.isSafeInteger(t.quantity)||t.quantity<=0||![t.price,t.fee,t.tax,t.time].every(Number.isFinite)||t.price<=0||t.fee<0||t.tax<0||typeof t.name!=='string'||t.name.length>80)throw Error('成交紀錄格式不符。');
   const r=reserves(a);if(r.cash>a.cash+.01||Object.entries(r.shares).some(([s,n])=>n>(a.positions[s]?.quantity||0)))throw Error('預留資金或股數超過可用餘額。');
   return a;
  }
  function place(account,q,input,now=Date.now()){
   validate(account);
-  if(!q||q.demo!==false||q.dataKind!=='daily'||!SYMBOLS.includes(q.symbol)||!Number.isFinite(q.asOf)||q.asOf*1000>now||now-q.asOf*1000>7*86400000||q.sync?.error)throw Error('請先取得 7 天內、同步成功的真實收盤行情。休市過久時請等待新資料。');
+  if(!q||q.demo!==false||q.dataKind!=='daily'||(!validSymbol(q.symbol)||!SYMBOLS.includes(q.symbol)&&q.marketVerified!==true)||!Number.isFinite(q.asOf)||q.asOf*1000>now||now-q.asOf*1000>7*86400000||q.sync?.error)throw Error('請先取得 7 天內、同步成功的真實收盤行情。休市過久時請等待新資料。');
   const {side,quantity,id,note=''}=input;const limit=round(input.limit);
   if(!['buy','sell'].includes(side)||!Number.isSafeInteger(quantity)||quantity<1||quantity>1000000||!Number.isFinite(limit)||limit<.01||limit>10000000||typeof id!=='string'||!id||typeof note!=='string'||note.length>500)throw Error('請輸入有效的股數、價格與練習理由。');
   if(account.orders.some(o=>o.id===id))throw Error('委託編號已存在。');
@@ -45,7 +46,7 @@
    if(!bar)continue;
    const price=round(bar.close*(o.side==='buy'?1+slippage:1-slippage));
    if(price<=0||o.side==='buy'&&price>o.limit||o.side==='sell'&&price<o.limit){o.status='expired';o.message='下一交易日收盤未符合設定價格，本次委託未成交。';continue;}
-   const gross=round(price*o.quantity),fee=round(gross*feeRate),tax=o.side==='sell'?round(gross*taxRate(o.symbol)):0;
+   const gross=round(price*o.quantity),fee=round(gross*feeRate),tax=o.side==='sell'?round(gross*taxRate(o.symbol,bar.time*1000)):0;
    const p=a.positions[o.symbol]||{quantity:0,cost:0};let pnl=null;
    if(o.side==='buy'){
     if(gross+fee>a.cash+.001){o.status='expired';o.message='結算時資金不足，未成交。';continue;}

@@ -12,3 +12,10 @@ test('sell realizes costs and taxes and removes closed positions',()=>{let a=P.s
 test('missing original history expires instead of inventing a later fill',()=>{const a=P.place(P.fresh(),q,order(),now);const b=P.settle(a,[{...next,history:next.history.slice(1)}],now+86400000);assert.equal(b.orders[0].status,'expired');assert.equal(b.trades.length,0);});
 test('invalid backup and inputs are rejected',()=>{assert.throws(()=>P.validate({...P.fresh(),cash:-1}));for(const quantity of [0,1.5,NaN])assert.throws(()=>P.place(P.fresh(),q,order('1','buy',quantity),now));assert.throws(()=>P.place(P.fresh(),q,order('1','buy',1,.001),now));});
 test('expanded universe accepts listed/OTC names and taxes equity ETFs correctly',()=>{assert.equal(P.taxRate('00878.TW'),.001);assert.equal(P.taxRate('0056.TW'),.001);assert.equal(P.taxRate('6488.TWO'),.003);assert.equal(P.place(P.fresh(),{...q,symbol:'6488.TWO'},order(),now).orders[0].symbol,'6488.TWO');});
+
+test('full-directory paper orders require verified new symbols and backups remain valid',()=>{
+ const q={symbol:'2603.TW',name:'長榮',price:100,demo:false,dataKind:'daily',asOf:Date.now()/1000-1,history:[]};
+ assert.throws(()=>P.place(P.fresh(),q,{side:'buy',quantity:1,limit:110,id:'directory',note:''}));
+ const a=P.place(P.fresh(),{...q,marketVerified:true},{side:'buy',quantity:1,limit:110,id:'directory',note:''});assert.equal(P.validate(JSON.parse(JSON.stringify(a))).orders[0].symbol,'2603.TW');
+ assert.equal(P.taxRate('00679B.TWO',Date.parse('2026-11-09T08:00:00Z')),0);assert.equal(P.taxRate('00679B.TWO',Date.parse('2027-01-01T08:00:00Z')),.001);
+});

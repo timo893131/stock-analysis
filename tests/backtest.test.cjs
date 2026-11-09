@@ -43,3 +43,7 @@ test('terminal bar cannot open a new position',()=>{
  const h=flat();h[h.length-2].close=200;h.at(-1).close=210;
  assert.equal(run(h).strategy.trades.length,0);
 });
+
+test('bond ETF exemption is applied using the simulated sale date',()=>{
+ const B=require('../static/backtest.js'),h=Array.from({length:90},(_,i)=>({time:Date.UTC(2026,6,i+1)/1000,close:100+i}));const r=B.run(h,{period:20,etf:true,bond:true});assert.ok(r.benchmark.trades.some(t=>t.side==='sell'));assert.ok(r.benchmark.trades.filter(t=>t.side==='sell').every(t=>t.tax===0));
+});

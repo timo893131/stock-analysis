@@ -55,7 +55,7 @@
       }
       function sell(bar, signalTime, reason) {
         const fill = bar.close * (1-slippage), gross = shares * fill;
-        const fee = gross * feeRate, tax = gross * taxRate;
+        const fee = gross * feeRate, tax = gross * (options.bond && new Date(bar.time*1000).toISOString().slice(0,10)<='2026-12-31'?0:taxRate);
         const pnl = gross-fee-tax-basis;
         cash += gross-fee-tax; fees += fee+tax; closed.push(pnl);
         trades.push({time:bar.time,signalTime,side:'sell',price:fill,quantity:shares,fee,tax,pnl,reason});
@@ -66,7 +66,7 @@
     }
     return {strategy:simulate(false), benchmark:simulate(true),period,allocation,initial,
       start:history[period].time,end:history.at(-1).time,bars:history.length-period,
-      execution:'next_close',feeRate,taxRate,slippage};
+      execution:'next_close',feeRate,taxRate,bond:!!options.bond,slippage};
   }
   if (typeof module !== 'undefined') module.exports = {run};
   else root.StockroomBacktest = {run};

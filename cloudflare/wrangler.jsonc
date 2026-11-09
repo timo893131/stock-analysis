@@ -1,0 +1,9 @@
+{
+  "name": "stockroom-api",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-11-01",
+  "workers_dev": true,
+  "vars": {"ALLOWED_ORIGIN":"https://timo893131.github.io","GEMINI_MODEL":"gemini-2.5-flash"},
+  "durable_objects":{"bindings":[{"name":"RESEARCH","class_name":"Research"}]},
+  "migrations":[{"tag":"v1","new_sqlite_classes":["Research"]}]
+}

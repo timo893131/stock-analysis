@@ -6,3 +6,6 @@ data/
 .venv/
 
 site/
+
+.wrangler/
+node_modules/
