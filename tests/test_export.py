@@ -13,10 +13,14 @@ class ExportTests(unittest.TestCase):
             root=Path(directory)
             html=(root/'index.html').read_text()
             self.assertIn('window.STOCKROOM_STATIC=true', html)
-            self.assertIn('src="./backtest.js"',html)
+            self.assertIn('src="./backtest.js?v=',html)
+            import hashlib
+            for name in ('app.js','style.css','universe.js'):
+                digest=hashlib.sha256((root/name).read_bytes()).hexdigest()[:12]
+                self.assertIn(name+'?v='+digest,html)
             self.assertTrue((root/'backtest.js').is_file())
             self.assertTrue((root/'paper.js').is_file())
-            self.assertIn('src="./paper.js"', html)
+            self.assertIn('src="./paper.js?v=', html)
             financials=json.loads((root/'data/fundamentals.json').read_text())
             self.assertEqual(len(financials['reports']),len(STOCKS))
             self.assertTrue(all(m['value'] is None for r in financials['reports'] for m in r['metrics']))

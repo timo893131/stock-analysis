@@ -1,5 +1,7 @@
 """Build GitHub Pages files. Default requires successfully synchronized prices."""
 import argparse
+import hashlib
+import re
 import json
 import shutil
 from pathlib import Path
@@ -30,6 +32,11 @@ def build(output, demo=False):
     (data / 'fundamentals.json').write_text(json.dumps({'reports': [make_report(s,{}) for s in STOCKS] if demo else reports()}, ensure_ascii=False, allow_nan=False))
     (data / 'ai.json').write_text(json.dumps({'reports': []} if demo else ai_stored(),ensure_ascii=False))
     (data / 'news.json').write_text(json.dumps({'items': []}))
+    def version_asset(match):
+        name=match.group(2)
+        digest=hashlib.sha256((output/name).read_bytes()).hexdigest()[:12]
+        return match.group(1)+'?v='+digest+'"'
+    index.write_text(re.sub(r'((?:src|href)="\./([^"?]+\.(?:js|css)))"',version_asset,index.read_text()))
     (output / '.nojekyll').touch()
 
 if __name__ == '__main__':
