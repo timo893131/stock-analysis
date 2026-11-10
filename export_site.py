@@ -50,6 +50,14 @@ def build(output, demo=False):
         digest=hashlib.sha256((output/name).read_bytes()).hexdigest()[:12]
         return match.group(1)+'?v='+digest+'"'
     index.write_text(re.sub(r'((?:src|href)="\./([^"?]+\.(?:js|css)))"',version_asset,index.read_text()))
+    code_files=sorted(p for p in output.iterdir() if p.is_file() and p.name not in ('sw.js','.nojekyll'))
+    version=hashlib.sha256(b''.join(p.name.encode()+p.read_bytes() for p in code_files)).hexdigest()[:12]
+    index.write_text(index.read_text().replace('__STOCKROOM_VERSION__',version))
+    assets=re.findall(r'(?:src|href)="(\./[^"]+)"',index.read_text())
+    precache=['./','./index.html']+[a for a in assets if a.split('?')[0].endswith(('.js','.css','.png','.webmanifest'))]
+    precache+=['./icon-192.png','./icon-512.png','./icon-maskable.png']
+    worker=(output/'sw.js').read_text().replace('__STOCKROOM_VERSION__',version).replace('__STOCKROOM_PRECACHE__',json.dumps(sorted(set(precache))))
+    (output/'sw.js').write_text(worker)
     (output / '.nojekyll').touch()
 
 if __name__ == '__main__':

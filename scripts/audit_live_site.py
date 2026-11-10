@@ -22,19 +22,25 @@ def fetch(path):
 def audit(loader=fetch):
     now=dt.datetime.now(dt.timezone.utc)
     result={'checkedAt':now.isoformat(),'url':BASE,'errors':[],'warnings':[],'assets':{},'quotes':[],'financials':[]}
-    for path in ('','style.css','app.js','backtest.js','paper.js','research.js','coach.js','advice-ui.js','interface.css','market-ui.js','screener.js','journal.js','journal-ui.js'):
+    for path in ('','style.css','app.js','backtest.js','paper.js','research.js','coach.js','advice-ui.js','interface.css','market-ui.js','screener.js','shell.js','shell.css','manifest.webmanifest','sw.js','journal.js','journal-ui.js'):
         try:
             body=loader(path)
             if not body.strip():raise ValueError()
             if path=='' and ('window.STOCKROOM_STATIC=true' not in body or 'financial-results' not in body or 'backtest-results' not in body):
                 result['errors'].append('首頁不是預期的靜態財報／回測版本')
-            if path=='':result['features']={'paperSettlement':'data-paper-settlement-version="3"' in body, 'paperTrading': 'src="./paper.js' in body and 'paper-symbol' in body, 'mobileViewport':'viewport-fit=cover' in body, 'decisionAssist':'id="decision-panel"' in body, 'quickResearch':'id="quick-panel"' in body, 'onDemandAI':'id="ai-dialog"' in body, 'inSiteAPI':'id="api-settings"' in body and 'id="ai-generate"' in body, 'simpleMenu':'data-tab="market"' in body and 'data-tab="settings"' in body, 'publicBrief':'id="brief-run"' in body and 'id="api-key"' not in body, 'marketWideQuick':'src="./screener.js' in body and '全市場 AI 速覽' in body, 'researchJournal':'src="./journal-ui.js' in body and 'value="watch"' in body, 'fullMarket':'id="full-market"' in body and 'src="./market-ui.js' in body, 'clearCalculator':'src="./advice-ui.js' in body and 'id="status-guide"' in body, 'beginnerGuide':'id="plain-insight"' in body and 'data-practice-budget="1000"' in body}
+            if path=='':result['features']={'installableApp':'rel="manifest"' in body and 'src="./shell.js' in body and 'name="app-version"' in body, 'paperSettlement':'data-paper-settlement-version="3"' in body, 'paperTrading': 'src="./paper.js' in body and 'paper-symbol' in body, 'mobileViewport':'viewport-fit=cover' in body, 'decisionAssist':'id="decision-panel"' in body, 'quickResearch':'id="quick-panel"' in body, 'onDemandAI':'id="ai-dialog"' in body, 'inSiteAPI':'id="api-settings"' in body and 'id="ai-generate"' in body, 'simpleMenu':'data-tab="market"' in body and 'data-tab="settings"' in body, 'publicBrief':'id="brief-run"' in body and 'id="api-key"' not in body, 'marketWideQuick':'src="./screener.js' in body and '全市場 AI 速覽' in body, 'researchJournal':'src="./journal-ui.js' in body and 'value="watch"' in body, 'fullMarket':'id="full-market"' in body and 'src="./market-ui.js' in body, 'clearCalculator':'src="./advice-ui.js' in body and 'id="status-guide"' in body, 'beginnerGuide':'id="plain-insight"' in body and 'data-practice-budget="1000"' in body}
             if path=='' and not all(result['features'].values()):
                 result['errors'].append('首頁缺少預期的新功能入口')
             result['assets'][path or 'index.html']='ok'
         except Exception:
             result['assets'][path or 'index.html']='failed'
             result['errors'].append('網頁檔案無法讀取：'+(path or 'index.html'))
+    try:
+        manifest=json.loads(loader('manifest.webmanifest'))
+        worker=loader('sw.js')
+        result['app']={'name':manifest.get('name'),'display':manifest.get('display'),'scope':manifest.get('scope'),'startURL':manifest.get('start_url'),'workerReady':'__STOCKROOM_' not in worker and 'stockroom-app-' in worker}
+        if manifest.get('display')!='standalone' or manifest.get('scope')!='./' or not result['app']['workerReady']:result['errors'].append('應用程式安裝或離線檔案格式不符')
+    except Exception:result['errors'].append('應用程式安裝／離線檔案暫時無法讀取')
     try:
         full=json.loads(loader('data/full-market.json'))
         result['fullMarket']={'status':full.get('status'),'count':len(full.get('quotes',[])),'turnoverCount':sum(isinstance(q.get('turnover'),(int,float)) and math.isfinite(q['turnover']) and q['turnover']>0 for q in full.get('quotes',[])),'markets':full.get('markets',{})}

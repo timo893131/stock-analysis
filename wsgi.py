@@ -22,7 +22,7 @@ def application(environ, start_response):
         headers.append(('Cache-Control', 'no-store'))
     else:
         target = (STATIC / ('index.html' if path == '/' else path.lstrip('/'))).resolve()
-        if target.is_relative_to(STATIC.resolve()) and target.is_file() and target.suffix in ('.html', '.css', '.js', '.svg', '.png', '.ico'):
+        if target.is_relative_to(STATIC.resolve()) and target.is_file() and target.suffix in ('.html', '.css', '.js', '.svg', '.png', '.ico','.webmanifest'):
             content = target.read_bytes()
             kind = mimetypes.guess_type(target.name)[0] or 'application/octet-stream'
         else:
