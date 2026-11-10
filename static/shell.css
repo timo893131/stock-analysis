@@ -10,3 +10,5 @@ body{font-family:system-ui,-apple-system,"PingFang TC","Microsoft JhengHei",sans
 :root{--app-safe-top:env(safe-area-inset-top,0px)}html{scroll-padding-top:calc(var(--app-header-height) + var(--app-safe-top) + 12px)}.app-header{height:calc(var(--app-header-height) + var(--app-safe-top));padding-top:var(--app-safe-top)}#detail-view>.detail-actions{top:calc(var(--app-header-height) + var(--app-safe-top))}@media(min-width:681px){.sidebar{padding-top:calc(28px + var(--app-safe-top))}}@media(max-width:680px){.app-header{padding-left:max(14px,env(safe-area-inset-left,0px));padding-right:max(14px,env(safe-area-inset-right,0px))}}
 
 .coach-actions .green-button.compact,.menu-shortcuts .green-button{font-size:15px}.app-settings>details{font-size:12px;color:#6d8074}.app-settings>details small{font-size:12px}@media(min-width:1024px) and (min-height:800px){.sidebar-note{display:block}}
+
+.app-task{margin:0;padding:12px 32px;background:#edf5fb;border-bottom:1px solid #c7dce9;color:#315d7d;font-size:13px;line-height:1.8}.app-task[hidden]{display:none!important}@media(max-width:680px){.app-task{padding:12px 14px}}
