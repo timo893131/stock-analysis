@@ -24,11 +24,10 @@ jobs:
           CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CF_ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           FINMIND_TOKEN: ${{ secrets.FINMIND_TOKEN }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           python - <<'PYCODE'
           import os
-          assert all(os.environ.get(k) for k in ('CF_TOKEN','CF_ACCOUNT','FINMIND_TOKEN','GEMINI_API_KEY')), 'Please configure the documented Actions Secrets first.'
+          assert all(os.environ.get(k) for k in ('CF_TOKEN','CF_ACCOUNT','FINMIND_TOKEN')), 'Please configure the documented Actions Secrets first.'
           PYCODE
       - id: deploy
         uses: cloudflare/wrangler-action@v3
@@ -39,10 +38,8 @@ jobs:
           wranglerVersion: "4.158.0"
           secrets: |
             FINMIND_TOKEN
-            GEMINI_API_KEY
         env:
           FINMIND_TOKEN: ${{ secrets.FINMIND_TOKEN }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       - name: Publish automatic connection settings
         env:
           API_URL: ${{ steps.deploy.outputs.deployment-url }}
@@ -57,10 +54,11 @@ jobs:
           check={'status':'unavailable'}
           deployed={}
           health={}
+          ai_check={}
           try:
               request=urllib.request.Request('https://api.cloudflare.com/client/v4/accounts/'+os.environ['CF_ACCOUNT']+'/workers/scripts/stockroom-api',headers={'Authorization':'Bearer '+os.environ['CF_TOKEN'],'User-Agent':'Stockroom-Website-Check/1.0'})
               with urllib.request.urlopen(request,timeout=30) as response: body=response.read().decode('utf-8',errors='replace')
-              deployed={'hasCurrentRevision':'20261109-public-v3' in body,'hasFallback':'cachedAt' in body}
+              deployed={'hasCurrentRevision':'20261110-workers-ai-v1' in body,'hasFallback':'cachedAt' in body}
           except Exception:deployed={'inspection':'unavailable'}
           try:
               request=urllib.request.Request(base+'/health',headers={'Origin':'https://timo893131.github.io','User-Agent':'Stockroom-Website-Check/1.0'})
@@ -73,8 +71,20 @@ jobs:
               check={'status':'ready','count':result['count'],'mode':result.get('mode'),'generatedAt':result.get('ai',{}).get('generatedAt'),'fallbackReason':result.get('reason')}
           except Exception:
               print('AI smoke check unavailable; public connection settings will still be published.')
+          # One actual stock analysis verifies the binding after deployment. It uses
+          # the same ten-attempt budget and cache as visitors; never retry/reset it.
+          try:
+              req=urllib.request.Request(base+'/research',data=b'{"symbol":"2603.TW","ai":true}',headers={'Content-Type':'application/json','Origin':'https://timo893131.github.io','User-Agent':'Stockroom-Website-Check/1.0'},method='POST')
+              with urllib.request.urlopen(req,timeout=90) as response: result=json.load(response)
+              a=result.get('ai',{})
+              ai_check={'status':a.get('status'),'model':a.get('model'),'generatedAt':a.get('generatedAt'),'symbol':result.get('quote',{}).get('symbol')}
+          except urllib.error.HTTPError as error:
+              try: reason=json.load(error).get('error','Service unavailable')
+              except Exception: reason='Service unavailable'
+              ai_check={'status':'unavailable','reason':reason}
+          except Exception: ai_check={'status':'unavailable'}
           with open(os.environ['RUNNER_TEMP']+'/stockroom-api.json','w') as out:
-              json.dump({'url':base,'mode':'public','commit':os.environ['GITHUB_SHA'],'checkedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'briefCheck':check,'deployedCode':deployed,'healthCheck':health},out)
+              json.dump({'url':base,'mode':'public','commit':os.environ['GITHUB_SHA'],'checkedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'briefCheck':check,'deployedCode':deployed,'healthCheck':health,'aiCheck':ai_check},out)
           PYCODE
           if git fetch origin service-config; then
             git checkout -B service-config FETCH_HEAD

@@ -102,7 +102,7 @@ async function openAI(symbol){
  }catch{}
  if(version!==aiDialogVersion)return;
  if(scheduled&&(!data||Date.parse(scheduled.generatedAt)>Date.parse(data.ai.generatedAt)))data={quote:q,ai:scheduled};
- if(!data){$('#ai-dialog-body').innerHTML='<p>目前沒有可讀取的解析（可能尚未生成或網路暫時不可用）。請依下方步驟執行單檔解析；不會以公式文字代替 AI。</p>';return;}
+ if(!data){$('#ai-dialog-body').innerHTML='<p>這檔股票尚未有可讀取的 AI 報告。按「一鍵 AI 解析」取得日收盤研究；若額度用完，可先查看走勢與財報，明日再試。</p>';return;}
  const current=StockroomDecision.assess(data.quote);
  $('#ai-dialog-body').innerHTML=`<p class="${current.ready?'':'financial-warning'}">行情日 ${esc(data.quote.tradeDate||'未提供')} · ${current.ready?'日收盤研究，非即時報價':'資料過期或不足：以下僅供回顧，請先重新解析'}</p>`+aiHTML(data.ai);
 }
