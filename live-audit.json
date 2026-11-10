@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-11-10T03:27:02.159427+00:00",
+  "checkedAt": "2026-11-10T03:30:36.587281+00:00",
   "url": "https://timo893131.github.io/stock-analysis/",
   "errors": [],
   "warnings": [],
@@ -496,6 +496,131 @@
       }
     }
   },
+  "marketScreen": {
+    "scope": "官方全市場日收盤快照的價量初選。不是全市場歷史／財報逐檔分析，也不是買入推薦；單日漲跌不能推出中長期走向。漲跌家數含 ETF，不是大盤指數。來源不完整時只代表列出的有效範圍。",
+    "coverage": {
+      "total": 2349,
+      "valid": 2332,
+      "sourceComplete": true,
+      "tradeDate": "2026-11-09",
+      "markets": {
+        "twse": 1333,
+        "tpex": 999
+      },
+      "counts": {
+        "stock": 1974,
+        "etf": 358
+      },
+      "excluded": {
+        "缺少有效收盤價量": 17
+      }
+    },
+    "breadth": {
+      "up": 1739,
+      "down": 492,
+      "flat": 101
+    },
+    "rules": {
+      "minVolume": 1000000,
+      "minTurnover": 30000000,
+      "minChange": -1,
+      "maxChange": 3
+    },
+    "candidateCounts": {
+      "stock": 122,
+      "etf": 81
+    },
+    "shortlist": [
+      {
+        "symbol": "3189.TW",
+        "name": "景碩",
+        "market": "上市",
+        "kind": "stock",
+        "price": 690,
+        "change": 2.8315946348733236,
+        "volume": 45116586,
+        "turnover": 31179925899,
+        "tradeDate": "2026-11-09"
+      },
+      {
+        "symbol": "3406.TW",
+        "name": "玉晶光",
+        "market": "上市",
+        "kind": "stock",
+        "price": 841,
+        "change": 1.9393939393939394,
+        "volume": 11372038,
+        "turnover": 9557090177,
+        "tradeDate": "2026-11-09"
+      },
+      {
+        "symbol": "2449.TW",
+        "name": "京元電子",
+        "market": "上市",
+        "kind": "stock",
+        "price": 209.5,
+        "change": 1.6990291262135921,
+        "volume": 44114908,
+        "turnover": 9324654294,
+        "tradeDate": "2026-11-09"
+      },
+      {
+        "symbol": "2382.TW",
+        "name": "廣達",
+        "market": "上市",
+        "kind": "stock",
+        "price": 296.5,
+        "change": 2.0654044750430294,
+        "volume": 20473689,
+        "turnover": 6096581006,
+        "tradeDate": "2026-11-09"
+      },
+      {
+        "symbol": "00878.TW",
+        "name": "國泰永續高股息",
+        "market": "上市",
+        "kind": "etf",
+        "price": 32.77,
+        "change": 2.438261956861519,
+        "volume": 98148332,
+        "turnover": 3217186958,
+        "tradeDate": "2026-11-09"
+      },
+      {
+        "symbol": "00919.TW",
+        "name": "群益台灣精選高息",
+        "market": "上市",
+        "kind": "etf",
+        "price": 30.98,
+        "change": 2.78699402786994,
+        "volume": 73442868,
+        "turnover": 2269186229,
+        "tradeDate": "2026-11-09"
+      },
+      {
+        "symbol": "00830.TW",
+        "name": "國泰費城半導體",
+        "market": "上市",
+        "kind": "etf",
+        "price": 68.5,
+        "change": 0.8094186902133923,
+        "volume": 23188458,
+        "turnover": 1585960335,
+        "tradeDate": "2026-11-09"
+      },
+      {
+        "symbol": "00679B.TWO",
+        "name": "元大美債20年",
+        "market": "上櫃",
+        "kind": "etf",
+        "price": 26.72,
+        "change": -0.6322052807735218,
+        "volume": 48797702,
+        "turnover": 1301722668,
+        "tradeDate": "2026-11-09"
+      }
+    ]
+  },
   "ai": [
     {
       "symbol": "2330.TW",
@@ -670,15 +795,15 @@
     ]
   },
   "backendDeployment": {
-    "id": 42749454030,
-    "head_sha": "a21db8c6e2969aabeea6ab6e01b7c47b989612a1",
-    "status": "completed",
-    "conclusion": "success",
-    "html_url": "https://github.com/timo893131/stock-analysis/actions/runs/42749454030",
+    "id": 42749883919,
+    "head_sha": "e5218564f51091fd51b387f3a815360a3e245f6b",
+    "status": "in_progress",
+    "conclusion": null,
+    "html_url": "https://github.com/timo893131/stock-analysis/actions/runs/42749883919",
     "jobs": [
       {
         "name": "deploy",
-        "conclusion": "success",
+        "conclusion": null,
         "steps": [
           {
             "name": "Set up job",
@@ -707,28 +832,23 @@
           },
           {
             "name": "Run cloudflare/wrangler-action@v3",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "in_progress"
           },
           {
             "name": "Publish automatic connection settings",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Post Run actions/setup-node@v4",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Post Run actions/checkout@v4",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Complete job",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           }
         ]
       }
