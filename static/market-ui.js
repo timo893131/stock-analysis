@@ -20,7 +20,7 @@ function render(){
 }
 let loading=null;
 function reload(){if(loading)return loading;loading=(async()=>{
- try{const r=await fetch(root.STOCKROOM_STATIC?'./data/full-market.json':'/api/full-market',{cache:'no-store',signal:AbortSignal.timeout(25000)});if(!r.ok)throw Error();const data=await r.json();if(!Array.isArray(data.quotes))throw Error();snapshot=data;snapshot.markets||={};options.onSnapshot?.();$('#full-action-status').textContent='';}
+ try{const r=await fetch(root.STOCKROOM_STATIC?'./data/full-market.json':'/api/full-market',{cache:'no-store',signal:AbortSignal.timeout(25000)});if(!r.ok)throw Error();root.StockroomShell?.observeData?.(r,'full-market.json');const data=await r.json();if(!Array.isArray(data.quotes))throw Error();snapshot=data;snapshot.markets||={};options.onSnapshot?.();$('#full-action-status').textContent='';}
  catch{$('#full-action-status').textContent='無法重新讀取整批快照，保留原本資料；請查看來源日期，稍後再更新。';}
  render();
 })().finally(()=>{loading=null;});return loading;}
