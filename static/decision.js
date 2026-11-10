@@ -28,12 +28,19 @@
   if(!actions[ai.action]||typeof ai.reason!=='string'||!ai.reason.trim())return {action:'insufficient',label:'尚未提供買入判斷',reason:'這是舊版報告，可重新解析取得簡短結論。'};
   return {action:ai.action,label:actions[ai.action],reason:ai.reason.slice(0,180)};
  }
+ function parseBudget(raw){
+  const text=String(raw??'').normalize('NFKC').trim().replace(/^(?:NT\$|NTD|新臺幣|新台幣)\s*/i,'').replace(/元$/,'').trim();
+  if(!/^(?:[0-9]+|[0-9]{1,3}(?:,[0-9]{3})+)$/.test(text))throw Error('請輸入整數金額，例如 10000 或 10,000。');
+  const value=Number(text.replace(/,/g,''));
+  if(!Number.isSafeInteger(value)||value<1||value>1e9)throw Error('可用資金範圍為 1 至 1,000,000,000 元。');
+  return value;
+ }
  function entryPlan(q,ai,budget,now=Date.now()){
   const a=advice(q,ai,now);
-  if(a.action!=='consider')return {shares:0,cost:0,loss:0,reason:'目前以觀察為主，新增買入試算為 0 元。'};
+  if(a.action!=='consider')return {shares:0,cost:0,loss:0,reason:a.label+'：'+a.reason+' 新增買入試算為 0 元。'};
   const limit=size(q,{budget,riskPct:1,stopPct:8,capPct:10});
   const shares=Math.floor(limit.shares*.3),ratio=limit.shares?shares/limit.shares:0;
   return {...limit,shares,cost:limit.cost*ratio,loss:limit.loss*ratio,reason:shares?'第一筆先以部位上限的 30% 試算，其餘資金保留。':'預算不足以分批買入 1 股，先不買入。'};
  }
- const api={assess,size,advice,entryPlan};if(typeof module!=='undefined')module.exports=api;else root.StockroomDecision=api;
+ const api={assess,size,advice,entryPlan,parseBudget};if(typeof module!=='undefined')module.exports=api;else root.StockroomDecision=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

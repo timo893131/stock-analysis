@@ -17,3 +17,7 @@ test('first entry is a fraction of cap, fee-adjusted and zero for waiting or ins
  for(const action of ['wait','avoid','insufficient'])assert.equal(D.entryPlan(q,{...ai,action},10000).cost,0);
  assert.throws(()=>D.entryPlan(q,ai,NaN));
 });
+test('budget parsing accepts pasted grouped/full-width amounts and rejects ambiguous input',()=>{
+ for(const text of ['10000','10,000','ＮＴ＄ １０，０００','NT$ 10,000','新臺幣10000元',' 10000 '])assert.equal(D.parseBudget(text),10000);
+ for(const text of ['', '1,00','-1000','1.5','1e5','NaN','Infinity','1000000001','0','abc10000'])assert.throws(()=>D.parseBudget(text));
+});
