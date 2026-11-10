@@ -99,3 +99,9 @@ Workers AI 新版回應含 action（consider/wait/avoid/insufficient）及簡短
 `interface.css` 統一狀態色與文字：綠為符合所述條件、黃為留意／等待、藍為資訊、灰為待資料；底色不是漲跌。頁面可展開圖例，漲跌加上明確文字。手機股票清單改為卡片，個股分類保留固定選單，進階風險公式收合；財報、回測、消息、練習與設定統一字級及操作尺寸。
 
 瀏覽器回歸測試：先以 `python3 export_site.py --demo --output /tmp/stockroom-interface-site` 匯出並在 8002 埠啟動靜態伺服器，再安裝／提供 Playwright，執行 `node tests/browser/interface.cjs`。可用 `PLAYWRIGHT_MODULE` 指定模組路徑及 `TEST_SITE_URL` 指定本機測試網址；使用模擬行情，不呼叫真實 AI。
+
+### 上市／上櫃／ETF 整批收盤快照
+
+`full_market.py` 每次每日發布流程各呼叫一次 TWSE `STOCK_DAY_ALL` 與 TPEx `tpex_mainboard_daily_close_quotes` 官方公開端點，過濾本站支援的一般股票／ETF 代碼，保留日期、收盤、漲跌及成交量；這些快照沒有歷史，與 20 檔研究清單分開。ROC／西元日期正規化，未成交或缺價保留 null，不能假裝零元或拿來回測。來源失敗保留已發布的該市場原日期與取得時間，標記 cached／unavailable，不把缺漏當成完整更新。來源回傳不足 100 筆視為異常，實際涵蓋數與日期顯示於網站。
+
+「找股票」預設顯示全市場快照，可分上市／上櫃／ETF、名稱代碼搜尋、漲跌與成交量排序及每頁 30 檔瀏覽。瀏覽快照不消耗 Workers 每日 120 次逐檔資料額度。開啟非研究清單標的的完整歷史／財報／AI 仍需按需載入及既有額度；一鍵 AI 摘要仍限已同步研究清單，不是整批快照的全市場 AI 掃描。官方快照成功時併入搜尋名錄，API 金鑰不進靜態檔。

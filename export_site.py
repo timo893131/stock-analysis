@@ -11,6 +11,7 @@ from fundamentals import reports, make_report
 from market import STOCKS
 from catalog import stored as catalog_stored, fallback as catalog_fallback
 from universe import FOCUS
+from full_market import stored as full_market_stored
 
 
 def build(output, demo=False):
@@ -26,7 +27,19 @@ def build(output, demo=False):
     index.write_text(index.read_text().replace('<script src="./app.js">', '<script>window.STOCKROOM_STATIC=true;</script><script src="./app.js">'))
     data = output / 'data'
     data.mkdir(exist_ok=True)
-    (data / 'catalog.json').write_text(json.dumps(catalog_fallback() if demo else catalog_stored(),ensure_ascii=False))
+    full = {'status':'unavailable','quotes':[],'markets':{}} if demo else full_market_stored()
+    (data / 'full-market.json').write_text(json.dumps(full,ensure_ascii=False,allow_nan=False))
+    directory = catalog_fallback() if demo else catalog_stored()
+    known = {x['symbol'] for x in directory['items']}
+    for q in full.get('quotes',[]):
+        if q['symbol'] not in known:
+            directory['items'].append({'symbol':q['symbol'],'name':q['name'],'market':q['market'],'industry':'ETF' if q['kind']=='etf' else '', 'date':q['tradeDate']})
+            known.add(q['symbol'])
+    if not demo and full.get('quotes'):
+        directory['source']='FinMind／TWSE OpenAPI／TPEx OpenAPI（依可用來源合併）'
+        directory['snapshotCheckedAt']=full.get('checkedAt')
+    if not demo and full.get('status')=='ready':directory['status']='ready'
+    (data / 'catalog.json').write_text(json.dumps(directory,ensure_ascii=False))
     (output / 'universe.js').write_text('window.STOCKROOM_UNIVERSE='+json.dumps([{'symbol':s,'name':n,'sector':sector} for s,n,sector in FOCUS],ensure_ascii=False)+';')
     (data / 'quotes.json').write_text(json.dumps({'quotes': rows}, ensure_ascii=False))
     (data / 'fundamentals.json').write_text(json.dumps({'reports': [make_report(s,{}) for s in STOCKS] if demo else reports()}, ensure_ascii=False, allow_nan=False))
