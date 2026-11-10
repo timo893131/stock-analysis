@@ -1,8 +1,13 @@
 {
-  "checkedAt": "2026-11-10T02:07:58.654892+00:00",
+  "checkedAt": "2026-11-10T02:30:15.962468+00:00",
   "url": "https://timo893131.github.io/stock-analysis/",
-  "errors": [],
-  "warnings": [],
+  "errors": [
+    "首頁缺少預期的新功能入口",
+    "網頁檔案無法讀取：market-ui.js"
+  ],
+  "warnings": [
+    "全市場快照尚無法讀取"
+  ],
   "assets": {
     "index.html": "ok",
     "style.css": "ok",
@@ -12,7 +17,8 @@
     "research.js": "ok",
     "coach.js": "ok",
     "advice-ui.js": "ok",
-    "interface.css": "ok"
+    "interface.css": "ok",
+    "market-ui.js": "failed"
   },
   "quotes": [
     {
@@ -465,6 +471,7 @@
     "inSiteAPI": true,
     "simpleMenu": true,
     "publicBrief": true,
+    "fullMarket": false,
     "clearCalculator": true,
     "beginnerGuide": true
   },
@@ -526,15 +533,15 @@
   ],
   "aiReadyCount": 6,
   "latestDeployment": {
-    "id": 42740380605,
-    "head_sha": "391ab2f8ecbddf80e2b79b596b46fbdfeda3a68f",
-    "status": "completed",
-    "conclusion": "success",
-    "html_url": "https://github.com/timo893131/stock-analysis/actions/runs/42740380605",
+    "id": 42743194843,
+    "head_sha": "46602219835d727400069682207137b9880d410d",
+    "status": "in_progress",
+    "conclusion": null,
+    "html_url": "https://github.com/timo893131/stock-analysis/actions/runs/42743194843",
     "jobs": [
       {
         "name": "build",
-        "conclusion": "success",
+        "conclusion": null,
         "steps": [
           {
             "name": "Set up job",
@@ -558,79 +565,53 @@
           },
           {
             "name": "Test",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "in_progress"
           },
           {
             "name": "Synchronize daily data",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Update financial health data when licensed",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Generate optional AI explanations",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Export market site",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Export demo site",
-            "conclusion": "skipped",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Run actions/upload-pages-artifact@v3",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Post Run actions/setup-node@v4",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Post Run actions/setup-python@v5",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Post Run actions/checkout@v4",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Complete job",
-            "conclusion": "success",
-            "status": "completed"
-          }
-        ]
-      },
-      {
-        "name": "deploy",
-        "conclusion": "success",
-        "steps": [
-          {
-            "name": "Set up job",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Deploy",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Complete job",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           }
         ]
       }
@@ -723,5 +704,5 @@
     "verified": true,
     "financialCoverage": 3
   },
-  "status": "passed"
+  "status": "failed"
 }
