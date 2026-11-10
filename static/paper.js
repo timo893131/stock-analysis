@@ -32,6 +32,26 @@
   return validate(a);
  }
  function cancel(account,id){const a=structuredClone(validate(account)),o=a.orders.find(x=>x.id===id);if(!o||o.status!=='pending')throw Error('只能取消尚未成交的委託。');o.status='cancelled';return a;}
+ function expectedDate(o){const cut=Math.max(o.createdAt,o.referenceTime*1000),d=new Date(day(cut)+'T00:00:00Z');do{d.setUTCDate(d.getUTCDate()+1);}while([0,6].includes(d.getUTCDay()));return d.toISOString().slice(0,10);}
+ function validHistory(q){return q?.demo===false&&!q.sync?.error&&Array.isArray(q.history)&&q.history.length>0&&q.history.every((x,i)=>Number.isFinite(x.time)&&Number.isFinite(x.close)&&x.close>0&&(i===0||x.time>q.history[i-1].time));}
+ function pendingInfo(o,q,marketDate=null,now=Date.now()){
+  if(o.status!=='pending')return {state:o.status,label:o.status==='filled'?'已成交':o.status==='expired'?'已失效':'已取消',reason:o.message||'委託已結束，不會再次成交。',needsHistory:false};
+  const target=expectedDate(o),close=Date.parse(target+'T13:30:00+08:00'),publish=Date.parse(target+'T18:20:00+08:00'),cut=Math.max(o.createdAt,o.referenceTime*1000);
+  if(o.createdAt>now+60000)return {state:'clock',label:'請確認裝置日期',reason:'委託時間在目前裝置時間之後，暫不回溯成交。',needsHistory:false,target};
+  if(validHistory(q)&&q.history.some(x=>day(x.time*1000)>day(cut)&&x.time*1000<=now))return {state:'ready',label:'可檢查結算',reason:'已有委託之後的收盤，按「更新並結算」檢查價格條件與儲存結果。',needsHistory:false,target};
+  if(now<close)return {state:'session',label:'等待後續交易日收盤',reason:`最早檢查 ${target} 或之後第一個交易日收盤；遇休市順延，送出不等於成交。`,needsHistory:false,target};
+  if(now<publish&&(!marketDate||marketDate<target))return {state:'publication',label:'等待收盤資料發布',reason:`最早檢查日 ${target}。網站平日臺北 18:20、22:20 更新；資料尚未發布，遇休市順延。`,needsHistory:false,target};
+  const latest=validHistory(q)?day(q.history.at(-1).time*1000):null;
+  return {state:'history',label:'待補齊結算行情',reason:latest?`這檔歷史行情目前只到 ${latest}，尚不能確認委託之後的第一個交易日。`:'目前未載入這檔完整歷史；全市場單日快照不足以回溯成交。',needsHistory:true,target};
+ }
+ function syncTargets(a,quotes,snapshots=[],now=Date.now()){
+  const pending=a.orders.filter(o=>o.status==='pending').sort((a,b)=>a.createdAt-b.createdAt),ordered=[...new Set([...pending.map(o=>o.symbol),...Object.keys(a.positions)])];
+  return ordered.filter(symbol=>{const q=quotes.find(q=>q.symbol===symbol),date=snapshots.find(q=>q.symbol===symbol)?.tradeDate,p=pending.find(o=>o.symbol===symbol);
+   if(p&&pendingInfo(p,q,date,now).needsHistory)return true;
+   if(a.positions[symbol])return !validHistory(q)||!Number.isFinite(q.price)||q.price<=0||!Number.isFinite(q.asOf)||now-q.asOf*1000>7*86400000||!!date&&day(q.history.at(-1).time*1000)<date;
+   return false;
+  });
+ }
  function settle(account,quotes,now=Date.now()){
   const a=structuredClone(validate(account));
   // Stable chronological processing; duplicate refreshes cannot re-execute completed orders.
@@ -44,8 +64,9 @@
    const cut=Math.max(o.createdAt,o.referenceTime*1000);
    const bar=h.find(x=>day(x.time*1000)>day(cut)&&x.time*1000<=now);
    if(!bar)continue;
+   if(bar.volume===0){o.status='expired';o.evaluatedAt=bar.time*1000;o.message='首次後續交易日的資料顯示成交量為 0，未模擬成交；預留已釋放。';continue;}
    const price=round(bar.close*(o.side==='buy'?1+slippage:1-slippage));
-   if(price<=0||o.side==='buy'&&price>o.limit||o.side==='sell'&&price<o.limit){o.status='expired';o.message='下一交易日收盤未符合設定價格，本次委託未成交。';continue;}
+   if(price<=0||o.side==='buy'&&price>o.limit||o.side==='sell'&&price<o.limit){o.status='expired';o.evaluatedAt=bar.time*1000;o.evaluatedPrice=price;o.message=`${day(bar.time*1000)} 收盤 ${bar.close.toFixed(2)}，含滑價試算 ${price.toFixed(2)}，未符合${o.side==='buy'?'最高買價':'最低賣價'} ${o.limit.toFixed(2)}；本次未成交，預留已釋放。`;continue;}
    const gross=round(price*o.quantity),fee=round(gross*feeRate),tax=o.side==='sell'?round(gross*taxRate(o.symbol,bar.time*1000)):0;
    const p=a.positions[o.symbol]||{quantity:0,cost:0};let pnl=null;
    if(o.side==='buy'){
@@ -57,11 +78,11 @@
     a.cash=round(a.cash+gross-fee-tax);a.realized=round(a.realized+pnl);p.quantity-=o.quantity;p.cost=round(p.cost-cost);
     if(p.quantity)a.positions[o.symbol]=p;else delete a.positions[o.symbol];
    }
-   o.status='filled';o.filledAt=bar.time*1000;
+   o.status='filled';o.filledAt=bar.time*1000;o.message=`已依 ${day(bar.time*1000)} 收盤及滑價假設成交；成交紀錄保留在下方。`;
    a.trades.unshift({orderId:o.id,symbol:o.symbol,name:o.name,side:o.side,quantity:o.quantity,price,fee,tax,pnl,time:bar.time*1000});
   }
   return validate(a);
  }
- const api={fresh,validate,reserves,place,cancel,settle,feeRate,slippage,taxRate,day};
+ const api={fresh,validate,reserves,place,cancel,settle,feeRate,slippage,taxRate,day,expectedDate,pendingInfo,syncTargets};
  if(typeof module!=='undefined')module.exports=api;else root.StockroomPaper=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

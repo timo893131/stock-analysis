@@ -19,3 +19,29 @@ test('full-directory paper orders require verified new symbols and backups remai
  const a=P.place(P.fresh(),{...q,marketVerified:true},{side:'buy',quantity:1,limit:110,id:'directory',note:''});assert.equal(P.validate(JSON.parse(JSON.stringify(a))).orders[0].symbol,'2603.TW');
  assert.equal(P.taxRate('00679B.TWO',Date.parse('2026-11-09T08:00:00Z')),0);assert.equal(P.taxRate('00679B.TWO',Date.parse('2027-01-01T08:00:00Z')),.001);
 });
+test('pending explanations separate next-session close from publication and missing history',()=>{
+ const morning=stamp('2026-11-10T02:52:39Z'),prior={...q,asOf:stamp('2026-11-09T05:30:00Z')/1000,history:[{time:stamp('2026-11-09T05:30:00Z')/1000,close:100}]};
+ const today=P.place(P.fresh(),prior,order('today'),morning).orders[0];assert.equal(P.expectedDate(today),'2026-11-11');assert.equal(P.pendingInfo(today,prior,'2026-11-09',stamp('2026-11-10T05:39:00Z')).state,'session');
+ const friday={...q,asOf:stamp('2026-11-06T05:30:00Z')/1000,history:[{time:stamp('2026-11-06T05:30:00Z')/1000,close:100}]},yesterday=P.place(P.fresh(),friday,order('yesterday'),stamp('2026-11-09T02:21:00Z')).orders[0];
+ assert.equal(P.pendingInfo(yesterday,prior,'2026-11-09',stamp('2026-11-10T05:39:00Z')).state,'publication');assert.equal(P.pendingInfo(yesterday,prior,'2026-11-09',stamp('2026-11-10T11:00:00Z')).needsHistory,true);
+});
+test('old non-focus pending orders request history, while future-session orders do not',()=>{
+ const old=P.place(P.fresh(),{...q,symbol:'2603.TW',marketVerified:true},order(),now);
+ assert.deepEqual(P.syncTargets(old,[],[{symbol:'2603.TW',tradeDate:'2026-11-09'}],stamp('2026-11-10T05:39:00Z')),['2603.TW']);
+ assert.deepEqual(P.syncTargets(old,[],[],now),[]);
+ const filled=P.settle(old,[{...next,symbol:'2603.TW'}],now+86400000);
+ assert.deepEqual(P.syncTargets(filled,[],[],now+86400000),['2603.TW']);
+ assert.deepEqual(P.syncTargets(filled,[{...next,symbol:'2603.TW',price:105,asOf:next.history.at(-1).time}],[],now+86400000),[]);
+});
+test('limit rejection names actual date and simulated price without inventing holdings',()=>{
+ const a=P.place(P.fresh(),q,order('reason','buy',10,101),now),b=P.settle(a,[next],now+86400000);
+ assert.match(b.orders[0].message,/2026-11-06/);assert.match(b.orders[0].message,/105.11/);assert.match(b.orders[0].message,/101.00/);assert.equal(b.orders[0].evaluatedAt,next.history.at(-1).time*1000);assert.deepEqual(b.positions,{});assert.equal(b.cash,a.cash);
+});
+test('zero-volume next session cannot create a paper position and later refresh cannot fill it',()=>{
+ const a=P.place(P.fresh(),q,order(),now),zero={...next,history:[q.history[0],{...next.history[1],volume:0}]},b=P.settle(a,[zero],now+86400000);
+ assert.equal(b.orders[0].status,'expired');assert.deepEqual(b.positions,{});assert.equal(b.trades.length,0);assert.deepEqual(P.settle(b,[next],now+86400000),b);
+});
+test('weekend expectation is a hint, not a fabricated session',()=>{
+ const fq={...q,asOf:stamp('2026-11-06T05:30:00Z')/1000},a=P.place(P.fresh(),fq,order(),stamp('2026-11-06T08:00:00Z'));
+ assert.equal(P.expectedDate(a.orders[0]),'2026-11-09');assert.equal(P.settle(a,[fq],stamp('2026-11-09T04:00:00Z')).trades.length,0);
+});
