@@ -1,3 +1,4 @@
+import subprocess
 """Audit the public Pages deployment. Store metadata only, never financial values."""
 import datetime as dt
 import json
@@ -38,6 +39,12 @@ def audit(loader=fetch):
         full=json.loads(loader('data/full-market.json'))
         result['fullMarket']={'status':full.get('status'),'count':len(full.get('quotes',[])),'turnoverCount':sum(isinstance(q.get('turnover'),(int,float)) and math.isfinite(q['turnover']) and q['turnover']>0 for q in full.get('quotes',[])),'markets':full.get('markets',{})}
         if full.get('status')!='ready':result['warnings'].append('全市場整批來源部分缺漏，請查看來源狀態')
+        try:
+            script="const S=require('./static/screener.js');let text='';process.stdin.on('data',x=>text+=x);process.stdin.on('end',()=>console.log(JSON.stringify(S.facts(S.screen(JSON.parse(text))))));"
+            checked=subprocess.run(['node','-e',script],input=json.dumps(full),text=True,capture_output=True,check=True,timeout=15)
+            result['marketScreen']=json.loads(checked.stdout)
+        except Exception:result['warnings'].append('全市場初選統計暫時無法驗證')
+
     except Exception:
         result['warnings'].append('全市場快照尚無法讀取')
     try:
