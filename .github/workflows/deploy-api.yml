@@ -71,13 +71,13 @@ jobs:
               check={'status':'ready','count':result['count'],'mode':result.get('mode'),'generatedAt':result.get('ai',{}).get('generatedAt'),'fallbackReason':result.get('reason')}
           except Exception:
               print('AI smoke check unavailable; public connection settings will still be published.')
-          # One actual stock analysis verifies the binding after deployment. It uses
+          # One actual market-wide brief verifies the shared screening scope. It uses
           # the same ten-attempt budget and cache as visitors; never retry/reset it.
           try:
-              req=urllib.request.Request(base+'/research',data=b'{"symbol":"2603.TW","ai":true}',headers={'Content-Type':'application/json','Origin':'https://timo893131.github.io','User-Agent':'Stockroom-Website-Check/1.0'},method='POST')
+              req=urllib.request.Request(base+'/brief',data=b'{}',headers={'Content-Type':'application/json','Origin':'https://timo893131.github.io','User-Agent':'Stockroom-Website-Check/1.0'},method='POST')
               with urllib.request.urlopen(req,timeout=90) as response: result=json.load(response)
               a=result.get('ai',{})
-              ai_check={'status':a.get('status'),'model':a.get('model'),'action':a.get('action'),'reason':a.get('reason'),'generatedAt':a.get('generatedAt'),'symbol':result.get('quote',{}).get('symbol')}
+              ai_check={'status':a.get('status'),'model':a.get('model'),'action':a.get('action'),'reason':a.get('reason'),'generatedAt':a.get('generatedAt'),'scopeVersion':result.get('scopeVersion'),'count':result.get('count'),'total':result.get('total'),'candidateCounts':result.get('candidateCounts'),'shortlistLength':len(result.get('shortlist',[]))}
           except urllib.error.HTTPError as error:
               try: reason=json.load(error).get('error','Service unavailable')
               except Exception: reason='Service unavailable'
