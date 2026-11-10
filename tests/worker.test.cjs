@@ -8,14 +8,14 @@ test('financial missing values stay null and ETF has separate coverage',async()=
 test('durable budget reserves at most ten AI attempts, survives new instance',async()=>{const {Research}=await mod;const map=new Map();const storage={async get(k){return structuredClone(map.get(k));},async put(k,v){map.set(k,structuredClone(v));},async transaction(fn){return fn(storage)}};let service=new Research({storage},{});for(let i=0;i<10;i++)await service.reserve('ai');service=new Research({storage},{});await assert.rejects(service.reserve('ai'),/額度/);assert.equal(map.get('budget').ai,10);});
 test('repeated in-site requests reuse quote and AI caches without spending twice',async()=>{
  const {Research}=await mod,map=new Map();const storage={async get(k){return structuredClone(map.get(k));},async put(k,v){map.set(k,structuredClone(v));},async transaction(fn){return fn(storage)}};
- const svc=new Research({storage},{AI:{run:async()=>{ai++;return {response:{summary:'研究',risks:'風險',checks:'查證'}}}}});svc.lookup=async()=>({symbol:'2603.TW',name:'長榮',industry:'航運'});let market=0,ai=0;
+ const svc=new Research({storage},{AI:{run:async()=>{ai++;return {response:{summary:'研究',risks:'風險',checks:'查證',action:'wait',reason:'等待證據'}}}}});svc.lookup=async()=>({symbol:'2603.TW',name:'長榮',industry:'航運'});let market=0,ai=0;
  svc.provider=async dataset=>{market++;if(dataset!=='TaiwanStockPrice')return [];return Array.from({length:65},(_,i)=>({stock_id:'2603',date:new Date(Date.now()-(65-i)*86400000).toISOString().slice(0,10),close:100+i,Trading_Volume:100}));};
- const original=global.fetch;global.fetch=async()=>{ai++;return Response.json({candidates:[{content:{parts:[{text:JSON.stringify({summary:'研究',risks:'風險',checks:'查證'})}]}}]});};
+ const original=global.fetch;global.fetch=async()=>{ai++;return Response.json({candidates:[{content:{parts:[{text:JSON.stringify({summary:'研究',risks:'風險',checks:'查證',action:'wait',reason:'等待證據'})}]}}]});};
  try{const request=()=>new Request('https://api.test/research',{method:'POST',body:JSON.stringify({symbol:'2603.TW',ai:true})});const responses=await Promise.all([svc.fetch(request()),svc.fetch(request())]);for(const r of responses){assert.equal(r.status,200);assert.equal((await r.json()).ai.status,'ready');}assert.equal(market,4);assert.equal(ai,1);assert.equal(map.get('budget').ai,1);}finally{global.fetch=original;}
 });
 
 test('one-click brief uses verified snapshot scope and shares cache across visitors',async()=>{
- const {Research}=await mod,map=new Map(),storage={async get(k){return structuredClone(map.get(k));},async put(k,v){map.set(k,structuredClone(v));},async transaction(fn){return fn(storage)}};const svc=new Research({storage},{});let calls=0;svc.explain=async facts=>{calls++;assert.equal(facts.stocks.length,1);return {status:'ready',generatedAt:new Date().toISOString(),summary:'研究',risks:'風險',checks:'查證'}};
+ const {Research}=await mod,map=new Map(),storage={async get(k){return structuredClone(map.get(k));},async put(k,v){map.set(k,structuredClone(v));},async transaction(fn){return fn(storage)}};const svc=new Research({storage},{});let calls=0;svc.explain=async facts=>{calls++;assert.equal(facts.stocks.length,1);return {status:'ready',generatedAt:new Date().toISOString(),summary:'研究',risks:'風險',checks:'查證',action:'wait',reason:'等待證據'}};
  const original=global.fetch;global.fetch=async()=>Response.json({quotes:[{symbol:'2330.TW',name:'台積電',asOf:Date.now()/1000-10,tradeDate:'2026-11-09',price:100,history:Array.from({length:60},()=>({close:100}))},{symbol:'demo',demo:true}]});
  try{const a=await svc.brief(),b=await svc.brief();assert.equal(a.count,1);assert.deepEqual(a.symbols,['2330.TW']);assert.equal(b.ai.status,'ready');assert.equal(calls,1);}finally{global.fetch=original;}
 });
@@ -28,7 +28,7 @@ test('read-only deployment check cannot trigger an AI request',async()=>{
 });
 test('Workers AI uses bounded JSON generation and validates real output without Gemini',async()=>{
  const {Research}=await mod;const map=new Map(),storage={async get(k){return structuredClone(map.get(k));},async put(k,v){map.set(k,structuredClone(v));},async transaction(fn){return fn(storage)}};let calls=0;
- const svc=new Research({storage},{AI:{async run(model,input){calls++;assert.equal(model,'@cf/meta/llama-3.1-8b-instruct-fast');assert.equal(input.max_tokens,1200);assert.equal(input.response_format.type,'json_schema');return {response:JSON.stringify({summary:'日收盤觀察',risks:'風險',checks:'查核'})};}}});
+ const svc=new Research({storage},{AI:{async run(model,input){calls++;assert.equal(model,'@cf/meta/llama-3.1-8b-instruct-fast');assert.equal(input.max_tokens,1200);assert.equal(input.response_format.type,'json_schema');return {response:JSON.stringify({summary:'日收盤觀察',risks:'風險',checks:'查核',action:'consider',reason:'趨勢條件偏多'})};}}});
  const a=await svc.explain({symbol:'2330.TW'});assert.equal(a.status,'ready');assert.match(a.model,/^@cf\//);assert.equal(calls,1);
  svc.env.AI.run=async()=>({response:{summary:'不完整'}});await assert.rejects(svc.explain({}),/格式/);
  svc.env.AI.run=async()=>{calls++;throw Error('private provider message')};await assert.rejects(svc.explain({}),/免費額度/);assert.equal(calls,2);assert.equal(map.get('budget').ai,3);

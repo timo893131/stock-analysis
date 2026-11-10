@@ -21,5 +21,19 @@
   const shares=Math.max(0,Math.floor(Math.min(riskBudget/lossPerShare,cap/costPerShare,budget/costPerShare)));
   return {shares,entry,stop,riskBudget,cap,cost:shares*costPerShare,loss:shares*lossPerShare};
  }
- const api={assess,size};if(typeof module!=='undefined')module.exports=api;else root.StockroomDecision=api;
+ function advice(q,ai,now=Date.now()){
+  const valid=assess(q,now).ready&&ai?.symbol===q?.symbol&&ai.asOf===q?.asOf&&ai.status==='ready'&&Number.isFinite(Date.parse(ai.generatedAt))&&Date.parse(ai.generatedAt)<=now&&now-Date.parse(ai.generatedAt)<86400000;
+  const actions={consider:'可考慮小額分批',wait:'先觀察，等待條件',avoid:'目前暫不建議買入',insufficient:'資料不足，暫不判斷'};
+  if(!valid)return {action:'insufficient',label:'資料待更新，暫不判斷',reason:'需要同行情日且 24 小時內的 AI 報告與有效行情。'};
+  if(!actions[ai.action]||typeof ai.reason!=='string'||!ai.reason.trim())return {action:'insufficient',label:'尚未提供買入判斷',reason:'這是舊版報告，可重新解析取得簡短結論。'};
+  return {action:ai.action,label:actions[ai.action],reason:ai.reason.slice(0,180)};
+ }
+ function entryPlan(q,ai,budget,now=Date.now()){
+  const a=advice(q,ai,now);
+  if(a.action!=='consider')return {shares:0,cost:0,loss:0,reason:'目前以觀察為主，新增買入試算為 0 元。'};
+  const limit=size(q,{budget,riskPct:1,stopPct:8,capPct:10});
+  const shares=Math.floor(limit.shares*.3),ratio=limit.shares?shares/limit.shares:0;
+  return {...limit,shares,cost:limit.cost*ratio,loss:limit.loss*ratio,reason:shares?'第一筆先以部位上限的 30% 試算，其餘資金保留。':'預算不足以分批買入 1 股，先不買入。'};
+ }
+ const api={assess,size,advice,entryPlan};if(typeof module!=='undefined')module.exports=api;else root.StockroomDecision=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

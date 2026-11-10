@@ -87,3 +87,7 @@ node --check static/app.js
 ### 站內 AI 地區錯誤修復
 
 站內個股與綜合摘要改用 Cloudflare Workers AI binding（`@cf/meta/llama-3.1-8b-instruct-fast`），不再從 Workers 請求 Gemini；GitHub 排程與單檔工作流程仍使用 Gemini。保留每日全站 10 次、失敗也計次及快取限制，單次輸入最多 20,000 字元／輸出 1,200 tokens，不自動重試或轉向付費模型。Workers AI 有每日免費 neurons 額度，與帳戶其他服務共用；實際用量與方案以 Cloudflare 控制台為準，程式不升級付費方案。模型輸出須通過三欄 JSON 檢查才顯示，並保留模型名稱與時間。原有每日計數不會因部署而重置。
+
+### AI 買入參考與第一筆試算
+
+Workers AI 新版回應含 action（consider/wait/avoid/insufficient）及簡短 reason。個股先呈現「可考慮小額分批／先觀察／暫不建議／資料不足」，完整原文收合。舊報告沒有 action 時不補造 AI 建議。金額由瀏覽器公式計算，輸入資金不傳給模型：單檔上限 10%、風險額度 1%、假設停損 8%，首筆只取計算股數上限的 30%，含費稅及滑價。不符合 consider、報告過期超過 24 小時、行情日期或代碼不符均試算為零；不足一股不強迫買入。不依 AI 推測報酬或保證停損成交，也不自動下單。

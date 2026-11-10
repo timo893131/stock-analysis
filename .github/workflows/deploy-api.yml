@@ -58,7 +58,7 @@ jobs:
           try:
               request=urllib.request.Request('https://api.cloudflare.com/client/v4/accounts/'+os.environ['CF_ACCOUNT']+'/workers/scripts/stockroom-api',headers={'Authorization':'Bearer '+os.environ['CF_TOKEN'],'User-Agent':'Stockroom-Website-Check/1.0'})
               with urllib.request.urlopen(request,timeout=30) as response: body=response.read().decode('utf-8',errors='replace')
-              deployed={'hasCurrentRevision':'20261110-workers-ai-v1' in body,'hasFallback':'cachedAt' in body}
+              deployed={'hasCurrentRevision':'20261110-ai-advice-v2' in body,'hasFallback':'cachedAt' in body}
           except Exception:deployed={'inspection':'unavailable'}
           try:
               request=urllib.request.Request(base+'/health',headers={'Origin':'https://timo893131.github.io','User-Agent':'Stockroom-Website-Check/1.0'})
@@ -77,7 +77,7 @@ jobs:
               req=urllib.request.Request(base+'/research',data=b'{"symbol":"2603.TW","ai":true}',headers={'Content-Type':'application/json','Origin':'https://timo893131.github.io','User-Agent':'Stockroom-Website-Check/1.0'},method='POST')
               with urllib.request.urlopen(req,timeout=90) as response: result=json.load(response)
               a=result.get('ai',{})
-              ai_check={'status':a.get('status'),'model':a.get('model'),'generatedAt':a.get('generatedAt'),'symbol':result.get('quote',{}).get('symbol')}
+              ai_check={'status':a.get('status'),'model':a.get('model'),'action':a.get('action'),'reason':a.get('reason'),'generatedAt':a.get('generatedAt'),'symbol':result.get('quote',{}).get('symbol')}
           except urllib.error.HTTPError as error:
               try: reason=json.load(error).get('error','Service unavailable')
               except Exception: reason='Service unavailable'
