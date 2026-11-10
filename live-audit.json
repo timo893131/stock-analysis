@@ -1,13 +1,8 @@
 {
-  "checkedAt": "2026-11-10T02:30:15.962468+00:00",
+  "checkedAt": "2026-11-10T02:32:22.493475+00:00",
   "url": "https://timo893131.github.io/stock-analysis/",
-  "errors": [
-    "首頁缺少預期的新功能入口",
-    "網頁檔案無法讀取：market-ui.js"
-  ],
-  "warnings": [
-    "全市場快照尚無法讀取"
-  ],
+  "errors": [],
+  "warnings": [],
   "assets": {
     "index.html": "ok",
     "style.css": "ok",
@@ -18,7 +13,7 @@
     "coach.js": "ok",
     "advice-ui.js": "ok",
     "interface.css": "ok",
-    "market-ui.js": "failed"
+    "market-ui.js": "ok"
   },
   "quotes": [
     {
@@ -188,7 +183,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-10T02:06:25.839325+00:00",
+      "fetchedAt": "2026-11-10T02:30:41.002364+00:00",
       "periods": {
         "revenue_yoy": "2026-09",
         "gross_margin": "2026-06-30",
@@ -204,7 +199,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-10T02:06:27.843834+00:00",
+      "fetchedAt": "2026-11-10T02:30:42.969927+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-06-30",
@@ -220,7 +215,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-10T02:06:29.894132+00:00",
+      "fetchedAt": "2026-11-10T02:30:44.840625+00:00",
       "periods": {
         "revenue_yoy": "2026-09",
         "gross_margin": "2026-06-30",
@@ -236,7 +231,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-10T02:06:31.969737+00:00",
+      "fetchedAt": "2026-11-10T02:30:46.671525+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -252,7 +247,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-10T02:06:31.969952+00:00",
+      "fetchedAt": "2026-11-10T02:30:46.671643+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -261,7 +256,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-10T02:06:31.969971+00:00",
+      "fetchedAt": "2026-11-10T02:30:46.671655+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -270,7 +265,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-10T02:06:34.140934+00:00",
+      "fetchedAt": "2026-11-10T02:30:48.589756+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -286,7 +281,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-10T02:06:36.155073+00:00",
+      "fetchedAt": "2026-11-10T02:30:50.405651+00:00",
       "periods": {
         "revenue_yoy": "2026-09",
         "gross_margin": "2026-09-30",
@@ -302,7 +297,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-10T02:06:38.145187+00:00",
+      "fetchedAt": "2026-11-10T02:30:52.346078+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-06-30",
@@ -318,7 +313,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-10T02:06:40.212378+00:00",
+      "fetchedAt": "2026-11-10T02:30:54.170986+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-06-30",
@@ -334,7 +329,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-10T02:06:42.229027+00:00",
+      "fetchedAt": "2026-11-10T02:30:55.987688+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-06-30",
@@ -350,7 +345,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-10T02:06:44.210965+00:00",
+      "fetchedAt": "2026-11-10T02:30:57.826297+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-06-30",
@@ -366,7 +361,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-10T02:06:46.343891+00:00",
+      "fetchedAt": "2026-11-10T02:30:59.656941+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -382,7 +377,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-10T02:06:48.341529+00:00",
+      "fetchedAt": "2026-11-10T02:31:02.268165+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-06-30",
@@ -398,7 +393,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-10T02:06:48.341784+00:00",
+      "fetchedAt": "2026-11-10T02:31:02.268268+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -407,7 +402,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-10T02:06:48.341804+00:00",
+      "fetchedAt": "2026-11-10T02:31:02.268281+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -416,7 +411,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-10T02:06:48.341815+00:00",
+      "fetchedAt": "2026-11-10T02:31:02.268287+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -425,7 +420,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-10T02:06:48.341824+00:00",
+      "fetchedAt": "2026-11-10T02:31:02.268292+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -434,7 +429,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-10T02:06:50.358031+00:00",
+      "fetchedAt": "2026-11-10T02:31:04.244660+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -450,7 +445,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-10T02:06:52.554735+00:00",
+      "fetchedAt": "2026-11-10T02:31:06.089327+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-06-30",
@@ -471,9 +466,29 @@
     "inSiteAPI": true,
     "simpleMenu": true,
     "publicBrief": true,
-    "fullMarket": false,
+    "fullMarket": true,
     "clearCalculator": true,
     "beginnerGuide": true
+  },
+  "fullMarket": {
+    "status": "ready",
+    "count": 2349,
+    "markets": {
+      "twse": {
+        "status": "ready",
+        "count": 1336,
+        "tradeDate": "2026-11-09",
+        "fetchedAt": "2026-11-10T02:30:18.158352+00:00",
+        "url": "https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL"
+      },
+      "tpex": {
+        "status": "ready",
+        "count": 1013,
+        "tradeDate": "2026-11-09",
+        "fetchedAt": "2026-11-10T02:30:18.158352+00:00",
+        "url": "https://www.tpex.org.tw/openapi/v1/tpex_mainboard_daily_close_quotes"
+      }
+    }
   },
   "ai": [
     {
@@ -535,13 +550,13 @@
   "latestDeployment": {
     "id": 42743194843,
     "head_sha": "46602219835d727400069682207137b9880d410d",
-    "status": "in_progress",
-    "conclusion": null,
+    "status": "completed",
+    "conclusion": "success",
     "html_url": "https://github.com/timo893131/stock-analysis/actions/runs/42743194843",
     "jobs": [
       {
         "name": "build",
-        "conclusion": null,
+        "conclusion": "success",
         "steps": [
           {
             "name": "Set up job",
@@ -565,53 +580,79 @@
           },
           {
             "name": "Test",
-            "conclusion": null,
-            "status": "in_progress"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Synchronize daily data",
-            "conclusion": null,
-            "status": "pending"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Update financial health data when licensed",
-            "conclusion": null,
-            "status": "pending"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Generate optional AI explanations",
-            "conclusion": null,
-            "status": "pending"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Export market site",
-            "conclusion": null,
-            "status": "pending"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Export demo site",
-            "conclusion": null,
-            "status": "pending"
+            "conclusion": "skipped",
+            "status": "completed"
           },
           {
             "name": "Run actions/upload-pages-artifact@v3",
-            "conclusion": null,
-            "status": "pending"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Post Run actions/setup-node@v4",
-            "conclusion": null,
-            "status": "pending"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Post Run actions/setup-python@v5",
-            "conclusion": null,
-            "status": "pending"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Post Run actions/checkout@v4",
-            "conclusion": null,
-            "status": "pending"
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success",
+            "status": "completed"
+          }
+        ]
+      },
+      {
+        "name": "deploy",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
+            "name": "Deploy",
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success",
+            "status": "completed"
           }
         ]
       }
@@ -685,7 +726,7 @@
   "catalog": {
     "status": "ready",
     "count": 2602,
-    "updatedAt": "2026-11-10T02:06:11.941331+00:00"
+    "updatedAt": "2026-11-10T02:30:29.281195+00:00"
   },
   "publicAPI": {
     "httpStatus": 200,
@@ -704,5 +745,5 @@
     "verified": true,
     "financialCoverage": 3
   },
-  "status": "failed"
+  "status": "passed"
 }
