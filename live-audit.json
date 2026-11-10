@@ -1,7 +1,14 @@
 {
-  "checkedAt": "2026-11-10T05:56:05.549296+00:00",
+  "checkedAt": "2026-11-10T08:19:03.996746+00:00",
   "url": "https://timo893131.github.io/stock-analysis/",
-  "errors": [],
+  "errors": [
+    "首頁缺少預期的新功能入口",
+    "網頁檔案無法讀取：shell.js",
+    "網頁檔案無法讀取：shell.css",
+    "網頁檔案無法讀取：manifest.webmanifest",
+    "網頁檔案無法讀取：sw.js",
+    "應用程式安裝／離線檔案暫時無法讀取"
+  ],
   "warnings": [],
   "assets": {
     "index.html": "ok",
@@ -15,6 +22,10 @@
     "interface.css": "ok",
     "market-ui.js": "ok",
     "screener.js": "ok",
+    "shell.js": "failed",
+    "shell.css": "failed",
+    "manifest.webmanifest": "failed",
+    "sw.js": "failed",
     "journal.js": "ok",
     "journal-ui.js": "ok"
   },
@@ -461,6 +472,7 @@
     }
   ],
   "features": {
+    "installableApp": false,
     "paperSettlement": true,
     "paperTrading": true,
     "mobileViewport": true,
@@ -680,15 +692,15 @@
   ],
   "aiReadyCount": 6,
   "latestDeployment": {
-    "id": 42765025684,
-    "head_sha": "bc2df21be870b48d2b6d957ee143c88eb7267cec",
-    "status": "completed",
-    "conclusion": "success",
-    "html_url": "https://github.com/timo893131/stock-analysis/actions/runs/42765025684",
+    "id": 42781656231,
+    "head_sha": "07777c011a3ae39ae9f806f4ecc4fbd10a301184",
+    "status": "in_progress",
+    "conclusion": null,
+    "html_url": "https://github.com/timo893131/stock-analysis/actions/runs/42781656231",
     "jobs": [
       {
         "name": "build",
-        "conclusion": "success",
+        "conclusion": null,
         "steps": [
           {
             "name": "Set up job",
@@ -717,79 +729,48 @@
           },
           {
             "name": "Synchronize daily data",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "in_progress"
           },
           {
             "name": "Update financial health data when licensed",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Generate optional AI explanations",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Export market site",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Export demo site",
-            "conclusion": "skipped",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Run actions/upload-pages-artifact@v3",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Post Run actions/setup-node@v4",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Post Run actions/setup-python@v5",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Post Run actions/checkout@v4",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Complete job",
-            "conclusion": "success",
-            "status": "completed"
-          }
-        ]
-      },
-      {
-        "name": "deploy",
-        "conclusion": "success",
-        "steps": [
-          {
-            "name": "Set up job",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Deploy",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Verify full-market AI once after publication",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Complete job",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           }
         ]
       }
@@ -883,5 +864,5 @@
     "verified": true,
     "financialCoverage": 3
   },
-  "status": "passed"
+  "status": "failed"
 }
