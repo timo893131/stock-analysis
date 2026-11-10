@@ -87,3 +87,23 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Verify full-market AI once after publication
+        if: vars.MARKET_DATA_PUBLIC_DISPLAY == 'true' && !(github.event_name == 'workflow_dispatch' && inputs.demo)
+        continue-on-error: true
+        run: |
+          python - <<'PYCODE'
+          import json,urllib.request,urllib.parse
+          headers={'Origin':'https://timo893131.github.io','User-Agent':'Stockroom-Website-Check/1.0','Content-Type':'application/json'}
+          with urllib.request.urlopen('https://raw.githubusercontent.com/timo893131/stock-analysis/service-config/api.json',timeout=20) as r: config=json.load(r)
+          u=urllib.parse.urlparse(config['url'])
+          assert u.scheme=='https' and u.hostname.endswith('.workers.dev') and not u.username and not u.password and not u.port
+          base='https://'+u.hostname
+          with urllib.request.urlopen(urllib.request.Request(base+'/health',headers=headers),timeout=20) as r: health=json.load(r)
+          assert health.get('apiRevision')=='20261110-full-brief-v3', 'AI backend is still upgrading; no model call made'
+          # Exactly one attempt through the normal shared ten-per-day budget; no retries.
+          request=urllib.request.Request(base+'/brief',data=b'{}',headers=headers,method='POST')
+          with urllib.request.urlopen(request,timeout=90) as r: result=json.load(r)
+          assert result.get('scopeVersion')==3 and result.get('ai',{}).get('status')=='ready'
+          print(json.dumps({k:result.get(k) for k in ('scopeVersion','count','total','sourceComplete','candidateCounts','dates')},ensure_ascii=False))
+          PYCODE

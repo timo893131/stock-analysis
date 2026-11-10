@@ -21,13 +21,13 @@ def fetch(path):
 def audit(loader=fetch):
     now=dt.datetime.now(dt.timezone.utc)
     result={'checkedAt':now.isoformat(),'url':BASE,'errors':[],'warnings':[],'assets':{},'quotes':[],'financials':[]}
-    for path in ('','style.css','app.js','backtest.js','paper.js','research.js','coach.js','advice-ui.js','interface.css','market-ui.js','journal.js','journal-ui.js'):
+    for path in ('','style.css','app.js','backtest.js','paper.js','research.js','coach.js','advice-ui.js','interface.css','market-ui.js','screener.js','journal.js','journal-ui.js'):
         try:
             body=loader(path)
             if not body.strip():raise ValueError()
             if path=='' and ('window.STOCKROOM_STATIC=true' not in body or 'financial-results' not in body or 'backtest-results' not in body):
                 result['errors'].append('首頁不是預期的靜態財報／回測版本')
-            if path=='':result['features']={'paperTrading': 'src="./paper.js' in body and 'paper-symbol' in body, 'mobileViewport':'viewport-fit=cover' in body, 'decisionAssist':'id="decision-panel"' in body, 'quickResearch':'id="quick-panel"' in body, 'onDemandAI':'id="ai-dialog"' in body, 'inSiteAPI':'id="api-settings"' in body and 'id="ai-generate"' in body, 'simpleMenu':'data-tab="market"' in body and 'data-tab="settings"' in body, 'publicBrief':'id="brief-run"' in body and 'id="api-key"' not in body, 'researchJournal':'src="./journal-ui.js' in body and 'value="watch"' in body, 'fullMarket':'id="full-market"' in body and 'src="./market-ui.js' in body, 'clearCalculator':'src="./advice-ui.js' in body and 'id="status-guide"' in body, 'beginnerGuide':'id="plain-insight"' in body and 'data-practice-budget="1000"' in body}
+            if path=='':result['features']={'paperTrading': 'src="./paper.js' in body and 'paper-symbol' in body, 'mobileViewport':'viewport-fit=cover' in body, 'decisionAssist':'id="decision-panel"' in body, 'quickResearch':'id="quick-panel"' in body, 'onDemandAI':'id="ai-dialog"' in body, 'inSiteAPI':'id="api-settings"' in body and 'id="ai-generate"' in body, 'simpleMenu':'data-tab="market"' in body and 'data-tab="settings"' in body, 'publicBrief':'id="brief-run"' in body and 'id="api-key"' not in body, 'marketWideQuick':'src="./screener.js' in body and '全市場 AI 速覽' in body, 'researchJournal':'src="./journal-ui.js' in body and 'value="watch"' in body, 'fullMarket':'id="full-market"' in body and 'src="./market-ui.js' in body, 'clearCalculator':'src="./advice-ui.js' in body and 'id="status-guide"' in body, 'beginnerGuide':'id="plain-insight"' in body and 'data-practice-budget="1000"' in body}
             if path=='' and not all(result['features'].values()):
                 result['errors'].append('首頁缺少預期的新功能入口')
             result['assets'][path or 'index.html']='ok'
@@ -36,7 +36,7 @@ def audit(loader=fetch):
             result['errors'].append('網頁檔案無法讀取：'+(path or 'index.html'))
     try:
         full=json.loads(loader('data/full-market.json'))
-        result['fullMarket']={'status':full.get('status'),'count':len(full.get('quotes',[])),'markets':full.get('markets',{})}
+        result['fullMarket']={'status':full.get('status'),'count':len(full.get('quotes',[])),'turnoverCount':sum(isinstance(q.get('turnover'),(int,float)) and math.isfinite(q['turnover']) and q['turnover']>0 for q in full.get('quotes',[])),'markets':full.get('markets',{})}
         if full.get('status')!='ready':result['warnings'].append('全市場整批來源部分缺漏，請查看來源狀態')
     except Exception:
         result['warnings'].append('全市場快照尚無法讀取')
@@ -124,7 +124,7 @@ def audit(loader=fetch):
         try:
             with urllib.request.urlopen(req,timeout=90) as response:
                 payload=json.load(response)
-                result['publicAPI']={'httpStatus':response.status,'apiRevision':payload.get('apiRevision'),'ready':payload.get('ai',{}).get('status')=='ready' or (payload.get('mode')=='published' and len(payload.get('items',[]))>0),'mode':payload.get('mode'),'fallbackReason':payload.get('reason'),'count':payload.get('count'),'generatedAt':payload.get('ai',{}).get('generatedAt')}
+                result['publicAPI']={'httpStatus':response.status,'apiRevision':payload.get('apiRevision'),'ready':payload.get('ai',{}).get('status')=='ready' or (payload.get('mode')=='published' and len(payload.get('items',[]))>0),'mode':payload.get('mode'),'fallbackReason':payload.get('reason'),'count':payload.get('count'),'scopeVersion':payload.get('scopeVersion'),'total':payload.get('total'),'sourceComplete':payload.get('sourceComplete'),'candidateCounts':payload.get('candidateCounts'),'shortlistLength':len(payload.get('shortlist',[])),'generatedAt':payload.get('ai',{}).get('generatedAt')}
         except urllib.error.HTTPError as error:
             raw=error.read(4096).decode('utf-8',errors='replace')
             try:message=json.loads(raw).get('error','unknown')

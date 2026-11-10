@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ['cloudflare/**', '.github/workflows/deploy-api.yml']
+    paths: ['cloudflare/**', 'static/screener.js', '.github/workflows/deploy-api.yml']
 permissions:
   contents: write
 concurrency:
@@ -58,7 +58,7 @@ jobs:
           try:
               request=urllib.request.Request('https://api.cloudflare.com/client/v4/accounts/'+os.environ['CF_ACCOUNT']+'/workers/scripts/stockroom-api',headers={'Authorization':'Bearer '+os.environ['CF_TOKEN'],'User-Agent':'Stockroom-Website-Check/1.0'})
               with urllib.request.urlopen(request,timeout=30) as response: body=response.read().decode('utf-8',errors='replace')
-              deployed={'hasCurrentRevision':'20261110-ai-advice-v2' in body,'hasFallback':'cachedAt' in body}
+              deployed={'hasCurrentRevision':'20261110-full-brief-v3' in body,'hasFallback':'cachedAt' in body}
           except Exception:deployed={'inspection':'unavailable'}
           try:
               request=urllib.request.Request(base+'/health',headers={'Origin':'https://timo893131.github.io','User-Agent':'Stockroom-Website-Check/1.0'})

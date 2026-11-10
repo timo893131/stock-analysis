@@ -30,5 +30,5 @@ async function init(config){options=config;document.querySelectorAll('[data-mark
  await reload();
  render();if(!manualMode)setMode(snapshot.quotes.length?'all':'research');
 }
-root.StockroomMarketUI={init,render,setMode,reload,getQuotes:()=>snapshot.quotes,get ready(){return !!options.hasHistory;}};
+root.StockroomMarketUI={init,render,setMode,reload,getQuotes:()=>snapshot.quotes,getSnapshot:()=>snapshot,get ready(){return !!options.hasHistory;}};
 })(globalThis);

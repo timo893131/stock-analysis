@@ -10,14 +10,14 @@ import full_market as F
 class FullMarketTests(unittest.TestCase):
     def test_dates_symbols_and_missing_prices(self):
         today=dt.date(2026,11,10)
-        rows=[{'Code':'2330','Name':'台積電','Date':'1151110','ClosingPrice':'1,200.5','Change':'+2.5','TradeVolume':'10,000'},
+        rows=[{'Code':'2330','Name':'台積電','Date':'1151110','ClosingPrice':'1,200.5','Change':'+2.5','TradeVolume':'10,000','TradeValue':'12,345,000'},
               {'Code':'00679B','Name':'債券ETF','Date':'20261110','ClosingPrice':'--','Change':'X0.00'},
               {'Code':'123456','Name':'權證','Date':'1151110','ClosingPrice':'1'},
               {'Code':'2379','Name':'未來','Date':'1151111','ClosingPrice':'745'}]
         result=F.normalize(rows,'twse',today)
         self.assertEqual({q['symbol'] for q in result},{'2330.TW','00679B.TW'})
         stock=next(q for q in result if q['symbol']=='2330.TW')
-        self.assertEqual(stock['volume'],10000)
+        self.assertEqual(stock['volume'],10000);self.assertEqual(stock['turnover'],12345000)
         self.assertAlmostEqual(stock['change'],2.5/1198*100)
         missing=next(q for q in result if q['symbol']=='00679B.TW')
         self.assertEqual(missing['kind'],'etf');self.assertIsNone(missing['price']);self.assertIsNone(missing['change'])

@@ -14,15 +14,15 @@ test('repeated in-site requests reuse quote and AI caches without spending twice
  try{const request=()=>new Request('https://api.test/research',{method:'POST',body:JSON.stringify({symbol:'2603.TW',ai:true})});const responses=await Promise.all([svc.fetch(request()),svc.fetch(request())]);for(const r of responses){assert.equal(r.status,200);assert.equal((await r.json()).ai.status,'ready');}assert.equal(market,4);assert.equal(ai,1);assert.equal(map.get('budget').ai,1);}finally{global.fetch=original;}
 });
 
-test('one-click brief uses verified snapshot scope and shares cache across visitors',async()=>{
- const {Research}=await mod,map=new Map(),storage={async get(k){return structuredClone(map.get(k));},async put(k,v){map.set(k,structuredClone(v));},async transaction(fn){return fn(storage)}};const svc=new Research({storage},{});let calls=0;svc.explain=async facts=>{calls++;assert.equal(facts.stocks.length,1);return {status:'ready',generatedAt:new Date().toISOString(),summary:'研究',risks:'風險',checks:'查證',action:'wait',reason:'等待證據'}};
- const original=global.fetch;global.fetch=async()=>Response.json({quotes:[{symbol:'2330.TW',name:'台積電',asOf:Date.now()/1000-10,tradeDate:'2026-11-09',price:100,history:Array.from({length:60},()=>({close:100}))},{symbol:'demo',demo:true}]});
- try{const a=await svc.brief(),b=await svc.brief();assert.equal(a.count,1);assert.deepEqual(a.symbols,['2330.TW']);assert.equal(b.ai.status,'ready');assert.equal(calls,1);}finally{global.fetch=original;}
+test('market-wide brief uses all snapshot rows, shares cache and has no legacy 20-stock fallback',async()=>{
+ const {Research}=await mod,map=new Map(),storage={async get(k){return structuredClone(map.get(k));},async put(k,v){map.set(k,structuredClone(v));}};const svc=new Research({storage},{});let calls=0;
+ const date=new Date(Date.now()-86400000).toISOString().slice(0,10),row={symbol:'4999.TW',name:'清單以外股票',market:'上市',price:100,change:1,volume:2000000,turnover:200000000,tradeDate:date};
+ const snapshot={quotes:[row,{...row,symbol:'7000.TWO',market:'上櫃'}],markets:{twse:{status:'ready',tradeDate:date},tpex:{status:'ready',tradeDate:date}}};
+ svc.explain=async facts=>{calls++;assert.equal(facts.coverage.valid,2);assert.ok(facts.shortlist.some(q=>q.symbol==='4999.TW'));return {status:'ready',generatedAt:new Date().toISOString(),summary:'全市場',risks:'風險',checks:'查證'}};
+ const original=global.fetch;global.fetch=async url=>{assert.match(url,/full-market.json$/);return Response.json(snapshot);};
+ try{const a=await svc.brief(),b=await svc.brief();assert.equal(a.count,2);assert.equal(a.scopeVersion,3);assert.equal(a.sourceComplete,true);assert.equal(b.ai.status,'ready');assert.equal(calls,1);map.clear();svc.explain=async()=>{throw Error('AI HTTP 429')};await assert.rejects(svc.brief(),/429/);assert.equal(map.has('daily-brief'),false);}finally{global.fetch=original;}
 });
-test('brief on AI failure returns only matching published AI, with clear provenance and cache',async()=>{
- const {Research}=await mod,map=new Map(),storage={async get(k){return structuredClone(map.get(k));},async put(k,v){map.set(k,structuredClone(v));}};const svc=new Research({storage},{});let calls=0;svc.explain=async()=>{calls++;throw Error('AI HTTP 429')};const stamp=Date.now()/1000-10,q={symbol:'2330.TW',name:'台積電',asOf:stamp,tradeDate:'2026-11-09',price:100,history:Array.from({length:60},()=>({close:100}))};const a={symbol:q.symbol,asOf:stamp,status:'ready',generatedAt:new Date().toISOString(),summary:'原始 AI',risks:'風險',checks:'查證'};const original=global.fetch;global.fetch=async url=>Response.json(url.endsWith('quotes.json')?{quotes:[q]}:{reports:[a,{...a,symbol:'unknown'}]});
- try{const r=await svc.brief();assert.equal(r.mode,'published');assert.equal(r.count,1);assert.equal(r.items[0].summary,'原始 AI');assert.equal(r.ai,undefined);await svc.brief();assert.equal(calls,1);}finally{global.fetch=original;}
-});
+test('read-only check rejects old 20-stock brief caches without generating',async()=>{const {Research}=await mod;const svc=new Research({storage:{async get(){return {cachedAt:Date.now(),count:20,ai:{status:'ready'}}}}},{});const r=await svc.fetch(new Request('https://api.test/brief',{method:'POST',body:'{"readOnly":true}'}));assert.equal(r.status,503);});
 test('read-only deployment check cannot trigger an AI request',async()=>{
  const {Research}=await mod;const svc=new Research({storage:{async get(){return undefined}}},{});svc.brief=async()=>{throw Error('must not generate')};const r=await svc.fetch(new Request('https://api.test/brief',{method:'POST',body:'{"readOnly":true}'}));assert.equal(r.status,503);assert.match((await r.json()).error,/尚未產生/);
 });

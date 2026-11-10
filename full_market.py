@@ -55,7 +55,7 @@ def normalize(rows, market, today=None):
         symbol = code + ('.TW' if market == 'twse' else '.TWO')
         item = {'symbol':symbol, 'name':name.strip(), 'market':SOURCES[market][0],
                 'kind':'etf' if code.startswith('00') else 'stock', 'price':price,
-                'change':change, 'changeAmount':delta, 'volume':volume if volume is not None and volume >= 0 else None,
+                'change':change, 'changeAmount':delta, 'turnover':number(row.get('TradeValue' if market == 'twse' else 'TransactionAmount')), 'volume':volume if volume is not None and volume >= 0 else None,
                 'tradeDate':stamp, 'source':'TWSE OpenAPI' if market == 'twse' else 'TPEx OpenAPI',
                 'status':'quoted' if price is not None else 'no_close'}
         if symbol not in result or stamp > result[symbol]['tradeDate']:
