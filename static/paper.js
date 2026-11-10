@@ -35,7 +35,7 @@
  function expectedDate(o){const cut=Math.max(o.createdAt,o.referenceTime*1000),d=new Date(day(cut)+'T00:00:00Z');do{d.setUTCDate(d.getUTCDate()+1);}while([0,6].includes(d.getUTCDay()));return d.toISOString().slice(0,10);}
  function validHistory(q){return q?.demo===false&&!q.sync?.error&&Array.isArray(q.history)&&q.history.length>0&&q.history.every((x,i)=>Number.isFinite(x.time)&&Number.isFinite(x.close)&&x.close>0&&(i===0||x.time>q.history[i-1].time));}
  function pendingInfo(o,q,marketDate=null,now=Date.now()){
-  if(o.status!=='pending')return {state:o.status,label:o.status==='filled'?'已成交':o.status==='expired'?'已失效':'已取消',reason:o.message||'委託已結束，不會再次成交。',needsHistory:false};
+  if(o.status!=='pending')return {state:o.status,label:o.status==='filled'?'已成交':o.status==='expired'?'未成交':'已取消',reason:o.message||'委託已結束，不會再次成交。',needsHistory:false};
   const target=expectedDate(o),close=Date.parse(target+'T13:30:00+08:00'),publish=Date.parse(target+'T18:20:00+08:00'),cut=Math.max(o.createdAt,o.referenceTime*1000);
   if(o.createdAt>now+60000)return {state:'clock',label:'請確認裝置日期',reason:'委託時間在目前裝置時間之後，暫不回溯成交。',needsHistory:false,target};
   if(validHistory(q)&&q.history.some(x=>day(x.time*1000)>day(cut)&&x.time*1000<=now))return {state:'ready',label:'可檢查結算',reason:'已有委託之後的收盤，按「更新並結算」檢查價格條件與儲存結果。',needsHistory:false,target};
