@@ -19,6 +19,8 @@ class PwaArtifacts(unittest.TestCase):
             for name in files:
                 path=name.split('?')[0];self.assertTrue((root/(path if path!='./' else 'index.html')).is_file(),name)
             self.assertTrue(any(x.startswith('./shell.js?v=') for x in files));self.assertTrue(any(x.startswith('./shell.css?v=') for x in files));self.assertNotIn('https://', ''.join(files))
+            for asset in ['planner.js','planner-ui.js','workbench.css','tokens.css','base.css']:
+                self.assertTrue(any(x.startswith('./'+asset+'?v=') for x in files),asset)
     def test_data_changes_do_not_masquerade_as_new_application_versions(self):
         with tempfile.TemporaryDirectory() as folder:
             build(folder,demo=True);first=(Path(folder)/'sw.js').read_text()

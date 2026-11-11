@@ -1,0 +1,23 @@
+{
+  "scanned": "2026-11-11",
+  "findings": {
+    "fonts": "static/shell.css:7 system Chinese font stack",
+    "palette": "static/style.css:1 named green/pale tokens; static/shell.css:2 green identity #173f35",
+    "framework": "static/index.html:2 static HTML, plain JavaScript, export_site.py:18 Pages/PWA export",
+    "routes": "app screens: overview, market, detail, portfolio, settings, learn; static/app.js setupMenus/switchTab",
+    "material": "existing app and real provider datasets; test captures use clearly marked demo data"
+  },
+  "preserve": [
+    "four destinations",
+    "stock APIs and shared free limits",
+    "local paper account v2",
+    "watchlist and research journal",
+    "green identity"
+  ],
+  "introduce": [
+    "role-based tokens",
+    "responsive workbench",
+    "risk-first virtual plan and local comparison",
+    "accessible controls and Hallmark browser sweep"
+  ]
+}

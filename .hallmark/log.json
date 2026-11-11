@@ -1,0 +1,23 @@
+[
+ {
+  "mode": "redesign",
+  "depth": "full",
+  "scope": "app",
+  "shape": "app screen",
+  "theme": "brand",
+  "axes": "light/grotesk-sans/cool",
+  "nav": "desktop tabs and mobile bottom bar",
+  "signature": "four-bound fee-aware virtual plan",
+  "sections": [
+   "overview",
+   "market",
+   "detail",
+   "portfolio",
+   "settings",
+   "learn"
+  ],
+  "waived": [],
+  "prompt": "Taiwan stock research workbench for beginners with phone-first paper practice",
+  "date": "2026-11-11"
+ }
+]
