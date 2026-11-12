@@ -27,7 +27,7 @@ def quote(item, rows, now=None):
     history=[{'time':int(dt.datetime.combine(dt.date.fromisoformat(day),dt.time(13,30),ZoneInfo('Asia/Taipei')).timestamp()),'close':close,'volume':volume} for day,close,volume in rows]
     age=now.timestamp()-history[-1]['time']
     if not 0<=age<=7*86400:raise ValueError('行情過期或日期異常，暫不生成解析')
-    return {'symbol':item['symbol'],'name':item['name'],'price':rows[-1][1],'asOf':history[-1]['time'],'tradeDate':rows[-1][0],'history':history,'demo':False,'source':'FinMind · 日收盤'}
+    return {'symbol':item['symbol'],'name':item['name'],'price':rows[-1][1],'asOf':history[-1]['time'],'tradeDate':rows[-1][0],'history':history,'demo':False,'dataKind':'daily','source':'FinMind · 日收盤'}
 
 
 def run(value,output):

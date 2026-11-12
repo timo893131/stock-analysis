@@ -58,7 +58,7 @@ jobs:
           try:
               request=urllib.request.Request('https://api.cloudflare.com/client/v4/accounts/'+os.environ['CF_ACCOUNT']+'/workers/scripts/stockroom-api',headers={'Authorization':'Bearer '+os.environ['CF_TOKEN'],'User-Agent':'Stockroom-Website-Check/1.0'})
               with urllib.request.urlopen(request,timeout=30) as response: body=response.read().decode('utf-8',errors='replace')
-              deployed={'hasCurrentRevision':'20261110-full-brief-v3' in body,'hasFallback':'cachedAt' in body}
+              deployed={'hasCurrentRevision':'20261112-beginner-sizing-v4' in body,'hasFallback':'cachedAt' in body}
           except Exception:deployed={'inspection':'unavailable'}
           try:
               request=urllib.request.Request(base+'/health',headers={'Origin':'https://timo893131.github.io','User-Agent':'Stockroom-Website-Check/1.0'})
@@ -83,8 +83,22 @@ jobs:
               except Exception: reason='Service unavailable'
               ai_check={'status':'unavailable','reason':reason}
           except Exception: ai_check={'status':'unavailable'}
+          # One stock verifies the new model-provided allocation field under the same
+          # shared free budget. Never retry or reset the quota on a failed check.
+          allocation_check={'status':'unavailable'}
+          try:
+              req=urllib.request.Request(base+'/research',data=json.dumps({'symbol':'2330.TW','ai':True}).encode(),headers={'Content-Type':'application/json','Origin':'https://timo893131.github.io','User-Agent':'Stockroom-Website-Check/1.0'},method='POST')
+              with urllib.request.urlopen(req,timeout=150) as response: checked=json.load(response)
+              a=checked.get('ai',{})
+              assert a.get('adviceVersion')==3 and a.get('allocationPct') in (0,5,10,20,25)
+              allocation_check={'status':a.get('status'),'adviceVersion':a.get('adviceVersion'),'action':a.get('action'),'allocationPct':a.get('allocationPct'),'model':a.get('model'),'generatedAt':a.get('generatedAt')}
+          except urllib.error.HTTPError as error:
+              try: reason=json.load(error).get('error','Service unavailable')
+              except Exception: reason='Service unavailable'
+              allocation_check={'status':'unavailable','reason':reason}
+          except Exception: allocation_check={'status':'unavailable'}
           with open(os.environ['RUNNER_TEMP']+'/stockroom-api.json','w') as out:
-              json.dump({'url':base,'mode':'public','commit':os.environ['GITHUB_SHA'],'checkedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'briefCheck':check,'deployedCode':deployed,'healthCheck':health,'aiCheck':ai_check},out)
+              json.dump({'url':base,'mode':'public','commit':os.environ['GITHUB_SHA'],'checkedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'briefCheck':check,'deployedCode':deployed,'healthCheck':health,'aiCheck':ai_check,'allocationCheck':allocation_check},out)
           PYCODE
           if git fetch origin service-config; then
             git checkout -B service-config FETCH_HEAD

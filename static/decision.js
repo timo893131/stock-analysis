@@ -35,12 +35,21 @@
   if(!Number.isSafeInteger(value)||value<1||value>1e9)throw Error('可用資金範圍為 1 至 1,000,000,000 元。');
   return value;
  }
- function entryPlan(q,ai,budget,now=Date.now()){
-  const a=advice(q,ai,now);
-  if(a.action!=='consider')return {shares:0,cost:0,loss:0,reason:a.label+'：'+a.reason+' 新增買入試算為 0 元。'};
-  const limit=size(q,{budget,riskPct:1,stopPct:8,capPct:10});
-  const shares=Math.floor(limit.shares*.3),ratio=limit.shares?shares/limit.shares:0;
-  return {...limit,shares,cost:limit.cost*ratio,loss:limit.loss*ratio,reason:shares?'第一筆先以部位上限的 30% 試算，其餘資金保留。':'預算不足以分批買入 1 股，先不買入。'};
+ function cashPlan(q,budget,now=Date.now()){
+  const P=typeof module!=='undefined'?require('./paper.js'):root.StockroomPaper;
+  if(!q||q.demo!==false||q.dataKind!=='daily'||!Number.isFinite(q.price)||q.price<=0||!Number.isFinite(q.asOf)||q.asOf*1000>now||now-q.asOf*1000>7*86400000||q.sync?.error)throw Error('需要有效的真實日收盤，才能換算股數。');
+  return P.amountShares(budget,P.executionPrice(q,'buy'));
  }
- const api={assess,size,advice,entryPlan,parseBudget};if(typeof module!=='undefined')module.exports=api;else root.StockroomDecision=api;
+ function entryPlan(q,ai,budget,now=Date.now()){
+  if(!Number.isFinite(budget)||budget<=0||budget>1e9)throw Error('請輸入有效預算。');
+  const a=advice(q,ai,now);
+  if(a.action!=='consider')return {shares:0,cost:0,reason:a.label+'：'+a.reason,allocationPct:0};
+  const pct=ai.allocationPct;
+  if(![5,10,20,25].includes(pct))return {shares:0,cost:0,allocationPct:null,reason:'這份 AI 未提供金額比例，請重新解析；手動金額換算仍可使用。'};
+  const allocation=Math.floor(budget*pct/100);
+  if(!allocation)return {shares:0,cost:0,allocationPct:pct,reason:'AI 的參考比例預算不足 1 元，先不買入。'};
+  const r=cashPlan(q,allocation,now);
+  return {...r,allocationPct:pct,allocation,reason:`AI 回覆的第一筆參考比例為 ${pct}%，以你輸入的預算換算；僅供研究，不限制自由練習。`};
+ }
+ const api={assess,size,advice,entryPlan,cashPlan,parseBudget};if(typeof module!=='undefined')module.exports=api;else root.StockroomDecision=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

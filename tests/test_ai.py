@@ -8,7 +8,7 @@ class AITests(unittest.TestCase):
         for x in ({},{'summary':'x','risks':'x','checks':5},{'summary':'x','risks':'x','checks':'x','buy':True}):
             with self.assertRaises(ValueError):validate_text(x)
     def test_provider_call_keeps_key_in_header_and_only_supplied_facts(self):
-        answer={'summary':'僅供研究','risks':'資料不完整','checks':'核對財報'}
+        answer={'summary':'僅供研究','risks':'資料不完整','checks':'核對財報','action':'wait','reason':'先確認財報','allocationPct':0}
         response={'candidates':[{'content':{'parts':[{'text':json.dumps(answer)}]}}]}
         q={'symbol':'2330.TW','name':'台積電','price':100,'asOf':123,'history':[{'close':100}]*60}
         with patch('urllib.request.urlopen',return_value=io.BytesIO(json.dumps(response).encode())) as call:
@@ -25,3 +25,9 @@ class AITests(unittest.TestCase):
         self.assertIsNone(matching_cached([r],{'symbol':'2330.TW','asOf':124}))
         q={'symbol':'2330.TW','asOf':123,'price':100,'history':[]}
         self.assertNotEqual(fingerprint(q,{}),fingerprint({**q,'price':101},{}))
+
+    def test_allocation_is_explicit_and_matches_the_action(self):
+        base={'summary':'研究','risks':'風險','checks':'查證','action':'consider','reason':'先核對證據','allocationPct':10}
+        self.assertEqual(validate_text(base,require_advice=True)['allocationPct'],10)
+        for item in [{**base,'allocationPct':0},{**base,'allocationPct':100},{**base,'allocationPct':True},{**base,'action':'wait'},{k:v for k,v in base.items() if k!='allocationPct'}]:
+            with self.assertRaises(ValueError):validate_text(item,require_advice=True)

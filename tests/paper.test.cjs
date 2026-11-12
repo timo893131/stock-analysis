@@ -45,3 +45,23 @@ test('weekend expectation is a hint, not a fabricated session',()=>{
  const fq={...q,asOf:stamp('2026-11-06T05:30:00Z')/1000},a=P.place(P.fresh(),fq,order(),stamp('2026-11-06T08:00:00Z'));
  assert.equal(P.expectedDate(a.orders[0]),'2026-11-09');assert.equal(P.settle(a,[fq],stamp('2026-11-09T04:00:00Z')).trades.length,0);
 });
+test('full money converts to whole shares including fees, without portfolio percentage cuts',()=>{
+ assert.deepEqual(P.amountShares(30000,745.75),{shares:40,cost:29872.51,fee:42.51,left:127.49,price:745.75});
+ for(const price of [.01,1,99.99,745.75,3000])for(const amount of [1,1000,30000,1000000]){const r=P.amountShares(amount,price);assert.ok(r.cost<=amount);assert.ok(r.left>=0);const gross=Math.round((r.shares+1)*price*100)/100,next=Math.round((gross+Math.round(gross*P.feeRate*100)/100)*100)/100;assert.ok(next>amount);}
+ assert.equal(P.amountShares(100,745.75).shares,0);assert.throws(()=>P.amountShares(NaN,100));
+});
+test('known-close practice creates holdings now and records added capital separately from gains',()=>{
+ const original=P.fresh(),a=P.place(original,q,{...order('free','buy',20000),execution:'known-close',autoFund:true},now);
+ assert.equal(original.orders.length,0);assert.equal(a.orders[0].status,'filled');assert.equal(a.positions[q.symbol].quantity,20000);assert.equal(a.cash,0);assert.equal(a.funding[0].amount,1004852.85);assert.equal(P.capital(a),2004852.85);assert.equal(a.positions[q.symbol].cost,2004852.85);assert.equal(a.trades[0].priceAsOf,q.asOf);assert.equal(a.trades[0].time,now);assert.match(a.orders[0].message,/非即時|並非即時/);assert.equal(P.reserves(a).cash,0);
+ assert.deepEqual(P.settle(a,[next],now+86400000),a);assert.deepEqual(P.validate(JSON.parse(JSON.stringify(a))),a);
+ const sold=P.place(a,q,{...order('sell-free','sell',20000),execution:'known-close',autoFund:true},now+1000);assert.deepEqual(sold.positions,{});assert.equal(sold.funding.length,1);assert.equal(P.capital(sold),P.capital(a));assert.equal(sold.cash-P.capital(sold),sold.realized);
+});
+test('auto-funding a legacy pending order preserves reservation, cancellation and original capital',()=>{
+ const a=P.place(P.fresh(),q,{...order('funded-pending','buy',20000),autoFund:true},now);assert.equal(a.orders[0].status,'pending');assert.equal(a.positions[q.symbol],undefined);assert.equal(P.reserves(a).cash,a.cash);
+ const b=P.cancel(a,'funded-pending');assert.equal(P.reserves(b).cash,0);assert.equal(b.cash,P.capital(b));assert.deepEqual(b.funding,a.funding);
+ assert.throws(()=>P.validate({...a,funding:[...a.funding,...a.funding]}));assert.throws(()=>P.validate({...a,funding:[{...a.funding[0],orderId:'unknown'}]}));assert.throws(()=>P.place(a,q,{...order('funded-pending'),autoFund:true},now));
+});
+test('free known-close mode still rejects invalid sources, shorts and duplicate submissions',()=>{
+ const input={...order('known','buy',1),execution:'known-close',autoFund:true};for(const bad of [{demo:true},{asOf:1},{asOf:now/1000+100},{sync:{error:'bad'}}])assert.throws(()=>P.place(P.fresh(),{...q,...bad},input,now));
+ const a=P.place(P.fresh(),q,input,now);assert.throws(()=>P.place(a,q,input,now));assert.throws(()=>P.place(a,q,{...input,id:'short',side:'sell',quantity:2},now));assert.equal(a.funding,undefined);
+});

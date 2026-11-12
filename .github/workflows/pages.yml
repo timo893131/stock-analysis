@@ -100,7 +100,7 @@ jobs:
           assert u.scheme=='https' and u.hostname.endswith('.workers.dev') and not u.username and not u.password and not u.port
           base='https://'+u.hostname
           with urllib.request.urlopen(urllib.request.Request(base+'/health',headers=headers),timeout=20) as r: health=json.load(r)
-          assert health.get('apiRevision')=='20261110-full-brief-v3', 'AI backend is still upgrading; no model call made'
+          assert health.get('apiRevision')=='20261112-beginner-sizing-v4', 'AI backend is still upgrading; no model call made'
           # Exactly one attempt through the normal shared ten-per-day budget; no retries.
           request=urllib.request.Request(base+'/brief',data=b'{}',headers=headers,method='POST')
           with urllib.request.urlopen(request,timeout=90) as r: result=json.load(r)
