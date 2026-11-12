@@ -1,7 +1,10 @@
 {
-  "checkedAt": "2026-11-11T17:59:07.795121+00:00",
+  "checkedAt": "2026-11-12T01:58:22.623432+00:00",
   "url": "https://timo893131.github.io/stock-analysis/",
-  "errors": [],
+  "errors": [
+    "首頁缺少預期的新功能入口",
+    "網頁檔案無法讀取：beginner-ui.js"
+  ],
   "warnings": [
     "8069.TWO 財務指標僅 5/6 項可用"
   ],
@@ -21,6 +24,7 @@
     "shell.css": "ok",
     "planner.js": "ok",
     "planner-ui.js": "ok",
+    "beginner-ui.js": "failed",
     "workbench.css": "ok",
     "tokens.css": "ok",
     "base.css": "ok",
@@ -472,6 +476,8 @@
     }
   ],
   "features": {
+    "freePractice": false,
+    "beginnerHub": false,
     "practicePlans": true,
     "hallmarkWorkbench": true,
     "installableApp": true,
@@ -702,15 +708,15 @@
   ],
   "aiReadyCount": 6,
   "latestDeployment": {
-    "id": 43072807160,
-    "head_sha": "707a5bca24b7d2503494d307fbadbb46df7f206a",
-    "status": "completed",
-    "conclusion": "success",
-    "html_url": "https://github.com/timo893131/stock-analysis/actions/runs/43072807160",
+    "id": 43138111766,
+    "head_sha": "be7fd2d4f81ed808900f02c6dc22c712d7509f61",
+    "status": "in_progress",
+    "conclusion": null,
+    "html_url": "https://github.com/timo893131/stock-analysis/actions/runs/43138111766",
     "jobs": [
       {
         "name": "build",
-        "conclusion": "success",
+        "conclusion": null,
         "steps": [
           {
             "name": "Set up job",
@@ -739,94 +745,63 @@
           },
           {
             "name": "Synchronize daily data",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "in_progress"
           },
           {
             "name": "Update financial health data when licensed",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Generate optional AI explanations",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Export market site",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Export demo site",
-            "conclusion": "skipped",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Run actions/upload-pages-artifact@v3",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Post Run actions/setup-node@v4",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Post Run actions/setup-python@v5",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Post Run actions/checkout@v4",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Complete job",
-            "conclusion": "success",
-            "status": "completed"
-          }
-        ]
-      },
-      {
-        "name": "deploy",
-        "conclusion": "success",
-        "steps": [
-          {
-            "name": "Set up job",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Deploy",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Verify full-market AI once after publication",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Complete job",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           }
         ]
       }
     ]
   },
   "backendDeployment": {
-    "id": 42749883919,
-    "head_sha": "e5218564f51091fd51b387f3a815360a3e245f6b",
-    "status": "completed",
-    "conclusion": "success",
-    "html_url": "https://github.com/timo893131/stock-analysis/actions/runs/42749883919",
+    "id": 43138111824,
+    "head_sha": "be7fd2d4f81ed808900f02c6dc22c712d7509f61",
+    "status": "in_progress",
+    "conclusion": null,
+    "html_url": "https://github.com/timo893131/stock-analysis/actions/runs/43138111824",
     "jobs": [
       {
         "name": "deploy",
-        "conclusion": "success",
+        "conclusion": null,
         "steps": [
           {
             "name": "Set up job",
@@ -855,28 +830,23 @@
           },
           {
             "name": "Run cloudflare/wrangler-action@v3",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "in_progress"
           },
           {
             "name": "Publish automatic connection settings",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Post Run actions/setup-node@v4",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Post Run actions/checkout@v4",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Complete job",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           }
         ]
       }
@@ -912,5 +882,5 @@
     "verified": true,
     "financialCoverage": 3
   },
-  "status": "warning"
+  "status": "failed"
 }
