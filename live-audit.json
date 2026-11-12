@@ -1,8 +1,13 @@
 {
-  "checkedAt": "2026-11-12T02:03:41.489623+00:00",
+  "checkedAt": "2026-11-12T18:26:29.490731+00:00",
   "url": "https://timo893131.github.io/stock-analysis/",
   "errors": [],
-  "warnings": [],
+  "warnings": [
+    "2357.TW 財務指標僅 5/6 項可用",
+    "2379.TW 財務指標僅 5/6 項可用",
+    "2345.TW 財務指標僅 5/6 項可用",
+    "AI 解讀可用 5/6 檔（選用功能）"
+  ],
   "assets": {
     "index.html": "ok",
     "style.css": "ok",
@@ -32,7 +37,7 @@
     {
       "symbol": "2330.TW",
       "demo": false,
-      "date": "2026-11-11",
+      "date": "2026-11-12",
       "historyRows": 130,
       "source": "FinMind · 日收盤",
       "syncError": null
@@ -40,7 +45,7 @@
     {
       "symbol": "2317.TW",
       "demo": false,
-      "date": "2026-11-11",
+      "date": "2026-11-12",
       "historyRows": 130,
       "source": "FinMind · 日收盤",
       "syncError": null
@@ -48,7 +53,7 @@
     {
       "symbol": "2454.TW",
       "demo": false,
-      "date": "2026-11-11",
+      "date": "2026-11-12",
       "historyRows": 130,
       "source": "FinMind · 日收盤",
       "syncError": null
@@ -56,7 +61,7 @@
     {
       "symbol": "2308.TW",
       "demo": false,
-      "date": "2026-11-11",
+      "date": "2026-11-12",
       "historyRows": 130,
       "source": "FinMind · 日收盤",
       "syncError": null
@@ -64,7 +69,7 @@
     {
       "symbol": "2881.TW",
       "demo": false,
-      "date": "2026-11-11",
+      "date": "2026-11-12",
       "historyRows": 130,
       "source": "FinMind · 日收盤",
       "syncError": null
@@ -72,7 +77,7 @@
     {
       "symbol": "0050.TW",
       "demo": false,
-      "date": "2026-11-11",
+      "date": "2026-11-12",
       "historyRows": 130,
       "source": "FinMind · 日收盤",
       "syncError": null
@@ -80,7 +85,7 @@
     {
       "symbol": "2303.TW",
       "demo": false,
-      "date": "2026-11-11",
+      "date": "2026-11-12",
       "historyRows": 130,
       "source": "FinMind · 日收盤",
       "syncError": null
@@ -88,7 +93,7 @@
     {
       "symbol": "3711.TW",
       "demo": false,
-      "date": "2026-11-11",
+      "date": "2026-11-12",
       "historyRows": 130,
       "source": "FinMind · 日收盤",
       "syncError": null
@@ -96,7 +101,7 @@
     {
       "symbol": "2382.TW",
       "demo": false,
-      "date": "2026-11-11",
+      "date": "2026-11-12",
       "historyRows": 130,
       "source": "FinMind · 日收盤",
       "syncError": null
@@ -104,7 +109,7 @@
     {
       "symbol": "3231.TW",
       "demo": false,
-      "date": "2026-11-11",
+      "date": "2026-11-12",
       "historyRows": 130,
       "source": "FinMind · 日收盤",
       "syncError": null
@@ -112,7 +117,7 @@
     {
       "symbol": "2357.TW",
       "demo": false,
-      "date": "2026-11-11",
+      "date": "2026-11-12",
       "historyRows": 130,
       "source": "FinMind · 日收盤",
       "syncError": null
@@ -120,7 +125,7 @@
     {
       "symbol": "2379.TW",
       "demo": false,
-      "date": "2026-11-11",
+      "date": "2026-11-12",
       "historyRows": 130,
       "source": "FinMind · 日收盤",
       "syncError": null
@@ -128,7 +133,7 @@
     {
       "symbol": "3034.TW",
       "demo": false,
-      "date": "2026-11-11",
+      "date": "2026-11-12",
       "historyRows": 130,
       "source": "FinMind · 日收盤",
       "syncError": null
@@ -136,7 +141,7 @@
     {
       "symbol": "2345.TW",
       "demo": false,
-      "date": "2026-11-11",
+      "date": "2026-11-12",
       "historyRows": 130,
       "source": "FinMind · 日收盤",
       "syncError": null
@@ -144,7 +149,7 @@
     {
       "symbol": "2882.TW",
       "demo": false,
-      "date": "2026-11-11",
+      "date": "2026-11-12",
       "historyRows": 130,
       "source": "FinMind · 日收盤",
       "syncError": null
@@ -152,7 +157,7 @@
     {
       "symbol": "2891.TW",
       "demo": false,
-      "date": "2026-11-11",
+      "date": "2026-11-12",
       "historyRows": 130,
       "source": "FinMind · 日收盤",
       "syncError": null
@@ -160,7 +165,7 @@
     {
       "symbol": "0056.TW",
       "demo": false,
-      "date": "2026-11-11",
+      "date": "2026-11-12",
       "historyRows": 130,
       "source": "FinMind · 日收盤",
       "syncError": null
@@ -168,7 +173,7 @@
     {
       "symbol": "00878.TW",
       "demo": false,
-      "date": "2026-11-11",
+      "date": "2026-11-12",
       "historyRows": 130,
       "source": "FinMind · 日收盤",
       "syncError": null
@@ -176,7 +181,7 @@
     {
       "symbol": "6488.TWO",
       "demo": false,
-      "date": "2026-11-11",
+      "date": "2026-11-12",
       "historyRows": 130,
       "source": "FinMind · 日收盤",
       "syncError": null
@@ -184,7 +189,7 @@
     {
       "symbol": "8069.TWO",
       "demo": false,
-      "date": "2026-11-11",
+      "date": "2026-11-12",
       "historyRows": 130,
       "source": "FinMind · 日收盤",
       "syncError": null
@@ -196,7 +201,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-12T01:58:56.670942+00:00",
+      "fetchedAt": "2026-11-12T18:23:00.576245+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-06-30",
@@ -212,7 +217,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-12T01:58:58.704285+00:00",
+      "fetchedAt": "2026-11-12T18:23:03.450237+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-06-30",
@@ -228,7 +233,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-12T01:59:00.729358+00:00",
+      "fetchedAt": "2026-11-12T18:23:06.287980+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-06-30",
@@ -244,7 +249,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-12T01:59:02.725303+00:00",
+      "fetchedAt": "2026-11-12T18:23:09.104487+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -260,7 +265,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-12T01:59:02.725600+00:00",
+      "fetchedAt": "2026-11-12T18:23:09.104742+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -269,7 +274,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-12T01:59:02.725622+00:00",
+      "fetchedAt": "2026-11-12T18:23:09.104799+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -278,7 +283,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-12T01:59:04.817511+00:00",
+      "fetchedAt": "2026-11-12T18:23:12.127203+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -294,7 +299,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-12T01:59:06.801110+00:00",
+      "fetchedAt": "2026-11-12T18:23:14.944681+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -310,7 +315,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-12T01:59:08.787177+00:00",
+      "fetchedAt": "2026-11-12T18:23:17.723731+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -326,7 +331,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-12T01:59:10.903044+00:00",
+      "fetchedAt": "2026-11-12T18:23:20.713497+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -339,14 +344,14 @@
     },
     {
       "symbol": "2357.TW",
-      "status": "ready",
-      "coverage": 6,
+      "status": "partial",
+      "coverage": 5,
       "total": 6,
-      "fetchedAt": "2026-11-12T01:59:12.885172+00:00",
+      "fetchedAt": "2026-11-12T18:23:23.519999+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
-        "gross_margin": "2026-06-30",
-        "eps": "2026-06-30",
+        "gross_margin": "2026-09-30",
+        "eps": "2026-09-30",
         "debt_ratio": "2026-06-30",
         "current_ratio": "2026-06-30",
         "operating_cash": "2026-06-30"
@@ -355,17 +360,17 @@
     },
     {
       "symbol": "2379.TW",
-      "status": "ready",
-      "coverage": 6,
+      "status": "partial",
+      "coverage": 5,
       "total": 6,
-      "fetchedAt": "2026-11-12T01:59:14.892524+00:00",
+      "fetchedAt": "2026-11-12T18:23:26.398212+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
-        "gross_margin": "2026-06-30",
-        "eps": "2026-06-30",
-        "debt_ratio": "2026-06-30",
-        "current_ratio": "2026-06-30",
-        "operating_cash": "2026-06-30"
+        "gross_margin": "2026-09-30",
+        "eps": "2026-09-30",
+        "debt_ratio": "2026-09-30",
+        "current_ratio": "2026-09-30",
+        "operating_cash": "2026-09-30"
       },
       "datasetErrors": {}
     },
@@ -374,7 +379,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-12T01:59:16.910160+00:00",
+      "fetchedAt": "2026-11-12T18:23:29.104125+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -387,17 +392,17 @@
     },
     {
       "symbol": "2345.TW",
-      "status": "ready",
-      "coverage": 6,
+      "status": "partial",
+      "coverage": 5,
       "total": 6,
-      "fetchedAt": "2026-11-12T01:59:18.922135+00:00",
+      "fetchedAt": "2026-11-12T18:23:32.038869+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
-        "gross_margin": "2026-06-30",
-        "eps": "2026-06-30",
-        "debt_ratio": "2026-06-30",
-        "current_ratio": "2026-06-30",
-        "operating_cash": "2026-06-30"
+        "gross_margin": "2026-09-30",
+        "eps": "2026-09-30",
+        "debt_ratio": "2026-09-30",
+        "current_ratio": "2026-09-30",
+        "operating_cash": "2026-09-30"
       },
       "datasetErrors": {}
     },
@@ -406,7 +411,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-12T01:59:18.922384+00:00",
+      "fetchedAt": "2026-11-12T18:23:32.039150+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -415,7 +420,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-12T01:59:18.922425+00:00",
+      "fetchedAt": "2026-11-12T18:23:32.039175+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -424,7 +429,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-12T01:59:18.922435+00:00",
+      "fetchedAt": "2026-11-12T18:23:32.039188+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -433,7 +438,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-12T01:59:18.922446+00:00",
+      "fetchedAt": "2026-11-12T18:23:32.039201+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -442,7 +447,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-12T01:59:21.018221+00:00",
+      "fetchedAt": "2026-11-12T18:23:34.813746+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -458,7 +463,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-12T01:59:23.009822+00:00",
+      "fetchedAt": "2026-11-12T18:23:37.999366+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -501,20 +506,20 @@
   "fullMarket": {
     "status": "ready",
     "count": 2350,
-    "turnoverCount": 2337,
+    "turnoverCount": 2339,
     "markets": {
       "twse": {
         "status": "ready",
         "count": 1337,
         "tradeDate": "2026-11-11",
-        "fetchedAt": "2026-11-12T01:58:23.977865+00:00",
+        "fetchedAt": "2026-11-12T18:22:25.220392+00:00",
         "url": "https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL"
       },
       "tpex": {
         "status": "ready",
         "count": 1013,
-        "tradeDate": "2026-11-11",
-        "fetchedAt": "2026-11-12T01:58:23.977865+00:00",
+        "tradeDate": "2026-11-12",
+        "fetchedAt": "2026-11-12T18:22:25.220392+00:00",
         "url": "https://www.tpex.org.tw/openapi/v1/tpex_mainboard_daily_close_quotes"
       }
     }
@@ -523,25 +528,26 @@
     "scope": "官方全市場日收盤快照的價量初選。不是全市場歷史／財報逐檔分析，也不是買入推薦；單日漲跌不能推出中長期走向。漲跌家數含 ETF，不是大盤指數。來源不完整時只代表列出的有效範圍。",
     "coverage": {
       "total": 2350,
-      "valid": 2318,
-      "sourceComplete": true,
-      "tradeDate": "2026-11-11",
+      "valid": 985,
+      "sourceComplete": false,
+      "tradeDate": "2026-11-12",
       "markets": {
-        "twse": 1330,
-        "tpex": 988
+        "twse": 0,
+        "tpex": 985
       },
       "counts": {
-        "stock": 1959,
-        "etf": 359
+        "stock": 868,
+        "etf": 117
       },
       "excluded": {
-        "缺少有效收盤價量": 32
+        "行情日期不同": 1337,
+        "缺少有效收盤價量": 28
       }
     },
     "breadth": {
-      "up": 1336,
-      "down": 833,
-      "flat": 149
+      "up": 349,
+      "down": 578,
+      "flat": 58
     },
     "rules": {
       "minVolume": 1000000,
@@ -550,97 +556,97 @@
       "maxChange": 3
     },
     "candidateCounts": {
-      "stock": 216,
-      "etf": 50
+      "stock": 25,
+      "etf": 35
     },
     "shortlist": [
       {
-        "symbol": "2308.TW",
-        "name": "台達電",
-        "market": "上市",
+        "symbol": "3105.TWO",
+        "name": "穩懋",
+        "market": "上櫃",
         "kind": "stock",
-        "price": 1295,
-        "change": 1.5686274509803921,
-        "volume": 20680668,
-        "turnover": 26119682575,
-        "tradeDate": "2026-11-11"
+        "price": 517,
+        "change": -0.7677543186180422,
+        "volume": 43278733,
+        "turnover": 23669769800,
+        "tradeDate": "2026-11-12"
       },
       {
-        "symbol": "2408.TW",
-        "name": "南亞科",
-        "market": "上市",
+        "symbol": "3374.TWO",
+        "name": "精材",
+        "market": "上櫃",
         "kind": "stock",
-        "price": 394,
-        "change": 2.8720626631853787,
-        "volume": 49645364,
-        "turnover": 19097654341,
-        "tradeDate": "2026-11-11"
+        "price": 472,
+        "change": 1.1789924973204717,
+        "volume": 30628307,
+        "turnover": 15234205880,
+        "tradeDate": "2026-11-12"
       },
       {
-        "symbol": "2327.TW",
-        "name": "國巨*",
-        "market": "上市",
+        "symbol": "3491.TWO",
+        "name": "昇達科",
+        "market": "上櫃",
         "kind": "stock",
-        "price": 424.5,
-        "change": 1.9207683073229291,
-        "volume": 44804634,
-        "turnover": 18889916491,
-        "tradeDate": "2026-11-11"
+        "price": 1455,
+        "change": 1.3937282229965158,
+        "volume": 4193505,
+        "turnover": 6405206090,
+        "tradeDate": "2026-11-12"
       },
       {
-        "symbol": "2492.TW",
-        "name": "華新科",
-        "market": "上市",
+        "symbol": "3693.TWO",
+        "name": "營邦",
+        "market": "上櫃",
         "kind": "stock",
-        "price": 288,
-        "change": -0.17331022530329288,
-        "volume": 45607861,
-        "turnover": 13180627894,
-        "tradeDate": "2026-11-11"
+        "price": 687,
+        "change": 0.7331378299120235,
+        "volume": 3793481,
+        "turnover": 2707526143,
+        "tradeDate": "2026-11-12"
       },
       {
-        "symbol": "00878.TW",
-        "name": "國泰永續高股息",
-        "market": "上市",
+        "symbol": "00937B.TWO",
+        "name": "群益ESG投等債20+",
+        "market": "上櫃",
         "kind": "etf",
-        "price": 33.5,
-        "change": 1.669195751138088,
-        "volume": 70100557,
-        "turnover": 2317892883,
-        "tradeDate": "2026-11-11"
+        "price": 14.44,
+        "change": 0.627177700348432,
+        "volume": 54568268,
+        "turnover": 787299284,
+        "tradeDate": "2026-11-12"
       },
       {
-        "symbol": "00919.TW",
-        "name": "群益台灣精選高息",
-        "market": "上市",
+        "symbol": "00679B.TWO",
+        "name": "元大美債20年",
+        "market": "上櫃",
         "kind": "etf",
-        "price": 31.22,
-        "change": 1.035598705501618,
-        "volume": 59861957,
-        "turnover": 1849941018,
-        "tradeDate": "2026-11-11"
+        "price": 26.61,
+        "change": 0.8336491095111784,
+        "volume": 23205102,
+        "turnover": 616247863,
+        "tradeDate": "2026-11-12"
       },
       {
-        "symbol": "0056.TW",
-        "name": "元大高股息",
-        "market": "上市",
+        "symbol": "00687B.TWO",
+        "name": "國泰20年美債",
+        "market": "上櫃",
         "kind": "etf",
-        "price": 53.15,
-        "change": 1.6252390057361379,
-        "volume": 34822027,
-        "turnover": 1831225567,
-        "tradeDate": "2026-11-11"
+        "price": 27.65,
+        "change": 0.8755928493250638,
+        "volume": 17900851,
+        "turnover": 494418497,
+        "tradeDate": "2026-11-12"
       },
       {
-        "symbol": "00929.TW",
-        "name": "復華台灣科技優息",
-        "market": "上市",
+        "symbol": "00751B.TWO",
+        "name": "元大AAA至A公司債",
+        "market": "上櫃",
         "kind": "etf",
-        "price": 25.82,
-        "change": 1.894238358326756,
-        "volume": 35871025,
-        "turnover": 916138226,
-        "tradeDate": "2026-11-11"
+        "price": 30.84,
+        "change": 0.8502289077828648,
+        "volume": 8939783,
+        "turnover": 275348508,
+        "tradeDate": "2026-11-12"
       }
     ]
   },
@@ -648,65 +654,65 @@
     {
       "symbol": "2330.TW",
       "status": "ready",
-      "reason": null,
+      "reason": "公司基本面穩健且營收成長強勁，但股價位於均線之下，且缺乏最新季度財報與估值資訊，建議等待更明確的趨勢與完整資料。",
       "model": "gemini-2.5-flash",
-      "generatedAt": "2026-11-11T17:57:26.496621+00:00",
+      "generatedAt": "2026-11-12T18:23:50.942822+00:00",
       "matchesQuote": true,
       "hasText": true
     },
     {
       "symbol": "2317.TW",
       "status": "ready",
-      "reason": null,
+      "reason": "股價處於均線下方，且最新財報顯示營業現金流為負，需觀察後續營運狀況與趨勢。",
       "model": "gemini-2.5-flash",
-      "generatedAt": "2026-11-11T17:57:50.227662+00:00",
+      "generatedAt": "2026-11-12T18:24:14.361585+00:00",
       "matchesQuote": true,
       "hasText": true
     },
     {
       "symbol": "2454.TW",
-      "status": "ready",
-      "reason": null,
-      "model": "gemini-2.5-flash",
-      "generatedAt": "2026-11-11T17:58:13.648336+00:00",
+      "status": "unavailable",
+      "reason": "network_or_response_invalid",
+      "model": null,
+      "generatedAt": null,
       "matchesQuote": true,
-      "hasText": true
+      "hasText": false
     },
     {
       "symbol": "2308.TW",
       "status": "ready",
-      "reason": null,
+      "reason": "股價處於下降趨勢，儘管部分財務數據表現良好，但需進一步釐清股價下跌原因及財務比率的合理性，待趨勢穩定後再考慮。",
       "model": "gemini-2.5-flash",
-      "generatedAt": "2026-11-11T07:48:46.456988+00:00",
+      "generatedAt": "2026-11-12T18:25:02.640442+00:00",
       "matchesQuote": true,
       "hasText": true
     },
     {
       "symbol": "2881.TW",
       "status": "ready",
-      "reason": null,
+      "reason": "缺乏金融業專屬的資本適足率、資產品質等關鍵財務指標，且無估值與適合度分析，資料不足以做出投資判斷。",
       "model": "gemini-2.5-flash",
-      "generatedAt": "2026-11-11T17:58:35.428634+00:00",
+      "generatedAt": "2026-11-12T18:25:25.513974+00:00",
       "matchesQuote": true,
       "hasText": true
     },
     {
       "symbol": "0050.TW",
       "status": "ready",
-      "reason": null,
+      "reason": "股價目前低於短期與中期均線，且短期均線位於長期均線下方，技術面顯示趨勢偏弱，建議觀望。",
       "model": "gemini-2.5-flash",
-      "generatedAt": "2026-11-11T07:49:30.150273+00:00",
+      "generatedAt": "2026-11-12T18:25:50.294658+00:00",
       "matchesQuote": true,
       "hasText": true
     }
   ],
-  "aiReadyCount": 6,
+  "aiReadyCount": 5,
   "latestDeployment": {
-    "id": 43138111766,
-    "head_sha": "be7fd2d4f81ed808900f02c6dc22c712d7509f61",
+    "id": 43279112904,
+    "head_sha": "bbfe48f87f3d633f498f707efc7a92bf93f63059",
     "status": "completed",
     "conclusion": "success",
-    "html_url": "https://github.com/timo893131/stock-analysis/actions/runs/43138111766",
+    "html_url": "https://github.com/timo893131/stock-analysis/actions/runs/43279112904",
     "jobs": [
       {
         "name": "build",
@@ -885,7 +891,7 @@
   "catalog": {
     "status": "ready",
     "count": 2604,
-    "updatedAt": "2026-11-12T01:58:44.723193+00:00"
+    "updatedAt": "2026-11-12T18:22:42.469321+00:00"
   },
   "publicAPI": {
     "httpStatus": 200,
@@ -893,24 +899,24 @@
     "ready": true,
     "mode": "generated",
     "fallbackReason": null,
-    "count": 2318,
+    "count": 985,
     "scopeVersion": 3,
     "total": 2350,
-    "sourceComplete": true,
+    "sourceComplete": false,
     "candidateCounts": {
-      "stock": 216,
-      "etf": 50
+      "stock": 25,
+      "etf": 35
     },
     "shortlistLength": 8,
-    "generatedAt": "2026-11-12T01:59:41.422Z"
+    "generatedAt": "2026-11-12T18:26:17.133Z"
   },
   "publicStock": {
     "httpStatus": 200,
     "symbol": "2603.TW",
-    "tradeDate": "2026-11-11",
+    "tradeDate": "2026-11-12",
     "historyCount": 130,
     "verified": true,
     "financialCoverage": 3
   },
-  "status": "passed"
+  "status": "warning"
 }
