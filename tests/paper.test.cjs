@@ -65,3 +65,18 @@ test('free known-close mode still rejects invalid sources, shorts and duplicate 
  const input={...order('known','buy',1),execution:'known-close',autoFund:true};for(const bad of [{demo:true},{asOf:1},{asOf:now/1000+100},{sync:{error:'bad'}}])assert.throws(()=>P.place(P.fresh(),{...q,...bad},input,now));
  const a=P.place(P.fresh(),q,input,now);assert.throws(()=>P.place(a,q,input,now));assert.throws(()=>P.place(a,q,{...input,id:'short',side:'sell',quantity:2},now));assert.equal(a.funding,undefined);
 });
+test('ticket estimates agree with full and partial sale ledger including fees and cost basis',()=>{
+ const buy={...order('ticket-buy','buy',103),execution:'known-close',autoFund:true};
+ const entry=P.estimate(P.fresh(),q.symbol,'buy',103,P.executionPrice(q,'buy'),now),a=P.place(P.fresh(),q,buy,now);
+ assert.equal(a.positions[q.symbol].cost,entry.net);assert.equal(a.trades[0].fee,entry.fee);
+ const price=P.executionPrice(q,'sell'),e=P.estimate(a,q.symbol,'sell',51,price,now),b=P.place(a,q,{...order('ticket-sell','sell',51),execution:'known-close'},now);
+ assert.equal(b.positions[q.symbol].quantity,52);assert.equal(b.trades[0].pnl,e.pnl);assert.equal(b.trades[0].tax,e.tax);assert.ok(Math.abs(b.cash-a.cash-e.net)<.00001);
+ const c=P.place(b,q,{...order('rest','sell',52),execution:'known-close'},now);assert.deepEqual(c.positions,{});assert.ok(Math.abs(c.cash-P.capital(c)-c.realized)<.001);
+ assert.throws(()=>P.estimate(a,q.symbol,'sell',0,price));assert.throws(()=>P.estimate(a,q.symbol,'sell',1,NaN));
+});
+test('ticket taxes use simulation date, and ETF rates differ from stocks',()=>{
+ const a=P.fresh();assert.equal(P.estimate(a,'0050.TW','sell',1000,100,now).tax,100);
+ assert.equal(P.estimate(a,'2330.TW','sell',1000,100,now).tax,300);
+ assert.equal(P.estimate(a,'00679B.TWO','sell',1000,100,now).tax,0);
+ assert.equal(P.estimate(a,'00679B.TWO','sell',1000,100,Date.parse('2027-01-01T00:00:00Z')).tax,100);
+});

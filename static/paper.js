@@ -1,4 +1,4 @@
-/* Local-only next-session close simulation. Deterministic, no broker integration. */
+/* Local-only known-close and next-session close simulation. Deterministic, no broker integration. */
 (function(root){
  'use strict';
  const SYMBOLS=["2330.TW", "2317.TW", "2454.TW", "2308.TW", "2881.TW", "0050.TW", "2303.TW", "3711.TW", "2382.TW", "3231.TW", "2357.TW", "2379.TW", "3034.TW", "2345.TW", "2882.TW", "2891.TW", "0056.TW", "00878.TW", "6488.TWO", "8069.TWO"];
@@ -19,6 +19,14 @@
   while(shares>0&&cost(shares)>amount+1e-8)shares--;
   if(shares<maxQuantity&&cost(shares+1)<=amount+1e-8)shares++;
   return {shares,cost:cost(shares),fee:round(round(shares*price)*feeRate),left:round(amount-cost(shares)),price};
+ }
+ // The ticket and ledger share the same cent rounding and tax rules.
+ function estimate(a,symbol,side,quantity,price,time=Date.now()){
+  if(!['buy','sell'].includes(side)||!Number.isSafeInteger(quantity)||quantity<1||quantity>maxQuantity||!Number.isFinite(price)||price<.01)throw Error('請輸入至少 1 股與有效價格。');
+  const gross=round(price*quantity),fee=round(gross*feeRate),tax=side==='sell'?round(gross*taxRate(symbol,time)):0;
+  const net=round(side==='buy'?gross+fee:gross-fee-tax),position=a.positions[symbol];
+  const cost=side==='sell'&&position&&quantity<=position.quantity?round(position.cost/position.quantity*quantity):null;
+  return {gross,fee,tax,net,pnl:cost===null?null:round(net-cost)};
  }
  function validate(a){
   if(!a||a.version!==2||a.initial!==1000000||!Number.isFinite(a.cash)||a.cash<0||!Number.isFinite(a.realized)||!a.positions||Array.isArray(a.positions)||!Array.isArray(a.orders)||!Array.isArray(a.trades)||a.orders.length>2000||a.trades.length>2000)throw Error('練習帳戶資料格式不符。');
@@ -71,7 +79,7 @@
   });
  }
  function fill(a,o,price,time,asOf){
-   const gross=round(price*o.quantity),fee=round(gross*feeRate),tax=o.side==='sell'?round(gross*taxRate(o.symbol,time)):0;
+   const {gross,fee,tax}=estimate(a,o.symbol,o.side,o.quantity,price,time);
    const p=a.positions[o.symbol]||{quantity:0,cost:0};let pnl=null;
    if(o.side==='buy'){
     if(gross+fee>a.cash+.001){o.status='expired';o.message='結算時資金不足，未成交。';return;}
@@ -104,6 +112,6 @@
   }
   return validate(a);
  }
- const api={fresh,validate,reserves,capital,amountShares,executionPrice,maxQuantity,place,cancel,settle,feeRate,slippage,taxRate,day,expectedDate,pendingInfo,syncTargets};
+ const api={fresh,validate,reserves,capital,estimate,amountShares,executionPrice,maxQuantity,place,cancel,settle,feeRate,slippage,taxRate,day,expectedDate,pendingInfo,syncTargets};
  if(typeof module!=='undefined')module.exports=api;else root.StockroomPaper=api;
 })(typeof globalThis!=='undefined'?globalThis:this);
