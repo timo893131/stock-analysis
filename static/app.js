@@ -281,7 +281,9 @@ function setPracticeMode(){
  $('#trade-form [type=submit]').textContent='下一步：核對訂單';$('#sell-half').hidden=$('#sell-all').hidden=side!=='sell';document.querySelectorAll('[data-practice-budget]').forEach(b=>b.hidden=side!=='buy');updateEstimate();
 }
 function updateEstimate(){
- const q=quotes.find(x=>x.symbol===selected),limit=Number($('#order-limit').value),side=$('#side').value,r=StockroomPaper.reserves(account),available=account.cash-r.cash;let quantity=Number($('#quantity').value),conversion=null;
+ const q=quotes.find(x=>x.symbol===selected),side=$('#side').value;
+ if($('#paper-execution').value==='known-close'){$('#order-limit').value=StockroomPaper.executionPrice(q,side).toFixed(2);$('#trade-info').textContent=(q.demo?'目前為示範資料，不能下單。':'價格依據 '+StockroomPaper.day(q.asOf*1000)+' 收盤 '+money(q.price)+'。')+' 確認後直接更新虛擬持倉；不是即時行情或真實交易。';}
+ const limit=Number($('#order-limit').value),r=StockroomPaper.reserves(account),available=account.cash-r.cash;let quantity=Number($('#quantity').value),conversion=null;
  try{
   if(side==='buy'&&$('#paper-amount').value.trim()){conversion=StockroomPaper.amountShares(StockroomDecision.parseBudget($('#paper-amount').value),limit);quantity=conversion.shares;$('#quantity').value=quantity;if(!quantity)throw Error('這筆金額不足買 1 股（含費用），請增加金額或選擇價格較低的標的。');}
   if(!Number.isSafeInteger(quantity)||quantity<0||!Number.isFinite(limit)||limit<=0)throw Error('請確認金額、股數與價格。');
