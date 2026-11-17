@@ -1,7 +1,9 @@
 {
-  "checkedAt": "2026-11-16T20:36:03.955931+00:00",
+  "checkedAt": "2026-11-17T02:37:53.408547+00:00",
   "url": "https://timo893131.github.io/stock-analysis/",
-  "errors": [],
+  "errors": [
+    "首頁缺少預期的新功能入口"
+  ],
   "warnings": [
     "AI 解讀可用 5/6 檔（選用功能）"
   ],
@@ -473,6 +475,7 @@
     }
   ],
   "features": {
+    "orderReview": false,
     "freePractice": true,
     "beginnerHub": true,
     "practicePlans": true,
@@ -705,15 +708,15 @@
   ],
   "aiReadyCount": 5,
   "latestDeployment": {
-    "id": 43950663478,
-    "head_sha": "bbfe48f87f3d633f498f707efc7a92bf93f63059",
-    "status": "completed",
-    "conclusion": "success",
-    "html_url": "https://github.com/timo893131/stock-analysis/actions/runs/43950663478",
+    "id": 44004374185,
+    "head_sha": "ab025cff0d8bc21563bb23c95b74a44f3992857a",
+    "status": "in_progress",
+    "conclusion": null,
+    "html_url": "https://github.com/timo893131/stock-analysis/actions/runs/44004374185",
     "jobs": [
       {
         "name": "build",
-        "conclusion": "success",
+        "conclusion": null,
         "steps": [
           {
             "name": "Set up job",
@@ -742,79 +745,48 @@
           },
           {
             "name": "Synchronize daily data",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "in_progress"
           },
           {
             "name": "Update financial health data when licensed",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Generate optional AI explanations",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Export market site",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Export demo site",
-            "conclusion": "skipped",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Run actions/upload-pages-artifact@v3",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Post Run actions/setup-node@v4",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Post Run actions/setup-python@v5",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           },
           {
             "name": "Post Run actions/checkout@v4",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Complete job",
-            "conclusion": "success",
-            "status": "completed"
-          }
-        ]
-      },
-      {
-        "name": "deploy",
-        "conclusion": "success",
-        "steps": [
-          {
-            "name": "Set up job",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Deploy",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Verify full-market AI once after publication",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Complete job",
-            "conclusion": "success",
-            "status": "completed"
+            "conclusion": null,
+            "status": "pending"
           }
         ]
       }
@@ -915,5 +887,5 @@
     "verified": true,
     "financialCoverage": 3
   },
-  "status": "warning"
+  "status": "failed"
 }
