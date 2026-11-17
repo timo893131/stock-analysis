@@ -1,9 +1,7 @@
 {
-  "checkedAt": "2026-11-17T02:37:53.408547+00:00",
+  "checkedAt": "2026-11-17T02:40:15.375639+00:00",
   "url": "https://timo893131.github.io/stock-analysis/",
-  "errors": [
-    "首頁缺少預期的新功能入口"
-  ],
+  "errors": [],
   "warnings": [
     "AI 解讀可用 5/6 檔（選用功能）"
   ],
@@ -200,7 +198,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-16T20:32:19.610043+00:00",
+      "fetchedAt": "2026-11-17T02:38:31.818969+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -216,7 +214,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-16T20:32:21.783428+00:00",
+      "fetchedAt": "2026-11-17T02:38:34.880186+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -232,7 +230,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-16T20:32:23.848508+00:00",
+      "fetchedAt": "2026-11-17T02:38:37.949363+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -248,7 +246,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-16T20:32:25.880463+00:00",
+      "fetchedAt": "2026-11-17T02:38:40.913484+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -264,7 +262,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-16T20:32:25.880681+00:00",
+      "fetchedAt": "2026-11-17T02:38:40.913699+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -273,7 +271,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-16T20:32:25.880696+00:00",
+      "fetchedAt": "2026-11-17T02:38:40.913714+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -282,7 +280,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-16T20:32:28.100992+00:00",
+      "fetchedAt": "2026-11-17T02:38:44.039085+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -298,7 +296,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-16T20:32:30.161860+00:00",
+      "fetchedAt": "2026-11-17T02:38:47.046184+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -314,7 +312,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-16T20:32:32.218342+00:00",
+      "fetchedAt": "2026-11-17T02:38:49.935587+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -330,7 +328,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-16T20:32:34.269396+00:00",
+      "fetchedAt": "2026-11-17T02:38:52.797656+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -346,7 +344,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-16T20:32:36.398544+00:00",
+      "fetchedAt": "2026-11-17T02:38:55.759059+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -362,7 +360,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-16T20:32:38.435972+00:00",
+      "fetchedAt": "2026-11-17T02:38:58.794004+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -378,7 +376,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-16T20:32:40.388451+00:00",
+      "fetchedAt": "2026-11-17T02:39:02.040104+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -394,7 +392,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-16T20:32:42.443984+00:00",
+      "fetchedAt": "2026-11-17T02:39:05.037032+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -410,7 +408,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-16T20:32:42.444232+00:00",
+      "fetchedAt": "2026-11-17T02:39:05.037294+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -419,7 +417,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-16T20:32:42.444249+00:00",
+      "fetchedAt": "2026-11-17T02:39:05.037312+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -428,7 +426,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-16T20:32:42.444257+00:00",
+      "fetchedAt": "2026-11-17T02:39:05.037320+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -437,7 +435,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-16T20:32:42.444266+00:00",
+      "fetchedAt": "2026-11-17T02:39:05.037327+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -446,7 +444,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-16T20:32:44.538199+00:00",
+      "fetchedAt": "2026-11-17T02:39:07.981655+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -462,7 +460,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-16T20:32:46.569140+00:00",
+      "fetchedAt": "2026-11-17T02:39:10.918954+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -475,7 +473,7 @@
     }
   ],
   "features": {
-    "orderReview": false,
+    "orderReview": true,
     "freePractice": true,
     "beginnerHub": true,
     "practicePlans": true,
@@ -505,21 +503,21 @@
   },
   "fullMarket": {
     "status": "ready",
-    "count": 2351,
-    "turnoverCount": 2337,
+    "count": 2352,
+    "turnoverCount": 2339,
     "markets": {
       "twse": {
         "status": "ready",
-        "count": 1336,
-        "tradeDate": "2026-11-13",
-        "fetchedAt": "2026-11-16T20:31:53.652722+00:00",
+        "count": 1337,
+        "tradeDate": "2026-11-16",
+        "fetchedAt": "2026-11-17T02:37:52.028297+00:00",
         "url": "https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL"
       },
       "tpex": {
         "status": "ready",
         "count": 1015,
         "tradeDate": "2026-11-16",
-        "fetchedAt": "2026-11-16T20:31:53.652722+00:00",
+        "fetchedAt": "2026-11-17T02:37:52.028297+00:00",
         "url": "https://www.tpex.org.tw/openapi/v1/tpex_mainboard_daily_close_quotes"
       }
     }
@@ -527,27 +525,26 @@
   "marketScreen": {
     "scope": "官方全市場日收盤快照的價量初選。不是全市場歷史／財報逐檔分析，也不是買入推薦；單日漲跌不能推出中長期走向。漲跌家數含 ETF，不是大盤指數。來源不完整時只代表列出的有效範圍。",
     "coverage": {
-      "total": 2351,
-      "valid": 984,
-      "sourceComplete": false,
+      "total": 2352,
+      "valid": 2315,
+      "sourceComplete": true,
       "tradeDate": "2026-11-16",
       "markets": {
-        "twse": 0,
+        "twse": 1331,
         "tpex": 984
       },
       "counts": {
-        "stock": 877,
-        "etf": 107
+        "stock": 1965,
+        "etf": 350
       },
       "excluded": {
-        "行情日期不同": 1336,
-        "缺少有效收盤價量": 31
+        "缺少有效收盤價量": 37
       }
     },
     "breadth": {
-      "up": 129,
-      "down": 810,
-      "flat": 45
+      "up": 269,
+      "down": 1952,
+      "flat": 94
     },
     "rules": {
       "minVolume": 1000000,
@@ -556,52 +553,52 @@
       "maxChange": 3
     },
     "candidateCounts": {
-      "stock": 7,
-      "etf": 22
+      "stock": 61,
+      "etf": 35
     },
     "shortlist": [
       {
-        "symbol": "2221.TWO",
-        "name": "大甲",
-        "market": "上櫃",
+        "symbol": "2466.TW",
+        "name": "冠西電",
+        "market": "上市",
         "kind": "stock",
-        "price": 151.5,
-        "change": 0.33112582781456956,
-        "volume": 13711273,
-        "turnover": 2109243401,
+        "price": 402.5,
+        "change": 2.4173027989821882,
+        "volume": 7367676,
+        "turnover": 2917393320,
         "tradeDate": "2026-11-16"
       },
       {
-        "symbol": "7717.TWO",
-        "name": "萊德光電-KY",
-        "market": "上櫃",
+        "symbol": "2603.TW",
+        "name": "長榮",
+        "market": "上市",
         "kind": "stock",
-        "price": 485,
-        "change": -0.9193054136874361,
-        "volume": 2860927,
-        "turnover": 1480952382,
+        "price": 257,
+        "change": -0.1941747572815534,
+        "volume": 10101861,
+        "turnover": 2631965764,
         "tradeDate": "2026-11-16"
       },
       {
-        "symbol": "6199.TWO",
-        "name": "天品",
-        "market": "上櫃",
+        "symbol": "2412.TW",
+        "name": "中華電",
+        "market": "上市",
         "kind": "stock",
-        "price": 169,
+        "price": 163.5,
+        "change": -0.9090909090909091,
+        "volume": 15282279,
+        "turnover": 2528354035,
+        "tradeDate": "2026-11-16"
+      },
+      {
+        "symbol": "2884.TW",
+        "name": "玉山金",
+        "market": "上市",
+        "kind": "stock",
+        "price": 48.3,
         "change": 0,
-        "volume": 8654831,
-        "turnover": 1466700310,
-        "tradeDate": "2026-11-16"
-      },
-      {
-        "symbol": "5202.TWO",
-        "name": "力新",
-        "market": "上櫃",
-        "kind": "stock",
-        "price": 20.4,
-        "change": 0.24570024570024573,
-        "volume": 20806088,
-        "turnover": 443416580,
+        "volume": 48186233,
+        "turnover": 2343413425,
         "tradeDate": "2026-11-16"
       },
       {
@@ -710,13 +707,13 @@
   "latestDeployment": {
     "id": 44004374185,
     "head_sha": "ab025cff0d8bc21563bb23c95b74a44f3992857a",
-    "status": "in_progress",
-    "conclusion": null,
+    "status": "completed",
+    "conclusion": "success",
     "html_url": "https://github.com/timo893131/stock-analysis/actions/runs/44004374185",
     "jobs": [
       {
         "name": "build",
-        "conclusion": null,
+        "conclusion": "success",
         "steps": [
           {
             "name": "Set up job",
@@ -745,48 +742,79 @@
           },
           {
             "name": "Synchronize daily data",
-            "conclusion": null,
-            "status": "in_progress"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Update financial health data when licensed",
-            "conclusion": null,
-            "status": "pending"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Generate optional AI explanations",
-            "conclusion": null,
-            "status": "pending"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Export market site",
-            "conclusion": null,
-            "status": "pending"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Export demo site",
-            "conclusion": null,
-            "status": "pending"
+            "conclusion": "skipped",
+            "status": "completed"
           },
           {
             "name": "Run actions/upload-pages-artifact@v3",
-            "conclusion": null,
-            "status": "pending"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Post Run actions/setup-node@v4",
-            "conclusion": null,
-            "status": "pending"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Post Run actions/setup-python@v5",
-            "conclusion": null,
-            "status": "pending"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Post Run actions/checkout@v4",
-            "conclusion": null,
-            "status": "pending"
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success",
+            "status": "completed"
+          }
+        ]
+      },
+      {
+        "name": "deploy",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
+            "name": "Deploy",
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
+            "name": "Verify full-market AI once after publication",
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success",
+            "status": "completed"
           }
         ]
       }
@@ -860,7 +888,7 @@
   "catalog": {
     "status": "ready",
     "count": 2605,
-    "updatedAt": "2026-11-16T20:32:07.234895+00:00"
+    "updatedAt": "2026-11-17T02:38:14.390867+00:00"
   },
   "publicAPI": {
     "httpStatus": 200,
@@ -868,16 +896,16 @@
     "ready": true,
     "mode": "generated",
     "fallbackReason": null,
-    "count": 984,
+    "count": 2315,
     "scopeVersion": 3,
-    "total": 2351,
-    "sourceComplete": false,
+    "total": 2352,
+    "sourceComplete": true,
     "candidateCounts": {
-      "stock": 7,
-      "etf": 22
+      "stock": 61,
+      "etf": 35
     },
     "shortlistLength": 8,
-    "generatedAt": "2026-11-16T20:35:41.079Z"
+    "generatedAt": "2026-11-17T02:39:54.750Z"
   },
   "publicStock": {
     "httpStatus": 200,
@@ -887,5 +915,5 @@
     "verified": true,
     "financialCoverage": 3
   },
-  "status": "failed"
+  "status": "warning"
 }
