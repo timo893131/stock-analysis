@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-11-17T02:40:15.375639+00:00",
+  "checkedAt": "2026-11-17T02:42:46.152278+00:00",
   "url": "https://timo893131.github.io/stock-analysis/",
   "errors": [],
   "warnings": [
@@ -198,7 +198,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-17T02:38:31.818969+00:00",
+      "fetchedAt": "2026-11-17T02:41:09.536206+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -214,7 +214,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-17T02:38:34.880186+00:00",
+      "fetchedAt": "2026-11-17T02:41:11.708091+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -230,7 +230,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-17T02:38:37.949363+00:00",
+      "fetchedAt": "2026-11-17T02:41:13.741356+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -246,7 +246,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-17T02:38:40.913484+00:00",
+      "fetchedAt": "2026-11-17T02:41:15.805031+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -262,7 +262,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-17T02:38:40.913699+00:00",
+      "fetchedAt": "2026-11-17T02:41:15.805255+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -271,7 +271,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-17T02:38:40.913714+00:00",
+      "fetchedAt": "2026-11-17T02:41:15.805269+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -280,7 +280,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-17T02:38:44.039085+00:00",
+      "fetchedAt": "2026-11-17T02:41:17.921655+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -296,7 +296,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-17T02:38:47.046184+00:00",
+      "fetchedAt": "2026-11-17T02:41:19.898046+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -312,7 +312,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-17T02:38:49.935587+00:00",
+      "fetchedAt": "2026-11-17T02:41:21.959181+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -328,7 +328,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-17T02:38:52.797656+00:00",
+      "fetchedAt": "2026-11-17T02:41:24.032423+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -344,7 +344,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-17T02:38:55.759059+00:00",
+      "fetchedAt": "2026-11-17T02:41:26.054820+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -360,7 +360,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-17T02:38:58.794004+00:00",
+      "fetchedAt": "2026-11-17T02:41:28.121878+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -376,7 +376,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-17T02:39:02.040104+00:00",
+      "fetchedAt": "2026-11-17T02:41:30.076338+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -392,7 +392,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-17T02:39:05.037032+00:00",
+      "fetchedAt": "2026-11-17T02:41:32.127254+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -408,7 +408,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-17T02:39:05.037294+00:00",
+      "fetchedAt": "2026-11-17T02:41:32.127477+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -417,7 +417,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-17T02:39:05.037312+00:00",
+      "fetchedAt": "2026-11-17T02:41:32.127492+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -426,7 +426,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-17T02:39:05.037320+00:00",
+      "fetchedAt": "2026-11-17T02:41:32.127526+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -435,7 +435,7 @@
       "status": "not_applicable",
       "coverage": 0,
       "total": null,
-      "fetchedAt": "2026-11-17T02:39:05.037327+00:00",
+      "fetchedAt": "2026-11-17T02:41:32.127536+00:00",
       "periods": {},
       "datasetErrors": {}
     },
@@ -444,7 +444,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-17T02:39:07.981655+00:00",
+      "fetchedAt": "2026-11-17T02:41:34.151977+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -460,7 +460,7 @@
       "status": "ready",
       "coverage": 6,
       "total": 6,
-      "fetchedAt": "2026-11-17T02:39:10.918954+00:00",
+      "fetchedAt": "2026-11-17T02:41:36.175084+00:00",
       "periods": {
         "revenue_yoy": "2026-10",
         "gross_margin": "2026-09-30",
@@ -510,14 +510,14 @@
         "status": "ready",
         "count": 1337,
         "tradeDate": "2026-11-16",
-        "fetchedAt": "2026-11-17T02:37:52.028297+00:00",
+        "fetchedAt": "2026-11-17T02:40:43.447517+00:00",
         "url": "https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL"
       },
       "tpex": {
         "status": "ready",
         "count": 1015,
         "tradeDate": "2026-11-16",
-        "fetchedAt": "2026-11-17T02:37:52.028297+00:00",
+        "fetchedAt": "2026-11-17T02:40:43.447517+00:00",
         "url": "https://www.tpex.org.tw/openapi/v1/tpex_mainboard_daily_close_quotes"
       }
     }
@@ -705,11 +705,11 @@
   ],
   "aiReadyCount": 5,
   "latestDeployment": {
-    "id": 44004374185,
-    "head_sha": "ab025cff0d8bc21563bb23c95b74a44f3992857a",
+    "id": 44004714440,
+    "head_sha": "99da6593d0757e009a614b8c3f21fc31bf3ce9ed",
     "status": "completed",
     "conclusion": "success",
-    "html_url": "https://github.com/timo893131/stock-analysis/actions/runs/44004374185",
+    "html_url": "https://github.com/timo893131/stock-analysis/actions/runs/44004714440",
     "jobs": [
       {
         "name": "build",
@@ -888,7 +888,7 @@
   "catalog": {
     "status": "ready",
     "count": 2605,
-    "updatedAt": "2026-11-17T02:38:14.390867+00:00"
+    "updatedAt": "2026-11-17T02:40:57.278369+00:00"
   },
   "publicAPI": {
     "httpStatus": 200,
