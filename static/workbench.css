@@ -211,3 +211,17 @@ body[data-view=overview] #data-banner{display:none!important}body[data-view=over
 @media(max-width:600px){.beginner-hub .panel-heading p{display:none}.beginner-hub .hub-tasks{grid-template-columns:repeat(3,minmax(0,1fr))}.hub-tasks>*:last-child{grid-column:auto}.hub-tasks button{font-size:14px}.practice-header-actions{flex-direction:row}.practice-header-actions>*{font-size:13px;padding-inline:var(--space-xs)}#portfolio-view>.market-grid{grid-template-columns:repeat(2,minmax(0,1fr))}#portfolio-view>.market-grid>.market-card:first-child{grid-column:1/-1}#portfolio-view .market-card strong{font-size:23px}#portfolio-view .practice-steps{display:none}.paper-status-summary{margin-block:var(--space-sm)}}
 /* Order ticket: editable draft, explicit review, then an inline receipt. */
 #paper-fields{border:0;margin:0;padding:0;min-width:0}#paper-fields[hidden],#paper-review[hidden],#trade-form [hidden]{display:none!important}.sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}.ticket-step{font-size:14px;color:var(--color-muted);padding-bottom:var(--space-sm);border-bottom:1px solid var(--color-rule)}.ticket-stock{font-size:22px;font-weight:650}.ticket-stock small{font-size:14px;display:block;color:var(--color-muted)}.ticket-lines{margin:var(--space-md) 0}.ticket-lines>div{display:flex;justify-content:space-between;gap:var(--space-md);padding:var(--space-sm) 0;border-bottom:1px solid var(--color-rule)}.ticket-lines dt{color:var(--color-muted);font-size:14px}.ticket-lines dd{margin:0;text-align:right;font-weight:650;font-variant-numeric:tabular-nums;overflow-wrap:anywhere;min-width:0}.paper-receipt{padding:var(--space-md);margin:var(--space-md) 0;border:1px solid var(--color-focus);border-left:4px solid var(--color-focus);border-radius:var(--radius-card);background:var(--color-paper)}.paper-receipt h3{margin-top:0}.paper-receipt p{font-size:15px;line-height:1.8}.order-filters{display:flex;flex-wrap:wrap;gap:var(--space-xs)}.order-filters button{font-size:14px;min-height:44px}.order-filters [aria-pressed=true]{background:var(--color-ink);color:var(--color-paper)}#paper-confirm{position:sticky;bottom:0;min-height:52px}#paper-find{width:100%;text-align:left;font-size:14px}#paper-review-title:focus{outline:none}#paper-review .fine-print{line-height:1.8}#trade-error:not(:empty){padding:var(--space-sm);border-left:3px solid var(--color-warning);background:var(--color-warning-paper);color:var(--color-warning)}
+
+/* Keep the account actions together above the receipt and balances. */
+body[data-view=portfolio] #data-banner { display: none !important; }
+.practice-toolbar { margin-bottom: var(--space-md); }
+#paper-trade-status:empty, #app-search-feedback:empty { display: none; }
+#paper-trade-status, #app-search-feedback { color: var(--color-info); font-size: 14px; }
+.holding-actions { display: flex; flex-wrap: wrap; gap: var(--space-xs); }
+.holding-actions .outline { margin: 0; min-width: 0; }
+#paper-holdings-title { scroll-margin-block-start: var(--space-sm); }
+@media (max-width: 600px) {
+ .practice-header-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+ #paper-pick { grid-column: 1 / -1; width: 100%; }
+ .holding-actions .outline { flex: 1 0 auto; }
+}

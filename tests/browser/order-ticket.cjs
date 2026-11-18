@@ -20,4 +20,60 @@ const account=page=>page.evaluate(()=>JSON.parse(localStorage.getItem('stockroom
  // A refreshed close while reviewing must invalidate the draft and recalculate the same budget.
  await page.locator('#paper-new').click();await page.locator('#paper-amount').fill('30000');await page.locator('#trade-form [type=submit]').click();liveQuote={...q,price:200,history:[{...q.history[0],close:200}]};await page.locator('#refresh').evaluate(el=>el.click());await page.waitForFunction(()=>document.querySelector('#detail-price').textContent==='200.00');await page.locator('#paper-confirm').click();assert.match(await page.locator('#trade-error').innerText(),/行情或帳戶已更新/);assert.deepEqual(await account(page),bought);await page.locator('#trade-form [type=submit]').click();assert.equal(await page.locator('#quantity').inputValue(),String(P.amountShares(30000,P.executionPrice(liveQuote,'buy')).shares));assert.match(await page.locator('#paper-review-body').innerText(),/200.20/);await page.locator('#close-dialog').click();
  await page.locator('#paper-new').click();await page.locator('#paper-find').click();await page.locator('#app-search-dialog').waitFor({state:'visible'});assert.deepEqual(await account(page),bought);assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);assert.deepEqual(errors,[]);await context.close();
-}console.log('PASS order ticket at 360/390/1280: review has no writes, partial sell respects reservations, fee/pnl preview, edit/cancel, receipt, filters, double-click, account change and offline protections, full-market search');}finally{await browser.close();}})().catch(e=>{console.error(e);process.exit(1)});
+}await searchAndBuy(browser);
+console.log('PASS order ticket at 360/390/1280: review has no writes, partial sell respects reservations, fee/pnl preview, edit/cancel, receipt, filters, double-click, account change and offline protections, full-market search');}finally{await browser.close();}})().catch(e=>{console.error(e);process.exit(1)});
+
+async function searchAndBuy(browser){
+ const page=await browser.newPage({serviceWorkers:'block',viewport:{width:390,height:844}});
+ await page.clock.install({time:new Date(now)});
+ const symbol='2603.TW';
+ const closes=Array.from({length:65},(_,i)=>({time:stamp-(64-i)*86400,close:120,volume:2000000}));
+ const found={...q,symbol,name:'長榮',marketVerified:true,history:closes,price:120};
+ const snapshot={quotes:[{symbol,name:'長榮',market:'上市',price:120,tradeDate:q.tradeDate}],markets:{twse:{status:'ready',tradeDate:q.tradeDate}},status:'ready'};
+ let requests=0;
+ await page.route('**/data/quotes.json',r=>r.fulfill({json:{quotes:[q]}}));
+ await page.route('**/data/full-market.json',r=>r.fulfill({json:snapshot}));
+ await page.route('https://raw.githubusercontent.com/**',r=>r.request().url().includes('/service-config/')?r.fulfill({json:{url:'https://picker-test.example.workers.dev',mode:'public'}}):r.fulfill({status:404}));
+ await page.route('https://picker-test.example.workers.dev/research',r=>{
+  const headers={'Access-Control-Allow-Origin':'*','Access-Control-Allow-Headers':'Content-Type','Access-Control-Allow-Methods':'POST, OPTIONS'};
+  if(r.request().method()==='OPTIONS')return r.fulfill({status:204,headers});
+  assert.deepEqual(JSON.parse(r.request().postData()),{symbol,ai:false});
+  requests++;
+  if(requests===1)return r.fulfill({status:503,headers,json:{error:'測試來源暫不可用'}});
+  return r.fulfill({headers,json:{quote:found}});
+ });
+ await page.goto((process.env.TEST_SITE_URL||'http://127.0.0.1:8005/')+'#portfolio',{waitUntil:'domcontentloaded'});
+ await page.locator('#paper-new').click();
+ await page.locator('#paper-amount').fill('1000');
+ await page.locator('#paper-find').click();
+ await page.keyboard.press('Escape');
+ assert.equal(await page.locator('#paper-amount').inputValue(),'1000');
+ await page.locator('#close-dialog').click();
+ await page.locator('#paper-pick').click();
+ await page.locator('#app-search-input').fill('２６０３');
+ const result=page.locator('[data-open-symbol="2603.TW"]');
+ await result.waitFor();
+ assert.equal(requests,0);
+ await result.click();
+ await page.waitForFunction(()=>document.querySelector('#app-search-feedback').textContent==='測試來源暫不可用');
+ assert.equal(await page.locator('#trade-dialog').isVisible(),false);
+ assert.equal(await account(page),null);
+ await result.click();
+ await page.locator('#trade-dialog').waitFor();
+ assert.equal(await page.locator('#paper-symbol').inputValue(),symbol);
+ assert.ok(page.url().endsWith('#portfolio'));
+ await page.locator('#paper-amount').fill('30000');
+ await page.locator('#trade-form [type=submit]').click();
+ await page.locator('#paper-confirm').click();
+ await page.locator('#paper-receipt').waitFor();
+ const saved=await account(page);
+ assert.equal(saved.positions[symbol].quantity,249);
+ assert.match(await page.locator('.holding-card').innerText(),/官方收盤快照/);
+ assert.match(await page.locator('.holding-card').innerText(),/可賣 249 股/);
+ await page.locator('[data-paper-add="2603.TW"]').click();
+ await page.locator('#trade-dialog').waitFor();
+ assert.equal(await page.locator('#paper-symbol').inputValue(),symbol);
+ assert.equal(requests,2);
+ await page.close();
+ console.log('PASS full-market picker: draft survives cancel, full-width code, request failure and retry, direct non-focus order, snapshot valuation and repeat buy');
+}
