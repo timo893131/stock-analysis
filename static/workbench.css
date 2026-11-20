@@ -225,3 +225,17 @@ body[data-view=portfolio] #data-banner { display: none !important; }
  #paper-pick { grid-column: 1 / -1; width: 100%; }
  .holding-actions .outline { flex: 1 0 auto; }
 }
+
+.holding-review-summary { display: flex; align-items: center; justify-content: space-between; gap: var(--space-xs); padding: var(--space-sm) 0; margin-bottom: var(--space-sm); border-top: 1px solid var(--color-rule); flex-wrap: wrap; }
+.holding-review-summary p, .holding-review-label { margin: 0; padding: var(--space-xs) var(--space-sm); border-radius: 8px; font-size: 14px; font-weight: 650; }
+.holding-review-label { display: inline-block; }
+.holding-review-summary .outline { margin: 0; }
+#holding-review-dialog { width: min(100%, 600px); }
+#holding-review-dialog h2 { padding-right: 48px; }
+#holding-review-body p:not(.holding-review-label) { line-height: 1.75; }
+#holding-review-body details { margin-bottom: var(--space-md); }
+#holding-review-body .fine-print a { display: inline-block; padding: var(--space-xs); }
+.holding-review-chart { margin: 0; color: var(--color-muted); font-size: 13px; }
+.holding-review-chart svg { display: block; width: 100%; height: 100px; }
+#holding-review-sell[hidden], #holding-review-feedback:empty { display: none; }
+#holding-review-feedback { color: var(--color-info); }

@@ -18,7 +18,7 @@ const PAPER_KEY='stockroom-paper-v2';let paperStored=null,paperLocked=false,acco
 let paperBaseReady=false,paperSyncBusy=false,paperRetryBusy=false,paperAutoCount=0,paperSyncMessage='';const paperSyncAttempts=new Map(),paperSyncErrors=new Map();
 function persist(key,value){try{localStorage.setItem(key,JSON.stringify(value));return true;}catch{toast('瀏覽器無法儲存資料，請允許本機儲存後再試。');return false;}}
 function toast(text){$('#toast').textContent=text;$('#toast').style.display='block';setTimeout(()=>$('#toast').style.display='none',3500);}
-function spark(history,large=false){const values=history.slice(large?-60:-20).map(x=>x.close),min=Math.min(...values)*.995,max=Math.max(...values)*1.005,w=large?700:100,h=large?180:35;const points=values.map((v,i)=>`${i*w/Math.max(1,values.length-1)},${h-12-(v-min)/(max-min)*(h-24)}`).join(' ');return `<svg class="${large?'':'spark'}" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" role="img" aria-label="${large?'歷史收盤價':'價格走勢'}">${large?`<defs><linearGradient id="fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#16866e" stop-opacity=".15"/><stop offset="100%" stop-color="#16866e" stop-opacity="0"/></linearGradient></defs>${[30,75,120,165].map(y=>`<line x1="0" y1="${y}" x2="700" y2="${y}" stroke="#edf1ef" stroke-dasharray="4 5"/>`).join('')}<polygon points="0,180 ${points} 700,180" fill="url(#fill)"/>`:''}<polyline points="${points}" fill="none" stroke="#198c76" stroke-width="${large?2:1.8}" vector-effect="non-scaling-stroke"/></svg>`;}
+function spark(history,large=false,fillId='fill'){const values=history.slice(large?-60:-20).map(x=>x.close),min=Math.min(...values)*.995,max=Math.max(...values)*1.005,w=large?700:100,h=large?180:35;const points=values.map((v,i)=>`${i*w/Math.max(1,values.length-1)},${h-12-(v-min)/(max-min)*(h-24)}`).join(' ');return `<svg class="${large?'':'spark'}" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" role="img" aria-label="${large?'歷史收盤價':'價格走勢'}">${large?`<defs><linearGradient id="${fillId}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#16866e" stop-opacity=".15"/><stop offset="100%" stop-color="#16866e" stop-opacity="0"/></linearGradient></defs>${[30,75,120,165].map(y=>`<line x1="0" y1="${y}" x2="700" y2="${y}" stroke="#edf1ef" stroke-dasharray="4 5"/>`).join('')}<polygon points="0,180 ${points} 700,180" fill="url(#${fillId})"/>`:''}<polyline points="${points}" fill="none" stroke="#198c76" stroke-width="${large?2:1.8}" vector-effect="non-scaling-stroke"/></svg>`;}
 function render(){StockroomPlannerUI.refresh();
 $('#watch-count').textContent=watch.length;$('#cash').textContent=money(account.cash-StockroomPaper.reserves(account).cash);$('#holdings-count').textContent=Object.keys(account.positions).length+' 檔';
 $('#market-cards').innerHTML=[quotes[5],quotes[0],quotes[4]].map(q=>`<article class="market-card"><p>${esc(q.name)} <small>${q.symbol.split('.')[0]} · ${q.demo?'示範':'行情'}</small></p><strong>${fmt(q.price)}</strong><span class="change ${q.change>=0?'up':'down'}">${q.change>=0?'上漲 +':'下跌 '}${fmt(q.change)}% <small>較前一收盤</small></span>${spark(q.history)}</article>`).join('');
@@ -281,6 +281,108 @@ function holdingMark(quote,close,now){
  if(freshPaperQuote(quote,now))return {price:quote.price,date:quoteDay(quote),source:'個股日收盤'};
  return null;
 }
+const holdingLabels={hold:'可考慮保留',watch:'先觀望',reduce:'可考慮分批賣出',unavailable:'待補資料'};
+const holdingStates={hold:'positive',watch:'info',reduce:'caution',unavailable:'unavailable'};
+let holdingReviewSymbol=null,holdingReviewKey='',holdingLoading=false;
+function holdingDecision(symbol,quote,officialClose,now=Date.now(),reserved=StockroomPaper.reserves(account).shares[symbol]||0){
+ return paperLocked?{action:'unavailable',reason:'帳戶資料無法讀取。'}:
+  StockroomHoldingReview.review({quote,position:account.positions[symbol],reserved,officialClose,now});
+}
+function currentHoldingDecision(symbol){
+ const snapshot=StockroomMarketUI.getSnapshot();
+ const close=marketClose(snapshot.quotes.find(row=>row.symbol===symbol),snapshot.markets,Date.now());
+ return holdingDecision(symbol,quotes.find(q=>q.symbol===symbol),close);
+}
+const percent=n=>(n>0?'+':'')+fmt(n*100)+'%';
+function holdingFindings(report){
+ if(report.action==='hold')return '收盤高於 20 日均線至少 1%，且 20 日均線高於 60 日均線。近 20 個交易日收盤上漲，短中期方向一致。';
+ if(report.action==='watch'){
+  const trend=report.ma20>report.ma60?'20 日均線高於 60 日均線':report.ma20<report.ma60?'20 日均線低於 60 日均線':'20 日均線與 60 日均線相同';
+  return `${trend}，但收盤距 20 日均線 ${percent(report.distance)}，近 20 日漲跌 ${percent(report.change)}。三項數據尚未同時符合保留或減碼條件，等下次收盤再判斷。`;
+ }
+ if(report.fraction===.5)return '收盤低於 20 日均線至少 1%，也低於 60 日均線。20 日均線低於 60 日均線，且近 20 日跌幅至少 5%，短中期同時偏弱。';
+ return '收盤低於 20 日均線至少 1%，近 20 日漲跌為負。先以四分之一做減碼練習，下一次日收盤再核對。';
+}
+function holdingSize(report){
+ if(report.action!=='reduce')return '新增賣出參考 0 股';
+ const fraction=fmt(report.fraction*100,0)+'%';
+ let text=`減碼參考 ${fraction}（${fmt(report.target,0)} 股）· 本次可帶入 ${fmt(report.shares,0)} 股`;
+ if(report.reserved)text+=`，已扣除等待成交的 ${fmt(report.reserved,0)} 股`;
+ if(!report.target)text+='，換算不足一股';
+ return text+'。';
+}
+function renderHoldingReview(){
+ const dialog=$('#holding-review-dialog');
+ if(!dialog.open)return;
+ const symbol=holdingReviewSymbol,report=currentHoldingDecision(symbol);
+ const key=JSON.stringify(report);
+ if(key===holdingReviewKey)return;
+ holdingReviewKey=key;
+ const quote=quotes.find(q=>q.symbol===symbol);
+ const name=quote?.name||account.orders.find(o=>o.symbol===symbol)?.name||symbol;
+ $('#holding-review-title').textContent=name+' · 持倉健檢';
+ const label=`<p class="holding-review-label" data-state="${holdingStates[report.action]}">${holdingLabels[report.action]}</p>`;
+ const body=$('#holding-review-body');
+ const sell=$('#holding-review-sell');
+ sell.hidden=!report.shares;
+ if(report.action==='unavailable'){body.innerHTML=label+`<p>${esc(report.reason)}</p>`;return;}
+ const row=(label,value)=>`<div><dt>${label}</dt><dd>${value}</dd></div>`;
+ body.innerHTML=label+`<p>${holdingFindings(report)}</p>
+  <p><strong>${holdingSize(report)}</strong></p>
+  <p>目前持有 ${fmt(report.quantity,0)} 股，可賣 ${fmt(report.sellable,0)} 股。${report.shares?`若這筆成交，還有 ${fmt(report.quantity-report.shares,0)} 股。`:''}</p>
+  ${report.proceeds?`<p>按上述行情試算，扣費稅後約入帳 NT$ ${fmt(report.proceeds.net)}，本筆賣出損益 NT$ ${fmt(report.proceeds.pnl)}。</p>`:''}
+  <h3>判斷依據</h3>
+  <figure class="holding-review-chart">${spark(quote.history.slice(-21),true,'holding-review-fill')}<figcaption>近 20 個交易日收盤走勢</figcaption></figure>
+  <dl class="ticket-lines">
+   ${row('最新收盤',fmt(report.price)+' 元')}
+   ${row('20 日均線',fmt(report.ma20)+' 元')}
+   ${row('60 日均線',fmt(report.ma60)+' 元')}
+   ${row('收盤距 20 日均線',percent(report.distance))}
+   ${row('近 20 日漲跌',percent(report.change))}
+  </dl>
+  <p class="fine-print">比較 ${esc(report.baseDate)} 的 ${fmt(report.basePrice)} 元與 ${esc(report.date)} 收盤。來源 ${esc(report.source)}。<a href="https://finmindtrade.com/" target="_blank" rel="noopener">查看行情來源</a></p>
+  <details><summary>判斷規則與試算範圍</summary><p>站內按收盤、均線及漲跌條件試算。短期轉弱以持股 25% 練習減碼，短中期同時轉弱以 50% 練習。按原持股向下取整、扣除已預留賣單，並以可賣股數為上限。股價證據只描述已發生的走勢，未納入財報事件、股利及拆股調整。</p></details>`;
+}
+function openHoldingReview(symbol){
+ holdingReviewSymbol=symbol;
+ holdingReviewKey='';
+ $('#holding-review-feedback').textContent='';
+ $('#holding-review-dialog').showModal();
+ renderHoldingReview();
+}
+$('#holding-review-close').onclick=()=>$('#holding-review-dialog').close();
+$('#holding-review-dialog').addEventListener('close',()=>{
+ const button=document.querySelector(`[data-paper-holding-review="${holdingReviewSymbol}"]`);
+ if(!document.querySelector('dialog[open]'))button?.focus({preventScroll:true});
+});
+$('#holding-review-load').onclick=async()=>{
+ if(holdingLoading)return;
+ const symbol=holdingReviewSymbol,button=$('#holding-review-load'),feedback=$('#holding-review-feedback');
+ holdingLoading=true;button.disabled=true;
+ feedback.textContent='正在更新收盤與歷史行情…';
+ try{
+  await requestStock(symbol,false);
+  if(holdingReviewSymbol===symbol){
+   renderHoldingReview();
+   feedback.textContent=currentHoldingDecision(symbol).action==='unavailable'?'已重新讀取。請查看上方資料狀態。':'已更新個股行情。';
+  }
+ }catch(error){if(holdingReviewSymbol===symbol)feedback.textContent=error.message;}
+ finally{holdingLoading=false;button.disabled=false;}
+};
+$('#holding-review-sell').onclick=()=>{
+ if(StockroomShell.offline){$('#holding-review-feedback').textContent='恢復連線後才能帶入賣出試算。';return;}
+ const report=currentHoldingDecision(holdingReviewSymbol);
+ if(JSON.stringify(report)!==holdingReviewKey){renderHoldingReview();$('#holding-review-feedback').textContent='行情或持股已更新，請重新核對。';return;}
+ if(!report.shares)return;
+ const symbol=holdingReviewSymbol;
+ $('#holding-review-dialog').close();
+ openPaper('sell',symbol);
+ if(!$('#trade-dialog').open)return;
+ $('#quantity').value=report.shares;
+ $('#order-note').value=`持倉健檢 ${report.date}：${holdingFindings(report)}`;
+ updateEstimate();
+};
+
 function renderPortfolio(){
  const pendingCount=account.orders.filter(o=>o.status==='pending').length;
  const reserved=StockroomPaper.reserves(account);
@@ -292,12 +394,14 @@ function renderPortfolio(){
  let total=account.cash,unrealized=0,missing=0;
  const positionCards=Object.entries(account.positions).map(([symbol,position])=>{
   const quote=stockQuotes.get(symbol),snapshotRow=snapshots.get(symbol);
-  const mark=holdingMark(quote,marketClose(snapshotRow,snapshot.markets,now),now);
+  const close=marketClose(snapshotRow,snapshot.markets,now);
+  const mark=holdingMark(quote,close,now);
   const value=mark?mark.price*position.quantity:null;
   const gain=mark?value-position.cost:null;
   const reservedShares=reserved.shares[symbol]||0,sellable=position.quantity-reservedShares;
   if(mark){total+=value;unrealized+=gain;}else missing++;
   const name=quote?.name||orderNames.get(symbol)||snapshotRow?.name||symbol;
+  const report=holdingDecision(symbol,quote,close,now,reservedShares);
   return `<article class="holding-card">
    <div class="panel-heading"><h3>${esc(name)} <small>${esc(symbol)}</small></h3><span>${fmt(position.quantity,0)} 股</span></div>
    <div class="holding-numbers">
@@ -306,6 +410,10 @@ function renderPortfolio(){
     <div><small>持倉市值</small><strong>${mark?money(value):'待行情'}</strong></div>
    </div>
    <p>${mark?`收盤 ${fmt(mark.price)} 元 · ${esc(mark.date)} · ${esc(mark.source)}`:'尚無有效收盤價'}<br>可賣 ${fmt(sellable,0)} 股${reservedShares?' · 委託預留 '+fmt(reservedShares,0)+' 股':''}</p>
+   <div class="holding-review-summary">
+    <p data-state="${holdingStates[report.action]}">${holdingLabels[report.action]}${report.action==='reduce'?' · '+fmt(report.shares,0)+' 股可帶入':''}</p>
+    <button type="button" class="outline" data-paper-holding-review="${symbol}" aria-label="${esc(name)} 持倉健檢">持倉健檢</button>
+   </div>
    <div class="holding-actions"><button class="outline" data-paper-add="${symbol}">再買入</button>
     <button class="outline" data-paper-sell="${symbol}" ${sellable?'':'disabled'}>練習賣出</button>
     <button class="outline" data-paper-research="${symbol}">查看分析</button></div>
@@ -314,6 +422,7 @@ function renderPortfolio(){
  const invested=StockroomPaper.capital(account),added=invested-account.initial;
  const expiredCount=account.orders.filter(o=>o.status==='expired').length,filledCount=account.orders.filter(o=>o.status==='filled').length;
  $('#portfolio-view').innerHTML=`<div class="practice-toolbar"><div class="practice-header-actions"><button class="green-button compact" id="paper-pick">＋ 選股下單</button><button class="outline" id="paper-new">買入 ${esc(stockQuotes.get(selected)?.name||selected)}</button><button class="outline" id="paper-plan" type="button">進階風險計畫</button></div><p id="paper-trade-status" role="status">${esc(paperOpening)}</p></div>${paperReceipt()}${paperLocked?'<div class="banner" data-state="caution">既有帳戶資料無法讀取。已暫停下單與寫入，下方數字不是已還原的持倉；請先匯出原始資料。</div>':''}<details class="paper-rules"><summary>練習方式與舊委託規則</summary><div class="banner">自由練習：按你輸入的完整金額換算股數，用已取得收盤價建立虛擬持倉。沒有固定 100 萬額度；不足時追加有紀錄的虛擬資金，不算收益。舊的待成交委託仍依下一交易日收盤規則檢查。</div></details><div class="paper-sync-box"><button class="outline" id="paper-sync" type="button" ${paperSyncBusy||!paperBaseReady?'disabled':''}>${paperSyncBusy?'正在檢查結算…':'⟳ 更新並結算委託'}</button><p id="paper-sync-status" role="status">${esc(paperSyncMessage||(!paperBaseReady?'正在讀取每日行情…':'會優先補載待成交與持倉股票，每次最多 5 檔；不呼叫 AI。'))}</p></div><div class="market-grid"><div class="market-card"><p>帳戶估值（含現金）</p><strong>${missing?'待行情':money(total)}</strong><span class="change">累計淨盈虧 ${missing?'—':money(total-invested)}（已扣追加資金）</span></div><div class="market-card"><p>練習額度</p><strong>自由投入</strong><span class="change">現有可用 ${money(account.cash-reserved.cash)}；不足可追加</span></div><div class="market-card"><p>已實現損益</p><strong>${money(account.realized)}</strong><span class="change">未實現 ${missing?'待行情':money(unrealized)}</span></div></div><p class="funding-summary">累計投入 ${money(invested)}（原始 ${money(account.initial)}＋追加 ${money(added)}）。追加不是獲利，賣出也不會重設本金。</p><div class="practice-steps"><span>① 輸入金額</span><span>② 確認股數與費用</span><span>③ 查看持倉</span></div><div class="paper-status-summary" aria-label="委託結果總覽"><span>等待檢查 <b>${pendingCount}</b></span><span>已成交 <b>${filledCount}</b></span><span>未成交 <b>${expiredCount}</b></span></div><h2 id="paper-holdings-title" tabindex="-1">目前持倉</h2>${missing?`<p class="fine-print">有 ${missing} 檔缺少有效收盤價，帳戶估值與未實現損益待補齊。</p>`:''}<div class="holding-grid">${positionCards||(pendingCount?`<div class="empty"><b>有 ${pendingCount} 筆委託等待檢查，尚未形成持倉。</b><p>請看下方每筆委託的等待日期或資料提示；不用重新下相同委託。</p><button class="outline" id="paper-pending-link">查看等待原因 ↓</button></div>`:`<div class="empty"><b>${expiredCount?'已有 '+expiredCount+' 筆委託未成交，因此沒有新增持倉。':'目前沒有持倉。'}</b><p>${expiredCount?'未成交的買入沒有扣款；下方可查看原因，或重新試算一筆新委託。':'可查看委託結果與成交紀錄，或選股票開始虛擬練習。'}</p><button class="outline" id="paper-browse">選股下單</button></div>`)}</div><h2 id="paper-orders-title">委託紀錄</h2><div class="order-filters" role="group" aria-label="篩選委託紀錄">${[['all','全部'],['pending','等待中'],['filled','已成交'],['expired','未成交'],['cancelled','已取消']].map(([key,label])=>`<button class="outline" type="button" data-order-filter="${key}" aria-pressed="${paperOrderFilter===key}">${label} ${key==='all'?account.orders.length:account.orders.filter(o=>o.status===key).length}</button>`).join('')}</div><p class="fine-print">顯示所選狀態最近 100 筆；完整紀錄可下載帳戶備份。</p><div class="order-list">${account.orders.filter(o=>paperOrderFilter==='all'||o.status===paperOrderFilter).slice(0,100).map(o=>`<article class="order-card" data-state="${o.status==='pending'?'caution':o.status==='filled'?'info':'unavailable'}"><div><b>${esc(o.name)} · ${o.side==='buy'?'買入':'賣出'} ${o.quantity} 股</b><span class="tag">${StockroomPaper.pendingInfo(o,quotes.find(q=>q.symbol===o.symbol),marketDates.get(o.symbol)).label}</span></div><p>${o.execution==='known-close'?'模擬成交每股價':o.side==='buy'?'最高買價':'最低賣價'} ${fmt(o.limit)} · 建立於 ${esc(new Date(o.createdAt).toLocaleString('zh-TW',{timeZone:'Asia/Taipei'}))}</p>${o.note?`<p class="order-note">理由：${esc(o.note)}</p>`:''}${paperOrderInfo(o,marketDates)}${o.status==='pending'?`<button class="outline" data-paper-cancel="${esc(o.id)}">取消委託</button>`:o.status==='expired'?`<button class="outline" data-paper-retry="${esc(o.id)}" ${paperRetryBusy||paperLocked||account.orders.some(x=>x.symbol===o.symbol&&x.status==='pending')?'disabled':''}>${account.orders.some(x=>x.symbol===o.symbol&&x.status==='pending')?'已有委託等待檢查':paperRetryBusy?'正在準備試算…':'依已取得行情重新試算'}</button>`:''}</article>`).join('')||'<p class="empty">此分類目前沒有委託</p>'}</div><details class="trade-history"><summary>成交紀錄（最近 100 筆）</summary><div class="table-wrap"><table><thead><tr><th>成交日</th><th>股票</th><th>方向</th><th>股數</th><th>含滑價價格</th><th>費稅</th><th>賣出損益</th></tr></thead><tbody>${account.trades.slice(0,100).map(t=>`<tr><td>${esc(StockroomPaper.day(t.time))}${t.priceAsOf?`<small>用 ${esc(StockroomPaper.day(t.priceAsOf*1000))} 收盤練習</small>`:''}</td><td>${esc(t.name)}</td><td>${t.side==='buy'?'買入':'賣出'}</td><td>${t.quantity}</td><td>${fmt(t.price)}</td><td>${fmt(t.fee+t.tax)}</td><td>${t.side==='sell'&&Number.isFinite(t.pnl)?money(t.pnl):'—'}</td></tr>`).join('')||'<tr><td colspan="7">尚無成交</td></tr>'}</tbody></table></div></details><details class="funding-history"><summary>查看追加虛擬資金紀錄（${(account.funding||[]).length} 筆）</summary><ul>${(account.funding||[]).slice(-20).reverse().map(f=>`<li>${esc(new Date(f.time).toLocaleString('zh-TW',{timeZone:'Asia/Taipei'}))}：追加 ${money(f.amount)}；只增加本金，不算收益。</li>`).join('')||'<li>尚未追加，仍沿用原始虛擬資金。</li>'}</ul></details><div class="backup-actions"><button class="outline" id="paper-export">下載帳戶備份</button><label class="outline">匯入備份<input id="paper-import" type="file" accept="application/json" hidden></label><button class="outline" id="reset-account">重設練習帳戶</button></div><p class="fine-print">資料只存在目前瀏覽器，換手機或清除網站資料會遺失，請定期備份。帳戶估值未預扣未來賣出成本；自由練習追加虛擬資金不計為收益。未處理股利、拆股或價格調整。原版練習帳戶仍保留在舊的本機儲存欄位，本版另用新版帳戶。</p>`;
+ renderHoldingReview();
  document.querySelectorAll('[data-order-filter]').forEach(b=>b.onclick=()=>{paperOrderFilter=b.dataset.orderFilter;renderPortfolio();document.querySelector(`[data-order-filter="${paperOrderFilter}"]`).focus();});
  $('#paper-receipt-close')?.addEventListener('click',()=>{paperReceiptId=null;renderPortfolio();$('#paper-holdings-title').focus();});
  $('#paper-plan').onclick=()=>showDetail('plan');$('#paper-sync').onclick=()=>syncPaperData(false);$('#paper-pending-link')?.addEventListener('click',()=>{paperOrderFilter='pending';renderPortfolio();$('#paper-orders-title').scrollIntoView({block:'start',behavior:'smooth'});});$('#paper-new').onclick=()=>void preparePaper('buy',selected);
@@ -374,7 +483,7 @@ function updateEstimate(){
   $('#trade-error').textContent=conversion&&!quantity?'這筆金額不足買 1 股（含費用），請增加金額或選擇價格較低的標的。':'';
  }catch(error){if(side==='buy'&&$('#paper-amount').value.trim())$('#quantity').value=0;$('#order-estimate').textContent='尚未換算，沒有送出委託。';$('#trade-error').textContent=error.message;}
 }
-$('#portfolio-view').addEventListener('click',e=>{const cancel=e.target.closest('[data-paper-cancel]'),sell=e.target.closest('[data-paper-sell]'),research=e.target.closest('[data-paper-research]'),retry=e.target.closest('[data-paper-retry]');try{if(retry){void retryPaper(retry.dataset.paperRetry);return;}if(cancel&&savePaper(StockroomPaper.cancel(account,cancel.dataset.paperCancel)))render();if(sell)void preparePaper('sell',sell.dataset.paperSell);const add=e.target.closest('[data-paper-add]');if(add)void preparePaper('buy',add.dataset.paperAdd);if(research){if(!quotes.some(q=>q.symbol===research.dataset.paperResearch)){switchTab('market');loadStock(research.dataset.paperResearch);return;}selected=research.dataset.paperResearch;switchTab('overview');showDetail();news();}}catch(error){toast(error.message);}});
+$('#portfolio-view').addEventListener('click',e=>{const holding=e.target.closest('[data-paper-holding-review]');if(holding){openHoldingReview(holding.dataset.paperHoldingReview);return;}const cancel=e.target.closest('[data-paper-cancel]'),sell=e.target.closest('[data-paper-sell]'),research=e.target.closest('[data-paper-research]'),retry=e.target.closest('[data-paper-retry]');try{if(retry){void retryPaper(retry.dataset.paperRetry);return;}if(cancel&&savePaper(StockroomPaper.cancel(account,cancel.dataset.paperCancel)))render();if(sell)void preparePaper('sell',sell.dataset.paperSell);const add=e.target.closest('[data-paper-add]');if(add)void preparePaper('buy',add.dataset.paperAdd);if(research){if(!quotes.some(q=>q.symbol===research.dataset.paperResearch)){switchTab('market');loadStock(research.dataset.paperResearch);return;}selected=research.dataset.paperResearch;switchTab('overview');showDetail();news();}}catch(error){toast(error.message);}});
 $('#learn-view').innerHTML='<h2 style="margin-top:14px">你的第一份投資指南</h2>'+[['01 · 行情時間，比價格更重要','臺股一般交易時段為交易日 09:00–13:30（臺北時間）。盤後價格可能是最近一次成交，並非此刻可成交的價格。本網站以來源時間標示資料，快速練習用已取得的真實日收盤建立虛擬持倉；進階委託則在委託日之後第一筆交易日收盤檢查。'],['02 · 技術訊號怎麼看？','20 日均線是最近 20 個交易日收盤價的平均。價格高於均線 1% 標記偏多觀察，低於 1% 標記謹慎觀察，中間為持續觀察。這只是價格趨勢，沒有涵蓋估值、財報或新聞影響。'],['03 · 預計效果不是預言','波動情境使用最近約半年日對數報酬的標準差乘上 √20，再換算為價格範圍。這是歷史波動尺度，不是模型預測、信賴區間或保證報酬；極端事件可能讓價格超出範圍。'],['04 · 用虛擬交易培養紀律','原始虛擬資金 100 萬元，自由練習不足時可追加並記入本金，不當作獲利。每次買賣計入 0.1425% 手續費，賣出股票收取 0.3% 交易稅，股票型 ETF 為 0.1%；債券 ETF 依適用期間計算。新版練習另計雙向 0.1% 不利滑價，但未涵蓋券商最低費用、折扣、股利與拆股調整，因此不能視為真實績效。'],['05 · 找到可信資訊','先看公開資訊觀測站的財報與重大訊息，再交叉核對交易所資料與具名媒體。新聞標題可能過時或不完整，應開啟原文確認發佈時間與內容。'],['06 · 把風險放在報酬前面','避免以單一訊號投入所有資金。先記錄投資理由、可以承受的損失與檢查時間。虛擬交易無法重現真實金錢下的心理壓力，也不保證未來的結果。']].map(([h,p])=>`<details class="lesson"><summary>${h}</summary><p>${p}</p></details>`).join('');
 const glossary=document.createElement('section');glossary.className='plain-glossary';glossary.innerHTML='<h3>看不懂的名詞，點一下</h3>'+[['MA20／20 日均線','最近 20 個交易日收盤價的平均，用來看價格相對於近期水準的位置；不是未來價格。'],['EPS／每股盈餘','公司每股分到多少盈餘。正值不代表股價便宜，還要看期間與估值。'],['ETF','把一籃子資產放在一檔商品裡。不同 ETF 風險差很多，仍要看持股與費用。'],['零股／一張','股票一般一張是 1,000 股；不足一張可用零股練習，本網站以「股」輸入。'],['停損','事先設定可接受的損失；本站的停損價只是試算，不會自動幫你賣出。'],['回測／最大回撤','回測用歷史資料模擬規則；最大回撤是期間中從高點到低點的最大跌幅，都不是未來獲利保證。']].map(([term,text])=>`<details><summary>${term}</summary><p>${text}</p></details>`).join('');$('#learn-view').append(glossary);
 const quiz=document.createElement('section');quiz.className='learning-quiz';quiz.innerHTML='<h3>30 秒確認：進階的下一交易日委託會立即成交嗎？</h3><div class="quiz-options"><button class="outline" data-quiz="later">下一交易日收盤才檢查，價格條件不符會失效</button><button class="outline" data-quiz="now">按送出就會立刻成交</button></div><p id="quiz-answer" role="status"></p><button class="green-button compact" id="learn-start">看懂了，去找一檔股票</button>';$('#learn-view').prepend(quiz);quiz.querySelectorAll('[data-quiz]').forEach(b=>b.onclick=()=>{$('#quiz-answer').textContent=b.dataset.quiz==='later'?'答對了。進階委託等待後續收盤；快速練習則用已取得收盤建立持倉，兩種都可在虛擬投資查看。':'進階委託還沒成交，必須等委託日之後第一筆交易日收盤，並符合你設定的價格。';});$('#learn-start').onclick=()=>switchTab('market');
